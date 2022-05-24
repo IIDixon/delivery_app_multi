@@ -1,3 +1,4 @@
+import 'package:delivery_app_multi/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/constant.dart';
@@ -79,15 +80,7 @@ class _RootPageState extends State<RootPage> {
     return IndexedStack(
       index: activeTab,
       children: const [
-        Center(
-          child: Text(
-            'Página Principal',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        HomePage(),
         Center(
           child: Text(
             'Página 2',
