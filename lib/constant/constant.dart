@@ -130,20 +130,311 @@ List<Image> slider = [
 List<Map<String, dynamic>> upvitam = [
   {
     'description': 'Colageno tipo II 40MG',
-    'pmc': '45.90',
-    'venda': '37.20',
-    'imgUrl': Image.asset('assets/PBM.jpg')
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'pmc': '121.24',
+    'venda': '101.30',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023728761_Up-Vitam-Artro-Colag-tipo-II-UCII-30-cps-430-x-321_.jpg'
   },
   {
     'description': 'Cabelos e Unhas 60CAPS',
-    'pmc': '22.60',
-    'venda': '16.50',
-    'imgUrl': Image.asset('assets/PBM.jpg')
+    'pmc': '58.96',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '48.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023702440_Up-Vitam-Cabelos-e-Unhas-60-cps-430-x-321_.jpg'
   },
   {
     'description': 'Cafeína 60Caps',
-    'pmc': '45.90',
-    'venda': '37.20',
-    'imgUrl': Image.asset('assets/PBM.jpg')
+    'pmc': '58.04',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '49.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720871_Up-Vitam-Cafeina-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Calcio 600+D3+K2 60Cp',
+    'pmc': '39.04',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '30.00',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023716973_Up-Vitam-Calcio-600-DK-60-cpr-430-x-321_.jpg'
+  },
+  {
+    'description': 'Calcio MDK 60Caps',
+    'pmc': '41.32',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '33.80',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2021/06/up-vitam-calcio-mdk.jpg'
+  },
+  {
+    'description': 'Clor. Magnésio 1700MG 60Cp',
+    'pmc': '38.65',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '30.10',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023708893_Up-Vitam-Cloreto-de-Magnesio-60-cpr-430-x-321_.jpg'
+  },
+  {
+    'description': 'Colágeno Hidrolisado 50Caps',
+    'pmc': '53.88',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '46.00',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023701078_Up-Vitam-Colageno-Hidrolisado-50-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Complexo B 60Caps',
+    'pmc': '55.79',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '48.20',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720864_Up-Vitam-Complexo-B-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Up Vitam Energia 60Caps',
+    'pmc': '51.60',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '39.10',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023722189_Up-Vitam-Energia-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Up Vitam Homem 60Caps',
+    'pmc': '47.90',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '38.80',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023706080_Up-Vitam-Homem-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Up Vitam Imunidade 60Caps',
+    'pmc': '52.21',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '39.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023722356_Up-Vitam-Imunidade-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Polivitamínico Kids 30 Gomas',
+    'pmc': '31.17',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '24.60',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2021/01/UP-VITAM-KIDS-1024x833.png'
+  },
+  {
+    'description': 'Kit Omega 3 300Caps',
+    'pmc': '130.42',
+    'laboratorio': 'Catarinense',
+    'qtde': '300',
+    'categoria': 'Vitaminas',
+    'venda': '125.20',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023720833_Up-Vitam-Kit-Omega-300-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Up Vitam Mulher 60Caps',
+    'pmc': '47.90',
+    'laboratorio': 'Catarinense',
+    'qtde': '60',
+    'categoria': 'Vitaminas',
+    'venda': '36.20',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023703614_Up-Vitam-Mulher-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Óleo de Alho Desodorizado 60Caps',
+    'pmc': '38.66',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '29.60',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720888_Up-Vitam-Oleo-de-Alho-Desodorizado-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Óleo de Côco 60Caps',
+    'pmc': '84.82',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '71.60',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023700293_Up-Vitam-Oleo-de-Coco-1000mg-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Óleo de Linhaça 30Caps',
+    'pmc': '45.24',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '35.60',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023701092_Up-Vitam-Oleo-de-Linhaca-30-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Ômega 3 60Caps',
+    'pmc': '42.31',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '33.60',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023702105_Up-VITAM-Omega-3-1000-mg-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Ômega 3 120Caps',
+    'pmc': '81.66',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '60.09',
+    'imgUrl': 'https://www.upvitam.com.br/wp-content/uploads/2020/01/omega3.jpg'
+  },
+  {
+    'description': 'Picolinato de Cromo 60Caps',
+    'pmc': '65.03',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '53.55',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023701085_Up-Vitam-Picolinato-de-Cromo-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Polivitamínico 50+ 60Caps',
+    'pmc': '47.90',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '36.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023706110_Up-Vitam-Senior-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Polivitamínico 60Caps',
+    'pmc': '47.90',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '37.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023700507_Up-Vitam-Polivitaminico-A-Z-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Própolis 30Caps',
+    'pmc': '44.21',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '36.40',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2021/01/PACK-UP-VITAM-PROPOLIS-1024x819.png'
+  },
+  {
+    'description': 'Termobio 60Caps',
+    'pmc': '55.68',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '48.50',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023721175_Up-Vitam-Termobio-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Triplo Imuno 30Caps',
+    'pmc': '54.58',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '47.20',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2021/01/UP-VITAM-TRIPLO-IMUNO-1024x819.png'
+  },
+  {
+    'description': 'Triptofano 860MG 60Caps',
+    'pmc': '69.38',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '52.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023722134_Up-Vitam-Triptofano-60-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Up Vitam Cartamus 90Caps',
+    'pmc': '157.82',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '130.22',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2021/01/UP-VITAM-CARTAMUS-739x1024.png'
+  },
+  {
+    'description': 'Vitamina C 1000UI 30Cp',
+    'pmc': '51.65',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '39.80',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2020/05/7896023729287_Up-Vitam-Vitamina-C-1000-mg-30-cpr-430-x-321_.jpg'
+  },
+  {
+    'description': 'Vitamina D 1000UI 30Caps',
+    'pmc': '37.40',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '31.20',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720895_Up-Vitam-Vitamina-D-1000-UI-30-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Vitamina D 2000UI 30Caps',
+    'pmc': '49.91',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '39.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720901_Up-Vitam-Vitamina-D-2000-UI-30-cps-430-x-321_.jpg'
+  },
+  {
+    'description': 'Vitamina E 400UI 30Caps',
+    'pmc': '46.66',
+    'laboratorio': 'Catarinense',
+    'qtde': '30',
+    'categoria': 'Vitaminas',
+    'venda': '39.90',
+    'imgUrl':
+        'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720918_Up-Vitam-Vitamina-E-400-UI-30-cps-430-x-321_.jpg'
   },
 ];
