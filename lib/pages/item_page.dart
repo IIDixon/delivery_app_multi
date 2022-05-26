@@ -2,6 +2,8 @@ import 'package:delivery_app_multi/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../models/item.dart';
+
 class ItemPage extends StatefulWidget {
   const ItemPage({Key? key, required this.item}) : super(key: key);
 
@@ -13,6 +15,8 @@ class ItemPage extends StatefulWidget {
 
 class _ItemPageState extends State<ItemPage> {
   int qtde = 1;
+  late Item item;
+  Cart cart = Cart();
 
   @override
   Widget build(BuildContext context) {
@@ -184,42 +188,12 @@ class _ItemPageState extends State<ItemPage> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: /*GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                backgroundColor: Colors.red,
-                                duration: Duration(seconds: 2),
-                                content: Text('Item adicionado ao carrinho',
-                                    style: TextStyle(fontSize: 18)),
-                              ));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color(0xFF0D47A1), width: 1),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Comprar',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 22, color: Colors.blue[900]),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ),*/
-
+                          child:
                               ElevatedButton(
                             onPressed: () {
-                              Cart cart = Cart();
-                              setState(() {
-                                cart.items.add(widget.item);
-                                print(cart.valueItems());
-                              });
+                              item = Item.fromJson(json: widget.item, qtde: qtde);
+                              cart.items.add(item);
+                              //print(cart.valueItems());
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(

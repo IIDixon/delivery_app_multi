@@ -34,16 +34,35 @@ class _CartPageState extends State<CartPage> {
                           height: 100,
                           width: 100,
                           child: Image(
-                            image: NetworkImage(cart.items[index]['imgUrl']),
+                            image: NetworkImage(cart.items[index].imgUrl),
                             fit: BoxFit.fill,
                           ),
                         ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Text(cart.items[index]['description'])
+                                Text(cart.items[index].name)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text('${cart.items[index].qtde} Unidades')
+                              ]
+                            ),
+                            Row(
+                              children: [
+                                const Text('Valor Unitário:'),
+                                const SizedBox(width: 5),
+                                Text('${cart.items[index].valueSale}')
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text('Valor Total:'),
+                                const SizedBox(width: 5),
+                                Text('${cart.items[index].qtde * cart.items[index].valueSale}'),
                               ],
                             ),
                           ],

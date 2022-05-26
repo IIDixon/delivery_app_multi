@@ -1,3 +1,4 @@
+import 'package:delivery_app_multi/models/item.dart';
 import 'package:get/get.dart';
 
 class Cart extends GetxController {
@@ -13,12 +14,12 @@ class Cart extends GetxController {
 
   // Observador do Getx, para carregar o carrinho sempre
   //que for incluído algum item
-  var items = <Map<String, dynamic>>[].obs;
+  var items = <Item>[].obs;
 
   double valueItems() {
     double value = 0;
     for (int i = 0; i <= items.length; i++) {
-      value += double.parse(items[i]['venda']);
+      value += items[i].valueSale;
     }
     return value;
   }
