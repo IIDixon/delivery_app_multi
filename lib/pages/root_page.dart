@@ -1,7 +1,9 @@
+import 'package:delivery_app_multi/pages/cart_page.dart';
 import 'package:delivery_app_multi/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/constant.dart';
+import '../models/cart.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int activeTab = 0;
-
+  Cart cart = Cart();
   AppBar? appBar;
 
   @override
@@ -51,10 +53,19 @@ class _RootPageState extends State<RootPage> {
         break;
       case 2:
         return AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.clear_outlined),
+              tooltip: 'Esvaziar carrinho',
+              onPressed: () {
+                cart.items.clear();
+              },
+            ),
+          ],
           backgroundColor: Colors.blue[900],
           elevation: 0.8,
           title: const Text(
-            'Página 3',
+            'Carrinho',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -90,15 +101,7 @@ class _RootPageState extends State<RootPage> {
             ),
           ),
         ),
-        Center(
-          child: Text(
-            'Página 3',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        CartPage(),
         Center(
           child: Text(
             'Página 4',
