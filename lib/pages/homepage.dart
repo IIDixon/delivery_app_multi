@@ -1,3 +1,4 @@
+import 'package:delivery_app_multi/pages/item_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: GestureDetector(
                     onTap: () {
-                      showModal(context, upvitam[index]);
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      Navigator.of(context).push(createRoute(upvitam[index]));
                     },
                     child: Container(
                       height: 250,
@@ -310,8 +312,43 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  Route createRoute(Map<String, dynamic> item) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => ItemPage(
+        item: item,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0, 1);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 1500),
+    );
+  }
+
   Future<dynamic> showModal(BuildContext context, Map<String, dynamic> item) {
     int qtde = 1;
+
+    void decrement() {
+      setState(() {
+        qtde = -1;
+      });
+    }
+
+    void increment() {
+      setState(() {
+        qtde += 1;
+      });
+    }
+
     return showModalBottomSheet(
         elevation: 5,
         transitionAnimationController: controller,
@@ -329,7 +366,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  //mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
@@ -367,144 +404,178 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ],
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Laboratório: ',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      Text(item['laboratorio'],
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold))
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Quantidade: ',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      Text(item['qtde'],
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold))
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Categoria: ',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      Text(item['categoria'],
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold))
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Column(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(7),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            children: [
-                                              const Text('De: ',
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 18)),
-                                              Text(
-                                                item['pmc'],
-                                                style: const TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 18,
-                                                    decoration: TextDecoration
-                                                        .lineThrough),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              const Text('Por: ',
-                                                  style: TextStyle(
-                                                      color: Colors.blue,
-                                                      fontSize: 20)),
-                                              Text(
-                                                item['venda'],
-                                                style: const TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 20),
-                                              ),
-                                            ],
+                                          const Text(
+                                            'Laboratório: ',
+                                            style: TextStyle(fontSize: 18),
                                           ),
+                                          Text(item['laboratorio'],
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold))
                                         ],
                                       ),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 25),
-                                              child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    bottom: 10),
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  border: Border.all(
-                                                      color: Colors.blue),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      const Icon(Icons.remove,
-                                                          size: 16,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Quantidade: ',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Text(item['qtde'],
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold))
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Categoria: ',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Text(item['categoria'],
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold))
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            'De: ',
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 18),
+                                          ),
+                                          Text(
+                                            item['pmc'],
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 18,
+                                                decoration:
+                                                    TextDecoration.lineThrough),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          const Text(
+                                            'Por: ',
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 20),
+                                          ),
+                                          Text(
+                                            item['venda'],
+                                            style: const TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 20),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 35),
+                                            child: Container(
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                border: Border.all(
+                                                    color: Colors.blue),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        qtde > 1
+                                                            ? decrement()
+                                                            : Null;
+                                                        print(qtde);
+                                                      },
+                                                      child: const Icon(
+                                                          Icons.remove,
+                                                          size: 20,
                                                           color: Colors.red),
-                                                      Text('$qtde',
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize:
-                                                                      18)),
-                                                      const Icon(Icons.add,
-                                                          size: 16,
+                                                    ),
+                                                    Text('$qtde',
+                                                        style: const TextStyle(
+                                                            fontSize: 20)),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        increment();
+                                                        print(qtde);
+                                                      },
+                                                      child: const Icon(
+                                                          Icons.add,
+                                                          size: 20,
                                                           color: Colors.blue),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                /*Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border:
+                                              Border.all(color: Colors.blue),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Icon(Icons.remove,
+                                                  size: 18, color: Colors.red),
+                                              Text('$qtde',
+                                                  style: const TextStyle(
+                                                      fontSize: 20)),
+                                              const Icon(Icons.add,
+                                                  size: 18, color: Colors.blue),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    ]),*/
                               ],
                             ),
                           ],
