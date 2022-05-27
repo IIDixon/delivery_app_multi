@@ -91,6 +91,51 @@ class _RootPageState extends State<RootPage> {
     }
   }
 
+  void alert() {
+    Cart cart = Cart();
+
+    if (cart.items.isNotEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                'Esvaziar Carrinho',
+                style: TextStyle(color: Colors.blue[900], fontSize: 22),
+              ),
+              content: const Text('Deseja remover todos os itens do carrinho?',
+                  style: TextStyle(color: Colors.blue, fontSize: 20)),
+              actions: [
+                TextButton(
+                    child: const Text('Cancelar',
+                        style: TextStyle(color: Colors.red)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                TextButton(
+                    child: const Text('Confirmar',
+                        style: TextStyle(color: Colors.blue)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      cart.items.clear();
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Itens removidos',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(milliseconds: 1500),
+                        ),
+                      );
+                    }),
+              ],
+            );
+          });
+    }
+  }
+
   Widget getBody() {
     return IndexedStack(
       index: activeTab,
