@@ -115,7 +115,20 @@ class _CartPageState extends State<CartPage> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Deslize para remover o item',
+                                                  style:
+                                                      TextStyle(fontSize: 16)),
+                                              backgroundColor: Colors.red,
+                                              duration:
+                                                  Duration(milliseconds: 1500),
+                                            ));
+                                          },
                                           icon: const Icon(
                                               Icons.arrow_back_ios_new,
                                               color: Colors.red),
