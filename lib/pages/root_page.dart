@@ -1,5 +1,6 @@
 import 'package:delivery_app_multi/pages/cart_page.dart';
 import 'package:delivery_app_multi/pages/homepage.dart';
+import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/constant.dart';
@@ -45,7 +46,7 @@ class _RootPageState extends State<RootPage> {
           backgroundColor: Colors.blue[900],
           elevation: 0.8,
           title: const Text(
-            'Página 2',
+            'Busca',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -55,7 +56,10 @@ class _RootPageState extends State<RootPage> {
         return AppBar(
           actions: [
             IconButton(
-              icon: const Icon(Icons.clear_outlined),
+              icon: const Icon(
+                Icons.delete_forever,
+                size: 28,
+              ),
               tooltip: 'Esvaziar carrinho',
               onPressed: () {
                 cart.items.clear();
@@ -76,7 +80,7 @@ class _RootPageState extends State<RootPage> {
           backgroundColor: Colors.blue[900],
           elevation: 0.8,
           title: const Text(
-            'Página 4',
+            'Perfil',
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -102,15 +106,7 @@ class _RootPageState extends State<RootPage> {
           ),
         ),
         CartPage(),
-        Center(
-          child: Text(
-            'Página 4',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        ProfilePage(),
       ],
     );
   }

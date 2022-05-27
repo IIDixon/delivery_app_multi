@@ -16,11 +16,16 @@ class Cart extends GetxController {
   //que for incluído algum item
   var items = <Item>[].obs;
 
+  void removeItem(int i) {
+    items.removeAt(i);
+  }
+
   double valueItems() {
     double value = 0;
-    for (int i = 0; i <= items.length; i++) {
-      value += items[i].valueSale;
-    }
+
+    items.forEach((element) {
+      value += element.valueSale * element.qtde;
+    });
     return value;
   }
 }

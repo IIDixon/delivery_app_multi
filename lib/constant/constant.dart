@@ -7,48 +7,90 @@ const List<IconData> icons = [
   Icons.person_outline
 ];
 
+Map<String, dynamic> profile = {
+  'name': 'Nathan',
+  'CPF': '123.456.789-00',
+  'email': 'nathan@gmail.com',
+  'cel': '(11) 91234-5678',
+  'address': {
+    'street': 'Rua do asfalto',
+    'number': '7070',
+    'district': 'Vila das casas',
+    'city': 'São Paulo do Rio Pardo',
+    'CEP': '15069-069'
+  },
+};
+
+List<Map<String, dynamic>> orders = [
+  {},
+];
+
 List<Map<String, dynamic>> items = [
   {
     'description': 'Dorflex 12 Comp.',
-    'unit': 10,
+    'qtde': '10',
     'pmc': '20.00',
     'venda': '10.50',
     'desconto': '9.50',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
   {
     'description': 'Anador 500MG 24CP',
-    'unit': 5,
+    'qtde': '5',
     'pmc': '25.00',
     'venda': '16.00',
     'desconto': '9.00',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
   {
     'description': 'Dipirona Sódica 1MG 30CP',
-    'unit': 10,
+    'qtde': '10',
     'pmc': '18.00',
     'venda': '8.50',
     'desconto': '9.50',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
   {
     'description': 'Dipirona Sódica 500MG 30CP',
-    'unit': 10,
+    'qtde': '10',
     'pmc': '15.00',
     'venda': '5.50',
     'desconto': '9.50',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
   {
     'description': 'Dorflex Uno 10CP',
-    'unit': 50,
+    'qtde': '50',
     'pmc': '20.00',
     'venda': '16.50',
     'desconto': '3.50',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
   {
     'description': 'Lisador Dip 1G 20CP',
-    'unit': 20,
+    'qtde': '20',
     'pmc': '35.00',
     'venda': '22.80',
     'desconto': '12.20',
+    'laboratorio': 'Catarinense',
+    'categoria': 'Vitaminas',
+    'imgUrl':
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
   },
 ];
 

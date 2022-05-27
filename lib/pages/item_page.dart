@@ -188,13 +188,13 @@ class _ItemPageState extends State<ItemPage> {
                     child: Row(
                       children: [
                         Expanded(
-                          child:
-                              ElevatedButton(
+                          child: ElevatedButton(
                             onPressed: () {
-                              item = Item.fromJson(json: widget.item, qtde: qtde);
+                              item =
+                                  Item.fromJson(json: widget.item, qtde: qtde);
                               cart.items.add(item);
                               //print(cart.valueItems());
-                              Navigator.pop(context);
+                              Navigator.of(context).pop();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 backgroundColor: Colors.red,

@@ -1,3 +1,4 @@
+import 'package:delivery_app_multi/models/item.dart';
 import 'package:delivery_app_multi/pages/item_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../constant/constant.dart';
+import '../route/route.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -88,36 +90,63 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: List.generate(items.length, (index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 2, color: Colors.grey.withOpacity(0.5)),
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 200,
-                            width: 150,
-                            child: Image.asset('assets/download.jpg'),
-                          ),
-                          Text(
-                            items[index]['description'],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            softWrap: true,
-                          ),
-                          Text("De: ${items[index]['pmc']}",
+                  child: GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      Navigator.of(context).push(routePageItem(items[index]));
+                    },
+                    child: Container(
+                      height: 250,
+                      width: 170,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 2, color: Colors.grey.withOpacity(0.5)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: SizedBox(
+                                //height: 220,
+                                //width: 150,
+                                child: Image(
+                                  image:
+                                      Image.asset('assets/download.jpg').image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  items[index]['description'],
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "De: ${items[index]['pmc']}",
                               style: const TextStyle(
                                   color: Colors.red,
                                   fontSize: 18,
-                                  decoration: TextDecoration.lineThrough)),
-                          Text("Por: ${items[index]['venda']}",
-                              style: TextStyle(
-                                  color: Colors.blue[800], fontSize: 20)),
-                        ],
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                            Text("Por: ${items[index]['venda']}",
+                                style: TextStyle(
+                                    color: Colors.blue[800], fontSize: 20)),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -164,7 +193,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: GestureDetector(
                     onTap: () {
                       ScaffoldMessenger.of(context).clearSnackBars();
-                      Navigator.of(context).push(createRoute(upvitam[index]));
+                      Navigator.of(context).push(routePageItem(upvitam[index]));
                     },
                     child: Container(
                       height: 250,
@@ -312,7 +341,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Route createRoute(Map<String, dynamic> item) {
+  /*Route createRoute(Map<String, dynamic> item) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => ItemPage(
         item: item,
@@ -332,7 +361,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       },
       transitionDuration: const Duration(milliseconds: 1500),
     );
-  }
+  }*/
 
   Future<dynamic> showModal(BuildContext context, Map<String, dynamic> item) {
     int qtde = 1;
