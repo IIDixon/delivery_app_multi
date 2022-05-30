@@ -1,4 +1,6 @@
+import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../constant/constant.dart';
 
@@ -47,7 +49,31 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Row(children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const UserDataPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0, 1);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                          transitionDuration:
+                              const Duration(milliseconds: 1200),
+                        ));
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.person_outline_outlined,
@@ -62,10 +88,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(color: Colors.blue, fontSize: 18)),
                   ),
                   style: ElevatedButton.styleFrom(
-                      animationDuration: const Duration(seconds: 2),
-                      primary: Colors.white,
-                      onPrimary: Colors.blue,
-                      shadowColor: Colors.blue[900]),
+                    animationDuration: const Duration(seconds: 2),
+                    primary: Colors.white,
+                    onPrimary: Colors.blue,
+                    shadowColor: Colors.blue[900],
+                    onSurface: Colors.blue[900],
+                  ),
                 ),
               ),
             ]),
