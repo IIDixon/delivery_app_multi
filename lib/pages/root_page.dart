@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../constant/constant.dart';
 import '../models/cart.dart';
+import '../models/person.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -18,6 +19,15 @@ class _RootPageState extends State<RootPage> {
   int activeTab = 0;
   Cart cart = Cart();
   AppBar? appBar;
+
+  @override
+  void initState() {
+    Person person = Person();
+    person.name.value = profile['name'];
+    person.cpf.value = profile['CPF'];
+    person.email.value = profile['email'];
+    person.tel.value = profile['cel'];
+  }
 
   @override
   Widget build(BuildContext context) {

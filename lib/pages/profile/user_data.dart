@@ -1,6 +1,7 @@
 import 'package:delivery_app_multi/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../models/person.dart';
@@ -150,17 +151,17 @@ class _UserDataPageState extends State<UserDataPage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    final person = Person(
-                        nameController.text,
-                        cpfController.text,
-                        emailController.text,
-                        celController.text);
+                    final person = Person.fromjson(
+                        name: nameController.text,
+                        cpf: cpfController.text,
+                        email: emailController.text,
+                        tel: celController.text);
 
                     setState(() {
-                      profile['name'] = person.name;
-                      profile['CPF'] = person.cpf;
-                      profile['email'] = person.email;
-                      profile['cel'] = person.tel;
+                      profile['name'] = nameController.text;
+                      profile['CPF'] = cpfController.text;
+                      profile['email'] = emailController.text;
+                      profile['cel'] = celController.text;
                     });
 
                     ScaffoldMessenger.of(context).clearSnackBars();

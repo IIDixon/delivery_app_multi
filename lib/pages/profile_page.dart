@@ -1,8 +1,10 @@
+import 'package:delivery_app_multi/pages/profile/address.dart';
 import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constant/constant.dart';
+import '../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,6 +14,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Person person = Person();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,11 +36,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: const Icon(Icons.person, size: 50)),
               ),
               const SizedBox(width: 15),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Olá ${profile['name']}',
-                  style: TextStyle(fontSize: 25, color: Colors.blue[900]),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Obx(
+                    () => Text(
+                      'Olá ${person.name}',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -104,7 +116,31 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const AddressPage(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(0, 1);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                            transitionDuration:
+                                const Duration(milliseconds: 1200),
+                          ));
+                    },
                     child: ListTile(
                       leading: Icon(Icons.maps_home_work_outlined,
                           size: 50, color: Colors.blue[900]),

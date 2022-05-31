@@ -1,10 +1,25 @@
 import 'package:get/get.dart';
 
 class Person extends GetxController {
-  Person(this.name, this.cpf, this.email, this.tel);
+  static final Person person = Person._internal();
 
-  String name;
-  String cpf;
-  String email;
-  String tel;
+  factory Person() {
+    return person;
+  }
+
+  factory Person.fromjson(
+      {String? name, String? cpf, String? email, String? tel}) {
+    person.name.value = name!;
+    person.cpf.value = cpf!;
+    person.email.value = email!;
+    person.tel.value = tel!;
+    return person;
+  }
+
+  Person._internal();
+
+  late var name = ''.obs;
+  late var cpf = ''.obs;
+  late var email = ''.obs;
+  late var tel = ''.obs;
 }
