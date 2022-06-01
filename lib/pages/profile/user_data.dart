@@ -38,6 +38,7 @@ class _UserDataPageState extends State<UserDataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Meus Dados'),
         centerTitle: true,

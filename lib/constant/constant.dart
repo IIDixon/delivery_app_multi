@@ -22,7 +22,17 @@ Map<String, dynamic> profile = {
 };
 
 List<Map<String, dynamic>> orders = [
-  {},
+  {
+    'loja': 'Loja Teste',
+    'cliente': 'Cliente teste',
+    'data': '01/06/2022',
+    'itens': [
+      {'codigo': '10', 'descricao': 'Anador 24Cp', 'qtde': '1'},
+      {'codigo': '8', 'descricao': 'Dorflex 30Cp', 'qtde': '1'}
+    ],
+    'total': '52.80',
+    'tpp': 'Cartão de Débito'
+  },
 ];
 
 List<Map<String, dynamic>> items = [
