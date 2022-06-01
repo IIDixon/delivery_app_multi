@@ -25,6 +25,7 @@ List<Map<String, dynamic>> orders = [
   {
     'loja': 'Loja Teste',
     'cliente': 'Cliente teste',
+    'numeroVenda': '154584',
     'data': '01/06/2022',
     'itens': [
       {'codigo': '10', 'descricao': 'Anador 24Cp', 'qtde': '1'},
