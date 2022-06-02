@@ -63,16 +63,16 @@ class _RootPageState extends State<RootPage> {
       case 2:
         return AppBar(
           actions: [
-            IconButton(
+            Obx(() => IconButton(
               icon: const Icon(
                 Icons.delete_forever,
                 size: 28,
               ),
               tooltip: 'Esvaziar carrinho',
-              onPressed: () {
+              onPressed: cart.items.isNotEmpty ? () {
                 cart.items.clear();
-              },
-            ),
+              } : null,
+            ),)
           ],
           backgroundColor: Colors.blue[900],
           elevation: 0.8,
