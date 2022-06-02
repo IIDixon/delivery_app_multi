@@ -18,6 +18,6 @@ Route routePageItem(Map<String, dynamic> item) {
         child: child,
       );
     },
-    transitionDuration: const Duration(milliseconds: 1500),
+    transitionDuration: const Duration(milliseconds: 1000),
   );
 }

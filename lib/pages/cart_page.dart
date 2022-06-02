@@ -1,7 +1,16 @@
+import 'dart:core';
+import 'dart:math';
+import 'package:delivery_app_multi/constant/constant.dart';
+import 'package:delivery_app_multi/pages/root_page.dart';
+import 'package:localization/localization.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/cart.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import '../models/item.dart';
+import '../models/person.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -12,6 +21,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   Cart cart = Get.put(Cart());
+  Person person = Get.put(Person());
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +277,17 @@ class _CartPageState extends State<CartPage> {
                         Expanded(
                             child: Obx(
                           () => ElevatedButton(
-                            onPressed: cart.items.isNotEmpty ? () {} : null,
+                            onPressed: cart.items.isNotEmpty ? () {
+                              var map = toJson(person, cart.items);
+                              postOrder(map);
+                              cart.items.clear();
+                              ScaffoldMessenger.of(context).clearSnackBars();
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text('Pedido efetuado com sucesso'),
+                              ));
+                            }
+                            : (){},
                             child: const Text('Ir para Pagamento',
                                 style: TextStyle(fontSize: 18)),
                             style: ElevatedButton.styleFrom(
@@ -287,5 +307,46 @@ class _CartPageState extends State<CartPage> {
         ],
       ),
     );
+  }
+
+  Map<dynamic, dynamic> toJson(Person person, List<Item> itens){
+    var order = Map();
+    var num = Random();
+    double value = 5; // 5 para embutir já o frete, apenas demonstrativo
+    DateTime data = DateTime.now();
+    order['loja'] = 'Loja Teste';
+    order['cliente'] = person.name.toString();
+    order['numeroVenda'] = num.nextInt(99999);
+    order['data'] = DateFormat('dd/MM/yyyy').format(data);
+    order['itens'] = listItem(itens);
+    for(int i = 0; i < listItem(itens).length; i++){
+      value += double.parse(listItem(itens)[i]['total']);
+    }
+    order['total'] = value.toStringAsFixed(2);
+    order['tpp'] = 'Dinheiro';
+    order['status'] = 'Separando';
+
+    return order;
+  }
+
+  List<Map> listItem(List<Item> itens){
+    List<Map> list = [];
+    var num = Random();
+    for(int i = 0; i < itens.length; i++){
+      Map map = {};
+      map['codigo'] = num.nextInt(99999);
+      map['descricao'] = itens[i].name;
+      map['qtde'] = itens[i].qtde;
+      map['total'] = (itens[i].qtde * itens[i].valueSale).toStringAsFixed(2);
+      list.add(map);
+    }
+
+    return list;
+  }
+
+  void postOrder(Map order){
+    setState(() {
+      orders.add(order);
+    });
   }
 }

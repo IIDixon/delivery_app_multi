@@ -5,6 +5,7 @@ import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Delivery App',
-      home: MyOrdersPage(),
+      home: RootPage(),
     );
   }
 }

@@ -45,10 +45,7 @@ class _RootPageState extends State<RootPage> {
         return AppBar(
           backgroundColor: Colors.blue[900],
           elevation: 0.8,
-          title: const Text(
-            'Página Principal',
-            style: TextStyle(color: Colors.white),
-          ),
+          title: const Image(image: NetworkImage('http://institucional.redemultidrogas.com.br/Images/logo-multidrogas-mini.png'), fit: BoxFit.fitWidth,color: Colors.white,),
           centerTitle: true,
         );
         break;

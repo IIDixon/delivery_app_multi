@@ -1,4 +1,5 @@
 import 'package:delivery_app_multi/pages/profile/address.dart';
+import 'package:delivery_app_multi/pages/profile/orders.dart';
 import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             );
                           },
                           transitionDuration:
-                              const Duration(milliseconds: 1200),
+                              const Duration(milliseconds: 1000),
                         ));
                   },
                   child: ListTile(
@@ -138,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                             transitionDuration:
-                                const Duration(milliseconds: 1200),
+                                const Duration(milliseconds: 1000),
                           ));
                     },
                     child: ListTile(
@@ -164,7 +165,31 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                          const MyOrdersPage(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
+                            const begin = Offset(0, 1);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                          transitionDuration:
+                          const Duration(milliseconds: 1000),
+                        ));
+                  },
                   child: ListTile(
                     leading: Icon(Icons.shopping_bag_outlined,
                         size: 50, color: Colors.blue[900]),
