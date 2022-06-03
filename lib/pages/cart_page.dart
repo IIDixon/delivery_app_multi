@@ -287,7 +287,7 @@ class _CartPageState extends State<CartPage> {
                                 content: Text('Pedido efetuado com sucesso'),
                               ));
                             }
-                            : (){},
+                            : null,
                             child: const Text('Ir para Pagamento',
                                 style: TextStyle(fontSize: 18)),
                             style: ElevatedButton.styleFrom(
