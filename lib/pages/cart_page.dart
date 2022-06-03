@@ -6,6 +6,7 @@ import 'package:localization/localization.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import '../models/cart.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -277,17 +278,23 @@ class _CartPageState extends State<CartPage> {
                         Expanded(
                             child: Obx(
                           () => ElevatedButton(
-                            onPressed: cart.items.isNotEmpty ? () {
-                              var map = toJson(person, cart.items);
-                              postOrder(map);
-                              cart.items.clear();
-                              ScaffoldMessenger.of(context).clearSnackBars();
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text('Pedido efetuado com sucesso'),
-                              ));
-                            }
-                            : null,
+                            onPressed: cart.items.isNotEmpty
+                                ? () {
+                                    var map = toJson(person, cart.items);
+                                    postOrder(map);
+                                    cart.items.clear();
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content:
+                                          Text('Pedido efetuado com sucesso'),
+                                    ));
+                                  }
+                                : () {
+                                    getTodo();
+                                  },
                             child: const Text('Ir para Pagamento',
                                 style: TextStyle(fontSize: 18)),
                             style: ElevatedButton.styleFrom(
@@ -309,7 +316,25 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Map<dynamic, dynamic> toJson(Person person, List<Item> itens){
+  void getTodo() async {
+    QueryBuilder<ParseObject> queryTodo =
+        QueryBuilder<ParseObject>(ParseObject('Product'));
+
+    //queryTodo.whereContains('descricao', 'Anador');
+
+    final ParseResponse apiResponse = await queryTodo.query();
+
+    if (apiResponse.success && apiResponse.results != null) {
+      for (var i in apiResponse.results!) {
+        print((i as ParseObject)['descricao']
+            .toString()); // Pegando apenas o nome do produto
+      }
+    } else {
+      print(apiResponse.error);
+    }
+  }
+
+  Map<dynamic, dynamic> toJson(Person person, List<Item> itens) {
     var order = Map();
     var num = Random();
     double value = 5; // 5 para embutir já o frete, apenas demonstrativo
@@ -319,7 +344,7 @@ class _CartPageState extends State<CartPage> {
     order['numeroVenda'] = num.nextInt(99999);
     order['data'] = DateFormat('dd/MM/yyyy').format(data);
     order['itens'] = listItem(itens);
-    for(int i = 0; i < listItem(itens).length; i++){
+    for (int i = 0; i < listItem(itens).length; i++) {
       value += double.parse(listItem(itens)[i]['total']);
     }
     order['total'] = value.toStringAsFixed(2);
@@ -329,10 +354,10 @@ class _CartPageState extends State<CartPage> {
     return order;
   }
 
-  List<Map> listItem(List<Item> itens){
+  List<Map> listItem(List<Item> itens) {
     List<Map> list = [];
     var num = Random();
-    for(int i = 0; i < itens.length; i++){
+    for (int i = 0; i < itens.length; i++) {
       Map map = {};
       map['codigo'] = num.nextInt(99999);
       map['descricao'] = itens[i].name;
@@ -344,7 +369,7 @@ class _CartPageState extends State<CartPage> {
     return list;
   }
 
-  void postOrder(Map order){
+  void postOrder(Map order) {
     setState(() {
       orders.add(order);
     });

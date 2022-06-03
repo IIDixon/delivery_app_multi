@@ -12,11 +12,6 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  var firstObject = ParseObject('FirsClass')
-    ..set('message', 'Classe criada com sucesso');
-
-  await firstObject.save();
-
   print('Sucesso ao inicializar');
 
   runApp(const MyApp());
