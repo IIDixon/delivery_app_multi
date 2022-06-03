@@ -1,13 +1,24 @@
-import 'package:delivery_app_multi/constant/constant.dart';
-import 'package:delivery_app_multi/pages/profile/address.dart';
-import 'package:delivery_app_multi/pages/profile/orders.dart';
-import 'package:delivery_app_multi/pages/profile/user_data.dart';
-import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final keyApplicationId = '7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9';
+  final keyClientKey = 'HibGluMR6cCCtuPnHDdbUuMfj4ygQHxNP16nvwrx';
+  final keyParseServerUrl = 'https://parseapi.back4app.com';
+
+  await Parse().initialize(keyApplicationId, keyParseServerUrl,
+      clientKey: keyClientKey, autoSendSessionId: true);
+
+  var firstObject = ParseObject('FirsClass')
+    ..set('message', 'Classe criada com sucesso');
+
+  await firstObject.save();
+
+  print('Sucesso ao inicializar');
+
   runApp(const MyApp());
 }
 
