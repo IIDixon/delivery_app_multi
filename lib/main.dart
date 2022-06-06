@@ -1,3 +1,4 @@
+import 'package:delivery_app_multi/pages/login/signin_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -23,10 +24,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Delivery App',
-      home: RootPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const RootPage(),
+        '/signin': (context) => const SigninPage(),
+      },
     );
   }
 }

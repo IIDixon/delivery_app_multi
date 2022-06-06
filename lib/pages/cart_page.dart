@@ -283,6 +283,7 @@ class _CartPageState extends State<CartPage> {
                                     var map = toJson(person, cart.items);
                                     postOrder(map);
                                     cart.items.clear();
+                                    //Navigator.of(context).pushNamed('/signin');
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
                                     ScaffoldMessenger.of(context)
