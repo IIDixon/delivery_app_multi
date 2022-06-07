@@ -16,6 +16,7 @@ class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -183,7 +184,9 @@ class _SigninPageState extends State<SigninPage> {
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/signup/userdata');
+                    },
                     child: Text(
                       'Criar agora',
                       style: TextStyle(

@@ -36,38 +36,6 @@ class _RootPageState extends State<RootPage> {
       backgroundColor: Colors.white,
       bottomNavigationBar: getFooter(),
       body: getBody(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(20),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: FloatingActionButton(
-                backgroundColor: activeTab == 0 ? Colors.grey : Colors.blue,
-                child: const Icon(Icons.navigate_before),
-                onPressed: activeTab == 0
-                    ? () {}
-                    : () {
-                        setState(() {
-                          activeTab--;
-                        });
-                      }),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-                child: const Icon(Icons.navigate_next),
-                onPressed: activeTab == 3
-                    ? null
-                    : () {
-                        setState(() {
-                          activeTab++;
-                        });
-                      }),
-          )
-        ]),
-      ),
     );
   }
 
