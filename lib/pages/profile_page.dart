@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Obx(
                       () => Text(
-                        'Olá ${person.name}',
+                        'Olá ${person.name.toUpperCase()}',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 25,
@@ -209,6 +209,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: (){Navigator.of(context).pushNamed('/signin');},
+                    child: Text('Fazer login'),
+                  )
+                ),
+              ],
+            )
           ],
         ),
       ),

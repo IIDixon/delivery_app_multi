@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:delivery_app_multi/models/person.dart';
+import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
@@ -12,6 +17,74 @@ class _SigninPageState extends State<SigninPage> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+
+  Future<void> login() async{
+    http.Response response;
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+
+    Map<String, String> header = {
+      "X-Parse-Application-Id" : "7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9",
+      "X-Parse-REST-API-Key" : "SG65TqMUHhXx9CduNNumoQkkfzDCXOuu9DQNdPiq",
+      "Content-Type" : "application/json"
+    };
+
+    Map<String, String> body = {
+      "email" : email,
+      "password" : password
+    };
+
+    response = await http.post(Uri.parse("https://parseapi.back4app.com/parse/functions/login"), headers: header, body: jsonEncode(body));
+
+    var resp = json.decode(response.body);
+    if(response.statusCode == 200){
+      var cpf;
+      var tel;
+      if(resp['result']['cpf'] != null){
+        cpf = resp['result']['cpf'];
+      }
+      if(resp['result']['tel'] != null){
+        tel = resp['result']['tel'];
+      }
+
+      Person person = Person.fromjson(name: resp['result']['name'], cpf: cpf, email: resp['result']['email'], tel: tel);
+      //person.name.value = resp['result']['name'];
+      //person.email.value = resp['result']['email'];
+      Navigator.of(context).pop();
+      //Navigator.of(context).pop;
+    }else if(resp['code'] == 101){
+      showError('Usuário e/ou senha inválidos');
+    }
+    else{
+      showError(resp['error']);
+    }
+  }
+
+  void showError(String errorMessage){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: const Text('Erro!'),
+            titleTextStyle: const TextStyle(color: Colors.red, fontSize: 20),
+            content: Text(errorMessage),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +234,7 @@ class _SigninPageState extends State<SigninPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          print('sucesso');
+                          login();
                         }
                       },
                       child:

@@ -14,6 +14,9 @@ class UserDataPage extends StatefulWidget {
 }
 
 class _UserDataPageState extends State<UserDataPage> {
+
+  Person person = Person();
+
   final nameController = TextEditingController();
   final cpfController = TextEditingController();
   final celController = TextEditingController();
@@ -28,10 +31,10 @@ class _UserDataPageState extends State<UserDataPage> {
   @override
   void initState() {
     setState(() {
-      nameController.text = profile['name'];
-      cpfController.text = profile['CPF'];
-      celController.text = profile['cel'];
-      emailController.text = profile['email'];
+      nameController.text = person.name.value;
+      cpfController.text = cpfFormatter.maskText(person.cpf.value);
+      celController.text = celFormatter.maskText(person.tel.value);
+      emailController.text = person.email.value;
     });
   }
 

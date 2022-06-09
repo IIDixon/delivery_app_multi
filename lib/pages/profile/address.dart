@@ -24,7 +24,7 @@ class _AddressPageState extends State<AddressPage> {
 
   var cepFormatter = MaskTextInputFormatter(mask: '#####-###');
 
-  final formKey = GlobalKey<FormState>();
+  final keyFormAddress = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _AddressPageState extends State<AddressPage> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Form(
-          key: formKey,
+          key: keyFormAddress,
           child: Column(
             children: [
               Expanded(
@@ -270,7 +270,7 @@ class _AddressPageState extends State<AddressPage> {
                 Expanded(
                     child: ElevatedButton(
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
+                    if (keyFormAddress.currentState!.validate()) {
                       profile['address']['street'] = streetController.text;
                       profile['address']['number'] = numberController.text;
                       profile['address']['district'] = districtController.text;

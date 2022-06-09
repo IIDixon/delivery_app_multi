@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -59,7 +57,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
       builder: (BuildContext context){
         return AlertDialog(
           title: const Text('Erro!'),
-          titleTextStyle: TextStyle(color: Colors.red, fontSize: 20),
+          titleTextStyle: const TextStyle(color: Colors.red, fontSize: 20),
           content: Text(errorMessage),
           actions: [
             TextButton(
@@ -78,6 +76,8 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     final email = person.email.value;
     final name = person.name.value;
     final password = person.password.value;
+    final cpf = person.cpf.value;
+    final tel = person.tel.value;
 
     /*final user = ParseUser.createUser(name, password, email);
 
@@ -91,14 +91,17 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     };
 
     Map<String, String> body = {
-      "username" : name,
       "email" : email,
-      "password" : password
+      "password" : password,
+      "name" : name,
+      "cpf" : cpf,
+      "tel" : tel
     };
 
     response = await http.post(Uri.parse("https://parseapi.back4app.com/parse/functions/create-user"), headers: header, body: jsonEncode(body));
     var resp = json.decode(response.body);
     if(response.statusCode == 200){
+      print(resp);
       showSuccess();
     } else{
       showError(resp['error']);

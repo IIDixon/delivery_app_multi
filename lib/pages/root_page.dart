@@ -20,14 +20,14 @@ class _RootPageState extends State<RootPage> {
   Cart cart = Cart();
   AppBar? appBar;
 
-  @override
+  /*@override
   void initState() {
     Person person = Person();
     person.name.value = profile['name'];
     person.cpf.value = profile['CPF'];
     person.email.value = profile['email'];
     person.tel.value = profile['cel'];
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

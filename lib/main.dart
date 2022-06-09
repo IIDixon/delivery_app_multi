@@ -2,6 +2,7 @@ import 'package:delivery_app_multi/pages/login/SignUp_Pages/address_page.dart';
 import 'package:delivery_app_multi/pages/login/SignUp_Pages/email_page.dart';
 import 'package:delivery_app_multi/pages/login/SignUp_Pages/userdata_page.dart';
 import 'package:delivery_app_multi/pages/login/signin_page.dart';
+import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -30,13 +31,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Delivery App',
-      initialRoute: '/signin',
+      initialRoute: '/',
       routes: {
         '/': (context) => const RootPage(),
         '/signin': (context) => const SigninPage(),
         '/signup/userdata': (context) => const SignupUserData(),
         '/signup/addressdata' : (context) => const SignupAddressPage(),
         '/signup/emaildata' : (context) => const SignupEmailPage(),
+        '/profile' : (context) => const ProfilePage(),
       },
     );
   }
