@@ -14,6 +14,8 @@ class UserDataPage extends StatefulWidget {
 }
 
 class _UserDataPageState extends State<UserDataPage> {
+  Person person = Person();
+
   final nameController = TextEditingController();
   final cpfController = TextEditingController();
   final celController = TextEditingController();
@@ -24,6 +26,16 @@ class _UserDataPageState extends State<UserDataPage> {
   var celFormatter = MaskTextInputFormatter(
     mask: '(##) #####-####',
   );
+
+  @override
+  void initState() {
+    setState(() {
+      nameController.text = person.name.value;
+      cpfController.text = cpfFormatter.maskText(person.cpf.value);
+      celController.text = celFormatter.maskText(person.tel.value);
+      emailController.text = person.email.value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

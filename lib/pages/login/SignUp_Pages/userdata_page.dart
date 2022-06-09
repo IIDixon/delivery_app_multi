@@ -18,9 +18,11 @@ class _SignupUserDataState extends State<SignupUserData> {
   final form1 = GlobalKey<FormState>();
   final form2 = GlobalKey<FormState>();
   var cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##');
+  var telFormatter = MaskTextInputFormatter(mask: '(##)#####-####');
 
   final cpfController = TextEditingController();
   final nameController = TextEditingController();
+  final telController = TextEditingController();
 
   bool verificaCampos() {
     if (userDataKey.currentState!.validate()) {
@@ -111,7 +113,6 @@ class _SignupUserDataState extends State<SignupUserData> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25),
                       TextFormField(
                         controller: cpfController,
                         validator: (text) {
@@ -137,6 +138,31 @@ class _SignupUserDataState extends State<SignupUserData> {
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
                                 const BorderSide(color: Color(0XFF0D47A1)),
+                          ),
+                        ),
+                      ),
+                      TextFormField(
+                        controller: telController,
+                        validator: (text){
+                          if(text!.length < 11 && telController.text.isNotEmpty){
+                            return 'Telefone inválido';
+                          }
+                          return null;
+                        },
+                        inputFormatters: [telFormatter],
+                        decoration: InputDecoration(
+                          label: const Text('Telefone (Opcional)'),
+                          labelStyle: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize:20,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -81,6 +79,8 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     final email = person.email.value;
     final name = person.name.value;
     final password = person.password.value;
+    final cpf = person.cpf.value;
+    final tel = person.tel.value;
 
     http.Response response;
     Map<String, String> header = {
@@ -90,10 +90,11 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     };
 
     Map<String, String> body = {
-      "username": email,
       "email": email,
       "password": password,
-      "name": name
+      "name": name,
+      "cpf": cpf,
+      "tel": tel
     };
 
     response = await http.post(
@@ -103,6 +104,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     await Future.delayed(const Duration(seconds: 2));
     var resp = json.decode(response.body);
     if (response.statusCode == 200) {
+      print(resp);
       showSuccess();
     } else {
       showError(resp['error']);

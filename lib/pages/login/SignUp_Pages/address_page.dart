@@ -322,7 +322,7 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                 ),
               ),
               LinearProgressIndicator(
-                value: 0.67,
+                value: 0.66,
                 backgroundColor: Colors.grey,
                 color: Colors.blue[900],
               ),
