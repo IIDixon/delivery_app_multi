@@ -26,16 +26,6 @@ class _UserDataPageState extends State<UserDataPage> {
   );
 
   @override
-  void initState() {
-    setState(() {
-      nameController.text = profile['name'];
-      cpfController.text = profile['CPF'];
-      celController.text = profile['cel'];
-      emailController.text = profile['email'];
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -157,13 +147,6 @@ class _UserDataPageState extends State<UserDataPage> {
                         cpf: cpfController.text,
                         email: emailController.text,
                         tel: celController.text);
-
-                    setState(() {
-                      profile['name'] = nameController.text;
-                      profile['CPF'] = cpfController.text;
-                      profile['email'] = emailController.text;
-                      profile['cel'] = celController.text;
-                    });
 
                     ScaffoldMessenger.of(context).clearSnackBars();
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

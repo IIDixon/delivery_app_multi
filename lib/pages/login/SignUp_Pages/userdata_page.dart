@@ -14,7 +14,7 @@ class SignupUserData extends StatefulWidget {
 
 class _SignupUserDataState extends State<SignupUserData> {
   Person person = Person();
-  final keyForm = GlobalKey<FormState>();
+  final userDataKey = GlobalKey<FormState>();
   final form1 = GlobalKey<FormState>();
   final form2 = GlobalKey<FormState>();
   var cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##');
@@ -22,8 +22,8 @@ class _SignupUserDataState extends State<SignupUserData> {
   final cpfController = TextEditingController();
   final nameController = TextEditingController();
 
-  bool verificaCampos(){
-    if(keyForm.currentState!.validate()){
+  bool verificaCampos() {
+    if (userDataKey.currentState!.validate()) {
       return true;
     }
     return false;
@@ -37,7 +37,9 @@ class _SignupUserDataState extends State<SignupUserData> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Cadastro',),
+        title: const Text(
+          'Cadastro',
+        ),
         centerTitle: true,
         foregroundColor: Colors.blue[900],
         backgroundColor: Colors.white,
@@ -45,16 +47,15 @@ class _SignupUserDataState extends State<SignupUserData> {
       //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(40),
-        child:
-        FloatingActionButton(
-            backgroundColor: Colors.blue[900],
-            child: const Icon(Icons.navigate_next),
-            onPressed: (){
-              if(verificaCampos() && keyForm.currentState!.validate()){
-                person.name.value = nameController.text;
-                Navigator.of(context).pushNamed('/signup/addressdata');
-              }
-            },
+        child: FloatingActionButton(
+          backgroundColor: Colors.blue[900],
+          child: const Icon(Icons.navigate_next),
+          onPressed: () {
+            if (verificaCampos() && userDataKey.currentState!.validate()) {
+              person.name.value = nameController.text;
+              Navigator.of(context).pushNamed('/signup/addressdata');
+            }
+          },
         ),
       ),
       body: SafeArea(
@@ -69,21 +70,26 @@ class _SignupUserDataState extends State<SignupUserData> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: Text('Aqui você deverá inserir seus dados pessoais', style: TextStyle(color: Colors.blue[900], fontSize: 20),softWrap: true,))
+                    Expanded(
+                        child: Text(
+                      'Aqui você deverá inserir seus dados pessoais',
+                      style: TextStyle(color: Colors.blue[900], fontSize: 20),
+                      softWrap: true,
+                    ))
                   ],
                 ),
               ),
               Expanded(
                 flex: 2,
                 child: Form(
-                  key: keyForm,
+                  key: userDataKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TextFormField(
                         controller: nameController,
-                        validator: (text){
-                          if(text == null || text.isEmpty){
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
                             return 'Preencha seu nome';
                           }
                           return null;
@@ -91,25 +97,26 @@ class _SignupUserDataState extends State<SignupUserData> {
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                           label: const Text('Nome e sobrenome'),
-                          labelStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 20
-                          ),
+                          labelStyle:
+                              TextStyle(color: Colors.blue[900], fontSize: 20),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),
                       const SizedBox(height: 25),
                       TextFormField(
                         controller: cpfController,
-                        validator: (text){
-                          if(text!.length < 14 && cpfController.text.isNotEmpty){
+                        validator: (text) {
+                          if (text!.length < 14 &&
+                              cpfController.text.isNotEmpty) {
                             return 'CPF Inválido';
                           }
                           return null;
@@ -119,15 +126,17 @@ class _SignupUserDataState extends State<SignupUserData> {
                           label: const Text('CPF (Opcional)'),
                           labelStyle: TextStyle(
                             color: Colors.blue[900],
-                            fontSize:20,
+                            fontSize: 20,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),

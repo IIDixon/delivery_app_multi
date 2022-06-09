@@ -6,6 +6,8 @@ import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
+import 'pages/login/SignUp_Pages/userdata_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,11 +34,11 @@ class MyApp extends StatelessWidget {
       title: 'Delivery App',
       initialRoute: '/signin',
       routes: {
-        '/': (context) => const RootPage(),
+        '/root': (context) => const RootPage(),
         '/signin': (context) => const SigninPage(),
         '/signup/userdata': (context) => const SignupUserData(),
-        '/signup/addressdata' : (context) => const SignupAddressPage(),
-        '/signup/emaildata' : (context) => const SignupEmailPage(),
+        '/signup/addressdata': (context) => const SignupAddressPage(),
+        '/signup/emaildata': (context) => const SignupEmailPage(),
       },
     );
   }

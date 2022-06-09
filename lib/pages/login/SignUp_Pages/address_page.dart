@@ -12,8 +12,7 @@ class SignupAddressPage extends StatefulWidget {
 }
 
 class _SignupAddressPageState extends State<SignupAddressPage> {
-
-  final keyForm = GlobalKey<FormState>();
+  final addressKey = GlobalKey<FormState>();
   final cepController = TextEditingController();
   final streetController = TextEditingController();
   final numberController = TextEditingController();
@@ -58,8 +57,8 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
     }
   }
 
-  bool verificaCampos(){
-    if(keyForm.currentState != null){
+  bool verificaCampos() {
+    if (addressKey.currentState != null) {
       return true;
     }
     return false;
@@ -72,31 +71,28 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       floatingActionButton: Padding(
-          padding: const EdgeInsets.all(40),
-          child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FloatingActionButton(
+        padding: const EdgeInsets.all(40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FloatingActionButton(
                 heroTag: null,
-                  backgroundColor: Colors.blue[900],
-                  child: const Icon(Icons.navigate_before),
-                  onPressed: (){
-                    Navigator.of(context).pop();
+                backgroundColor: Colors.blue[900],
+                child: const Icon(Icons.navigate_before),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            FloatingActionButton(
+                heroTag: null,
+                backgroundColor: Colors.blue[900],
+                child: const Icon(Icons.navigate_next),
+                onPressed: () {
+                  if (verificaCampos() && addressKey.currentState!.validate()) {
+                    Navigator.of(context).pushNamed('/signup/emaildata');
                   }
-              ),
-              FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: Colors.blue[900],
-                  child: const Icon(Icons.navigate_next),
-                  onPressed: (){
-                    if(verificaCampos() && keyForm.currentState!.validate()){
-                      Navigator.of(context).pushNamed('/signup/emaildata');
-                    }
-                  }
-              )
-            ],
-          ),
+                })
+          ],
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -111,36 +107,41 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Preencha seu endereço principal',style: TextStyle(color: Colors.blue[900], fontSize: 20),softWrap: true,)
+                    Text(
+                      'Preencha seu endereço principal',
+                      style: TextStyle(color: Colors.blue[900], fontSize: 20),
+                      softWrap: true,
+                    )
                   ],
                 ),
               ),
               Expanded(
                 flex: 2,
                 child: Form(
-                  key: keyForm,
+                  key: addressKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TextFormField(
                         inputFormatters: [cepFormatter],
                         controller: cepController,
-                        onEditingComplete: () async{
+                        onEditingComplete: () async {
                           if (cepController.text.isNotEmpty) {
-                            Map address =
-                                await getAddress(cepController.text.replaceAll('-', ''));
+                            Map address = await getAddress(
+                                cepController.text.replaceAll('-', ''));
                             setAddress(address);
                           }
                         },
                         onFieldSubmitted: (cep) async {
                           if (cepController.text.isNotEmpty) {
                             Map address =
-                            await getAddress(cep.replaceAll('-', ''));
+                                await getAddress(cep.replaceAll('-', ''));
                             setAddress(address);
                           }
                         },
-                        validator: (text){
-                          if(cepController.text.length < 8 || cepController.text.isEmpty){
+                        validator: (text) {
+                          if (cepController.text.length < 8 ||
+                              cepController.text.isEmpty) {
                             return 'CEP inválido';
                           }
                           return null;
@@ -148,15 +149,16 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           label: const Text('CEP'),
-                          labelStyle: TextStyle(fontSize: 20, color: Colors.blue[900]),
+                          labelStyle:
+                              TextStyle(fontSize: 20, color: Colors.blue[900]),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1))
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  const BorderSide(color: Color(0XFF0D47A1))),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1))
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  const BorderSide(color: Color(0XFF0D47A1))),
                         ),
                       ),
                       const SizedBox(
@@ -181,17 +183,17 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0xFF424242)),
+                                const BorderSide(color: Color(0xFF424242)),
                           ),
                         ),
                       ),
@@ -210,12 +212,12 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),
@@ -241,17 +243,17 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0xFF424242)),
+                                const BorderSide(color: Color(0xFF424242)),
                           ),
                         ),
                       ),
@@ -277,17 +279,17 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0xFF424242)),
+                                const BorderSide(color: Color(0xFF424242)),
                           ),
                         ),
                       ),
@@ -306,12 +308,12 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide:
-                            const BorderSide(color: Color(0XFF0D47A1)),
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),
