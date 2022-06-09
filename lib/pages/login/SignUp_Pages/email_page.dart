@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import '../../../models/person.dart';
 import '../../root_page.dart';
 

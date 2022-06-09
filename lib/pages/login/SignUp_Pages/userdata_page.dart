@@ -113,6 +113,7 @@ class _SignupUserDataState extends State<SignupUserData> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15),
                       TextFormField(
                         controller: cpfController,
                         validator: (text) {
@@ -141,10 +142,12 @@ class _SignupUserDataState extends State<SignupUserData> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15),
                       TextFormField(
                         controller: telController,
-                        validator: (text){
-                          if(text!.length < 11 && telController.text.isNotEmpty){
+                        validator: (text) {
+                          if (text!.length < 11 &&
+                              telController.text.isNotEmpty) {
                             return 'Telefone inválido';
                           }
                           return null;
@@ -154,15 +157,17 @@ class _SignupUserDataState extends State<SignupUserData> {
                           label: const Text('Telefone (Opcional)'),
                           labelStyle: TextStyle(
                             color: Colors.blue[900],
-                            fontSize:20,
+                            fontSize: 20,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: Color(0XFF0D47A1)),
+                            borderSide:
+                                const BorderSide(color: Color(0XFF0D47A1)),
                           ),
                         ),
                       ),

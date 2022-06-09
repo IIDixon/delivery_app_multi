@@ -23,4 +23,12 @@ class Person extends GetxController {
   late var email = ''.obs;
   late var password = ''.obs;
   late var tel = ''.obs;
+
+  void reset() {
+    name = ''.obs;
+    cpf = ''.obs;
+    email = ''.obs;
+    password = ''.obs;
+    tel = ''.obs;
+  }
 }

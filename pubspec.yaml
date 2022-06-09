@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.17.0
   localization: ^2.1.0
   parse_server_sdk_flutter: ^3.1.2
+  easy_splash_screen: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,8 @@ flutter:
     - assets/FIDELIDADE.jpg
     - assets/JORNAL.jpg
     - assets/PBM.jpg
-    - assets/
+    - assets/logo-multidrogas-mini.png
+    - assets/logo-multidrogas-big2.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
