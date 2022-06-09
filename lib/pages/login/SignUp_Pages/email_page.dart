@@ -19,9 +19,10 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
   final passwordConfController = TextEditingController();
 
   final emailKey = GlobalKey<FormState>();
-
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
+  bool processing = false;
 
   bool verificaCampos() {
     if (emailKey.currentState != null) {
@@ -81,6 +82,8 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     final cpf = person.cpf.value;
     final tel = person.tel.value;
 
+    person.reset();
+
     http.Response response;
     Map<String, String> header = {
       "X-Parse-Application-Id": "7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9",
@@ -91,7 +94,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     Map<String, String> body = {
       "email": email,
       "password": password,
-      "name": name,
+      "name": name!,
       "cpf": cpf,
       "tel": tel
     };
@@ -100,10 +103,16 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
         Uri.parse("https://parseapi.back4app.com/parse/functions/create-user"),
         headers: header,
         body: jsonEncode(body));
-    await Future.delayed(const Duration(seconds: 2));
+    //await Future.delayed(const Duration(seconds: 2));
     var resp = json.decode(response.body);
     if (response.statusCode == 200) {
-      print(resp);
+      person.name.value = resp['result']['name'];
+      person.email.value = resp['result']['email'];
+      person.password.value = resp['result']['password'];
+      person.cpf.value = resp['result']['cpf'];
+      person.tel.value = resp['result']['telefone'];
+      person.id.value = resp['result']['id'];
+
       showSuccess();
     } else {
       showError(resp['error']);
@@ -124,21 +133,24 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                 heroTag: null,
                 backgroundColor: Colors.blue[900],
                 child: const Icon(Icons.navigate_before),
-                onPressed: () {
+                onPressed: processing == false ? () {
                   Navigator.of(context).pop();
-                }),
+                } : null) ,
             FloatingActionButton(
                 heroTag: null,
                 backgroundColor: Colors.blue[900],
                 child: const Icon(Icons.navigate_next),
-                onPressed: () {
+                onPressed: processing == false ? () {
                   if (verificaCampos() && emailKey.currentState!.validate()) {
                     person.email.value = emailController.text;
                     person.password.value = passwordController.text;
+                    setState(() {
+                      processing = true;
+                    });
                     refreshIndicatorKey.currentState?.show();
                     //userRegistration();
                   }
-                })
+                } : null)
           ],
         ),
       ),
@@ -175,6 +187,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextFormField(
+                          readOnly: processing,
                           controller: emailController,
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -208,6 +221,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                           height: 15,
                         ),
                         TextFormField(
+                          readOnly: processing,
                           controller: passwordController,
                           obscureText: true,
                           validator: (text) {
@@ -241,6 +255,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                           height: 15,
                         ),
                         TextFormField(
+                          readOnly: processing,
                           controller: passwordConfController,
                           obscureText: true,
                           validator: (text) {

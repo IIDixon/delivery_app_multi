@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Obx(
                                 () => Text(
-                                  'Olá ${person.name.toUpperCase()}',
+                                  'Olá ${person.name}',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 25,

@@ -55,7 +55,9 @@ class _SigninPageState extends State<SigninPage> {
           name: resp['result']['name'],
           cpf: cpf,
           email: resp['result']['email'],
-          tel: tel);
+          tel: tel,
+          id: resp['result']['id']
+      );
       //person.name.value = resp['result']['name'];
       //person.email.value = resp['result']['email'];
       Navigator.of(context).pop();
@@ -102,11 +104,11 @@ class _SigninPageState extends State<SigninPage> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      appBar: processing == false ? AppBar(
         foregroundColor: Colors.blue[900],
         backgroundColor: Colors.white,
         elevation: 0,
-      ),
+      ) : null,
       body: RefreshIndicator(
         key: indicatorKey,
         edgeOffset: 200,
