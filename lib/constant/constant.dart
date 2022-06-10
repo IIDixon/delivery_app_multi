@@ -21,19 +21,29 @@ Map<String, dynamic> profile = {
   },
 };
 
-List<Map<dynamic, dynamic>> orders = [
+List<Map> orders = [
   {
     'loja': 'Loja Teste',
     'cliente': 'Cliente teste',
     'numeroVenda': '154584',
-    'data': '01/06/2022',
+    'data': "2022-05-01",
     'itens': [
-      {'codigo': '10', 'descricao': 'Anador 24Cp', 'qtde': '1', 'total' : '30.80'},
-      {'codigo': '8', 'descricao': 'Dorflex 30Cp', 'qtde': '1', 'total' : '22.00'}
+      {
+        'codigo': '10',
+        'descricao': 'Anador 24Cp',
+        'qtde': '1',
+        'total': '30.80'
+      },
+      {
+        'codigo': '8',
+        'descricao': 'Dorflex 30Cp',
+        'qtde': '1',
+        'total': '22.00'
+      }
     ],
     'total': '52.80',
     'tpp': 'Cartão de Débito',
-    'status' : 'Entregue'
+    'status': 'Entregue'
   },
 ];
 

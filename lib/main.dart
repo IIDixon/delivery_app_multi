@@ -19,6 +19,7 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
+  print(DateTime.now());
   print('Sucesso ao inicializar');
 
   runApp(const MyApp());

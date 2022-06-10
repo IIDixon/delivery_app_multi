@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
 import 'package:delivery_app_multi/constant/constant.dart';
@@ -137,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                                                       TextStyle(fontSize: 16)),
                                               backgroundColor: Colors.red,
                                               duration:
-                                                  Duration(milliseconds: 1500),
+                                                  Duration(milliseconds: 1000),
                                             ));
                                           },
                                           icon: const Icon(
@@ -280,18 +281,20 @@ class _CartPageState extends State<CartPage> {
                           () => ElevatedButton(
                             onPressed: cart.items.isNotEmpty
                                 ? () {
-                                    var map = toJson(person, cart.items);
+                                    var map =
+                                        jsonDecode(toJson(person, cart.items));
                                     postOrder(map);
                                     cart.items.clear();
                                     //Navigator.of(context).pushNamed('/signin');
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content:
-                                          Text('Pedido efetuado com sucesso'),
-                                    ));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(
+                                                'Pedido efetuado com sucesso'),
+                                            duration:
+                                                Duration(milliseconds: 1000)));
                                   }
                                 : null,
                             child: const Text('Ir para Pagamento',
@@ -333,15 +336,18 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  Map<dynamic, dynamic> toJson(Person person, List<Item> itens) {
-    var order = Map();
+  String toJson(Person person, List<Item> itens) {
+    var order = <dynamic, dynamic>{};
     var num = Random();
     double value = 5; // 5 para embutir já o frete, apenas demonstrativo
     DateTime data = DateTime.now();
+    DateFormat('dd/MM/yyyy')
+        .format(data); // Formata a data em formato específico
     order['loja'] = 'Loja Teste';
     order['cliente'] = person.name.toString();
     order['numeroVenda'] = num.nextInt(99999);
-    order['data'] = DateFormat('dd/MM/yyyy').format(data);
+    order['data'] =
+        data.toIso8601String(); // Formata a data para o suportado pelo JSON
     order['itens'] = listItem(itens);
     for (int i = 0; i < listItem(itens).length; i++) {
       value += double.parse(listItem(itens)[i]['total']);
@@ -350,7 +356,8 @@ class _CartPageState extends State<CartPage> {
     order['tpp'] = 'Dinheiro';
     order['status'] = 'Separando';
 
-    return order;
+    print(jsonEncode(order));
+    return jsonEncode(order);
   }
 
   List<Map> listItem(List<Item> itens) {

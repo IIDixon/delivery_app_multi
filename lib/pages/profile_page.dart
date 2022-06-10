@@ -1,11 +1,8 @@
-import 'package:delivery_app_multi/pages/login/signin_page.dart';
 import 'package:delivery_app_multi/pages/profile/address.dart';
 import 'package:delivery_app_multi/pages/profile/orders.dart';
 import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../constant/constant.dart';
 import '../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -256,35 +253,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const SigninPage())); /*.pushAndRemoveUntil(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          const SigninPage(),
-                                      transitionsBuilder: (context, animation,
-                                          secondaryAnimation, child) {
-                                        const begin = Offset(0, 1);
-                                        const end = Offset.zero;
-                                        const curve = Curves.ease;
-
-                                        var tween = Tween(
-                                                begin: begin, end: end)
-                                            .chain(CurveTween(curve: curve));
-
-                                        return SlideTransition(
-                                          position: animation.drive(tween),
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration:
-                                          const Duration(milliseconds: 800),
-                                    ),
-                                    ModalRoute.withName('/root'));*/
                                 setState(() {
                                   person.reset();
                                 });

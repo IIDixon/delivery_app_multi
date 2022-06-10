@@ -642,7 +642,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 2),
+                                    duration: Duration(milliseconds: 1000),
                                     content: Text(
                                       'Item Adicionado ao carrinho',
                                       style: TextStyle(
