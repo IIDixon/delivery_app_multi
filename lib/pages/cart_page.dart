@@ -281,7 +281,39 @@ class _CartPageState extends State<CartPage> {
                           () => ElevatedButton(
                             onPressed: cart.items.isNotEmpty
                                 ? () {
-                                    var map =
+                                    if (person.name.value == '' ||
+                                        person.name.value!.isEmpty) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Aviso'),
+                                              titleTextStyle: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 20),
+                                              content: const Text(
+                                                  'Para prosseguir será necessário realizar login.'),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text('OK'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context)
+                                                        .pushNamed('/signin');
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushNamed('/checkout');
+                                    }
+                                    /*var map =
                                         jsonDecode(toJson(person, cart.items));
                                     postOrder(map);
                                     cart.items.clear();
@@ -294,11 +326,13 @@ class _CartPageState extends State<CartPage> {
                                             content: Text(
                                                 'Pedido efetuado com sucesso'),
                                             duration:
-                                                Duration(milliseconds: 1000)));
+                                                Duration(milliseconds: 1000)));*/
                                   }
                                 : null,
-                            child: const Text('Ir para Pagamento',
-                                style: TextStyle(fontSize: 18)),
+                            child: const Text(
+                              'Ir para Pagamento',
+                              style: TextStyle(fontSize: 18),
+                            ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue[900],
                               shape: RoundedRectangleBorder(
@@ -342,7 +376,7 @@ class _CartPageState extends State<CartPage> {
     double value = 5; // 5 para embutir já o frete, apenas demonstrativo
     DateTime data = DateTime.now();
     DateFormat('dd/MM/yyyy')
-        .format(data); // Formata a data em formato específico
+        .format(data); // Formata a data em um padrão específico
     order['loja'] = 'Loja Teste';
     order['cliente'] = person.name.toString();
     order['numeroVenda'] = num.nextInt(99999);

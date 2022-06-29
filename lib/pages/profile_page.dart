@@ -253,9 +253,52 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                setState(() {
-                                  person.reset();
-                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                          'Sair da conta',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        titleTextStyle: const TextStyle(
+                                            color: Colors.red, fontSize: 16),
+                                        content: Text(
+                                          'Deseja sair da conta?',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.blue[900]),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text(
+                                              'Sim',
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 17),
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                person.reset();
+                                              });
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text(
+                                              'Não',
+                                              style: TextStyle(fontSize: 17),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
                               },
                               child: const ListTile(
                                 leading: Icon(Icons.exit_to_app_rounded,
