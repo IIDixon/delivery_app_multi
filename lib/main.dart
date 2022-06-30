@@ -63,6 +63,7 @@ class _SplashState extends State<Splash> {
         logoSize: 200,
         backgroundColor: Colors.white,
         showLoader: true,
+        loaderColor: const Color(0XFF0D47A1),
         loadingText: Text('Carregando dados...',
             style: TextStyle(color: Colors.blue[900], fontSize: 20)),
         navigator: const RootPage(),
