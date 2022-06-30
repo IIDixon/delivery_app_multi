@@ -14,10 +14,6 @@ import 'pages/login/SignUp_Pages/userdata_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /*final keyApplicationId = '7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9';
-  final keyClientKey = 'HibGluMR6cCCtuPnHDdbUuMfj4ygQHxNP16nvwrx';
-  final keyParseServerUrl = 'https://parseapi.back4app.com';*/
-
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
