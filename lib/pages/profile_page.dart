@@ -1,11 +1,8 @@
-import 'package:delivery_app_multi/pages/login/signin_page.dart';
 import 'package:delivery_app_multi/pages/profile/address.dart';
 import 'package:delivery_app_multi/pages/profile/orders.dart';
 import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../constant/constant.dart';
 import '../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -256,38 +253,53 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const SigninPage())); /*.pushAndRemoveUntil(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          const SigninPage(),
-                                      transitionsBuilder: (context, animation,
-                                          secondaryAnimation, child) {
-                                        const begin = Offset(0, 1);
-                                        const end = Offset.zero;
-                                        const curve = Curves.ease;
-
-                                        var tween = Tween(
-                                                begin: begin, end: end)
-                                            .chain(CurveTween(curve: curve));
-
-                                        return SlideTransition(
-                                          position: animation.drive(tween),
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration:
-                                          const Duration(milliseconds: 800),
-                                    ),
-                                    ModalRoute.withName('/root'));*/
-                                setState(() {
-                                  person.reset();
-                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                          'Sair da conta',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        titleTextStyle: const TextStyle(
+                                            color: Colors.red, fontSize: 16),
+                                        content: Text(
+                                          'Deseja sair da conta?',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.blue[900]),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text(
+                                              'Sim',
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 17),
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                person.reset();
+                                                Navigator.of(context).pop();
+                                              });
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text(
+                                              'Não',
+                                              style: TextStyle(fontSize: 17),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
                               },
                               child: const ListTile(
                                 leading: Icon(Icons.exit_to_app_rounded,

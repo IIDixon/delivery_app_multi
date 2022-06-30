@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../../back4app/credentials.dart';
 import '../../../models/person.dart';
 import '../../root_page.dart';
 
@@ -22,7 +24,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  bool processing = false;
+  var processing = false.obs;
 
   bool verificaCampos() {
     if (emailKey.currentState != null) {
@@ -86,8 +88,8 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
 
     http.Response response;
     Map<String, String> header = {
-      "X-Parse-Application-Id": "7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9",
-      "X-Parse-REST-API-Key": "SG65TqMUHhXx9CduNNumoQkkfzDCXOuu9DQNdPiq",
+      "X-Parse-Application-Id": keyApplicationId,
+      "X-Parse-REST-API-Key": restApiKey,
       "Content-Type": "application/json"
     };
 
@@ -106,197 +108,224 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     //await Future.delayed(const Duration(seconds: 2));
     var resp = json.decode(response.body);
     if (response.statusCode == 200) {
-      person.name.value = resp['result']['name'];
-      person.email.value = resp['result']['email'];
-      person.password.value = resp['result']['password'];
-      person.cpf.value = resp['result']['cpf'];
-      person.tel.value = resp['result']['telefone'];
-      person.id.value = resp['result']['id'];
+      person = Person.fromjson(
+          name: resp['result']['name'],
+          cpf: cpf,
+          email: resp['result']['email'],
+          tel: tel,
+          id: resp['result']['objectId']);
 
+      processing.value = false;
       showSuccess();
     } else {
+      processing.value = false;
       showError(resp['error']);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.blue[900],
-                child: const Icon(Icons.navigate_before),
-                onPressed: processing == false ? () {
-                  Navigator.of(context).pop();
-                } : null) ,
-            FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Colors.blue[900],
-                child: const Icon(Icons.navigate_next),
-                onPressed: processing == false ? () {
-                  if (verificaCampos() && emailKey.currentState!.validate()) {
-                    person.email.value = emailController.text;
-                    person.password.value = passwordController.text;
-                    setState(() {
-                      processing = true;
-                    });
-                    refreshIndicatorKey.currentState?.show();
-                    //userRegistration();
-                  }
-                } : null)
-          ],
-        ),
-      ),
-      body: RefreshIndicator(
-        edgeOffset: 200,
-        key: refreshIndicatorKey,
-        color: Colors.blue[900],
+    return Obx(
+      () => Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        strokeWidth: 3,
-        onRefresh: () async {
-          //return Future<void>.delayed(const Duration(seconds: 3));
-          return userRegistration();
-        },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    'Insira suas credencias para acesso',
-                    style: TextStyle(color: Colors.blue[900], fontSize: 20),
-                    softWrap: true,
-                  ),
+        floatingActionButton: processing.value == false
+            ? Padding(
+                padding: const EdgeInsets.all(40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FloatingActionButton(
+                        heroTag: "btn3",
+                        backgroundColor: Colors.blue[900],
+                        child: const Icon(Icons.navigate_before),
+                        onPressed: processing.value == false
+                            ? () {
+                                Navigator.of(context).pop();
+                              }
+                            : null),
+                    FloatingActionButton(
+                        heroTag: "btn4",
+                        backgroundColor: Colors.blue[900],
+                        child: const Icon(Icons.navigate_next),
+                        onPressed: processing.value == false
+                            ? () {
+                                if (verificaCampos() &&
+                                    emailKey.currentState!.validate()) {
+                                  person.email.value = emailController.text;
+                                  person.password.value =
+                                      passwordController.text;
+                                  processing.value = true;
+                                  userRegistration();
+                                  //userRegistration();
+                                }
+                              }
+                            : null)
+                  ],
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Form(
-                    key: emailKey,
+              )
+            : null,
+        body: SafeArea(
+          child: processing.value == true
+              ? Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF0D47A1)),
+                            strokeWidth: 5,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Validando dados...',
+                          style:
+                              TextStyle(color: Colors.blue[900], fontSize: 22),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        TextFormField(
-                          readOnly: processing,
-                          controller: emailController,
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Campo obrigatório';
-                            } else if (GetUtils.isEmail(emailController.text) ==
-                                false) {
-                              return 'Email inválido';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            label: const Text('Email'),
-                            labelStyle: TextStyle(
-                              color: Colors.blue[900],
-                              fontSize: 20,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            'Insira suas credencias para acesso',
+                            style: TextStyle(
+                                color: Colors.blue[900], fontSize: 20),
+                            softWrap: true,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Form(
+                            key: emailKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  readOnly: processing.value,
+                                  controller: emailController,
+                                  validator: (text) {
+                                    if (text == null || text.isEmpty) {
+                                      return 'Campo obrigatório';
+                                    } else if (GetUtils.isEmail(
+                                            emailController.text) ==
+                                        false) {
+                                      return 'Email inválido';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    label: const Text('Email'),
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue[900],
+                                      fontSize: 20,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  readOnly: processing.value,
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  validator: (text) {
+                                    if (text == null || text.isEmpty) {
+                                      return 'Campo obrigatório';
+                                    } else if (passwordController.text !=
+                                        passwordConfController.text) {
+                                      return 'As senhas digitadas não coincidem';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    label: const Text('Senha'),
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue[900],
+                                      fontSize: 20,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  readOnly: processing.value,
+                                  controller: passwordConfController,
+                                  obscureText: true,
+                                  validator: (text) {
+                                    if (text == null || text.isEmpty) {
+                                      return 'Campo obrigatório';
+                                    } else if (passwordController.text !=
+                                        passwordConfController.text) {
+                                      return 'As senhas digitadas não coincidem';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    label: const Text('Confirmar Senha'),
+                                    labelStyle: TextStyle(
+                                      color: Colors.blue[900],
+                                      fontSize: 20,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0XFF0D47A1)),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          readOnly: processing,
-                          controller: passwordController,
-                          obscureText: true,
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Campo obrigatório';
-                            } else if (passwordController.text !=
-                                passwordConfController.text) {
-                              return 'As senhas digitadas não coincidem';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            label: const Text('Senha'),
-                            labelStyle: TextStyle(
-                              color: Colors.blue[900],
-                              fontSize: 20,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          readOnly: processing,
-                          controller: passwordConfController,
-                          obscureText: true,
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Campo obrigatório';
-                            } else if (passwordController.text !=
-                                passwordConfController.text) {
-                              return 'As senhas digitadas não coincidem';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            label: const Text('Confirmar Senha'),
-                            labelStyle: TextStyle(
-                              color: Colors.blue[900],
-                              fontSize: 20,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  const BorderSide(color: Color(0XFF0D47A1)),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
+                        LinearProgressIndicator(
+                          value: 0.99,
+                          backgroundColor: Colors.grey,
+                          color: Colors.blue[900],
                         ),
                       ],
                     ),
                   ),
                 ),
-                LinearProgressIndicator(
-                  value: 0.99,
-                  backgroundColor: Colors.grey,
-                  color: Colors.blue[900],
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

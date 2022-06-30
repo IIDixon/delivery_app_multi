@@ -198,7 +198,7 @@ class _ItemPageState extends State<ItemPage> {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 backgroundColor: Colors.red,
-                                duration: Duration(seconds: 2),
+                                duration: Duration(milliseconds: 1000),
                                 content: Text('Item adicionado ao carrinho',
                                     style: TextStyle(fontSize: 18)),
                               ));

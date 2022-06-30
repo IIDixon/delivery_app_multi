@@ -1,5 +1,6 @@
 import 'package:delivery_app_multi/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyOrdersPage extends StatefulWidget {
   const MyOrdersPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                             },
                             child: ListTile(
                               leading: Hero(
-                                  tag: 'order',
+                                  tag: 'order $index',
                                   child: Icon(
                                     Icons.sell_rounded,
                                     color: Colors.blue[900],
@@ -80,7 +81,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                                   'Pedido - ${orders[index]['numeroVenda']}',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.blue[900])),
-                              subtitle: Text('Data - ${orders[index]['data']}',
+                              subtitle: Text(
+                                  'Data - ${DateFormat('dd/MM/yyyy').format(orders[index]['date'])}',
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.blue[900])),
                             ),
@@ -135,7 +137,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    item['data'],
+                    item['date'],
                     style: const TextStyle(fontSize: 18, color: Colors.grey),
                   )
                 ]),
@@ -172,7 +174,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                         style: TextStyle(fontSize: 18, color: Colors.blue),
                       ),
                       const SizedBox(width: 10),
-                      Text('R\$ ${item['total']}',
+                      Text('R\$ ${item['value']}',
                           overflow: TextOverflow.ellipsis,
                           style:
                               TextStyle(color: Colors.blue[900], fontSize: 20))
@@ -228,45 +230,54 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 3, bottom: 3),
                     child: ListView.builder(
-                      //shrinkWrap: true,
-                      itemCount: item['itens'].length,
-                      itemBuilder: (context, index){
-                        return Container(
-                          child: ListTile(
-                            leading: Text('${item['itens'][index]['qtde']}x',
-                              style: const TextStyle(fontSize: 17, color: Colors.red),),
-                            title: Text(item['itens'][index]['descricao'],
-                              //overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              style: TextStyle(fontSize: 19, color: Colors.blue[900]),),
-                            trailing: Text('R\$ ${item['itens'][index]['total']}',
-                              style: const TextStyle(fontSize: 19, color: Colors.blue),),
-                          ),
-                        );
-                      }
-                    ),
+                        //shrinkWrap: true,
+                        itemCount: item['itens'].length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: ListTile(
+                              leading: Text(
+                                '${item['itens'][index]['qtde']}x',
+                                style: const TextStyle(
+                                    fontSize: 17, color: Colors.red),
+                              ),
+                              title: Text(
+                                item['itens'][index]['product'],
+                                //overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontSize: 19, color: Colors.blue[900]),
+                              ),
+                              trailing: Text(
+                                'R\$ ${item['itens'][index]['totalValue']}',
+                                style: const TextStyle(
+                                    fontSize: 19, color: Colors.blue),
+                              ),
+                            ),
+                          );
+                        }),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Voltar', style: TextStyle(color: Colors.blue[900], fontSize: 20),),
-                        style: ElevatedButton.styleFrom(
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        /*Navigator.of(context)
+                            .popUntil(ModalRoute.withName('/profile'));*/
+                      },
+                      child: Text(
+                        'Voltar',
+                        style: TextStyle(color: Colors.blue[900], fontSize: 20),
+                      ),
+                      style: ElevatedButton.styleFrom(
                           side: const BorderSide(color: Color(0XFF0D47A1)),
                           primary: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                          )
-                        ),
-                      ),
+                          )),
                     ),
-                  ]
-                ),
+                  ),
+                ]),
               ],
             ),
           ),

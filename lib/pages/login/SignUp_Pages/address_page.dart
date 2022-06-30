@@ -76,14 +76,14 @@ class _SignupAddressPageState extends State<SignupAddressPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-                heroTag: null,
+                heroTag: "btn1",
                 backgroundColor: Colors.blue[900],
                 child: const Icon(Icons.navigate_before),
                 onPressed: () {
                   Navigator.of(context).pop();
                 }),
             FloatingActionButton(
-                heroTag: null,
+                heroTag: "btn2",
                 backgroundColor: Colors.blue[900],
                 child: const Icon(Icons.navigate_next),
                 onPressed: () {
