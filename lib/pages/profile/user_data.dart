@@ -32,10 +32,10 @@ class _UserDataPageState extends State<UserDataPage> {
 
   final userDataKey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> refreshKey =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
-  bool verificaCampos(){
-    if(userDataKey.currentState != null){
+  bool verificaCampos() {
+    if (userDataKey.currentState != null) {
       return true;
     }
     return false;
@@ -102,6 +102,7 @@ class _UserDataPageState extends State<UserDataPage> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Dados alterados com sucesso'),
         backgroundColor: Colors.red,
+        duration: Duration(milliseconds: 1000),
       ));
       Navigator.pop(context);
     } else {
@@ -137,7 +138,7 @@ class _UserDataPageState extends State<UserDataPage> {
         color: Colors.blue[900],
         backgroundColor: Colors.white,
         strokeWidth: 3,
-        onRefresh: ()async{
+        onRefresh: () async {
           return userUpdate();
         },
         child: Padding(
@@ -154,8 +155,8 @@ class _UserDataPageState extends State<UserDataPage> {
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
                             readOnly: processing,
-                            validator: (text){
-                              if(text == null || text.isEmpty){
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
                                 return 'Campo obrigatório';
                               }
                               return null;
@@ -164,8 +165,8 @@ class _UserDataPageState extends State<UserDataPage> {
                             controller: nameController,
                             decoration: InputDecoration(
                               label: const Text('Nome Completo'),
-                              labelStyle:
-                                  TextStyle(color: Colors.blue[900], fontSize: 22),
+                              labelStyle: TextStyle(
+                                  color: Colors.blue[900], fontSize: 22),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
@@ -173,8 +174,8 @@ class _UserDataPageState extends State<UserDataPage> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Color(0xFF0D47A1))),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF0D47A1))),
                             ),
                           ),
                         ),
@@ -183,8 +184,9 @@ class _UserDataPageState extends State<UserDataPage> {
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
                             readOnly: processing,
-                            validator: (text){
-                              if(cpfController.text.length > 1 && cpfController.text.length < 11){
+                            validator: (text) {
+                              if (cpfController.text.length > 1 &&
+                                  cpfController.text.length < 11) {
                                 return 'CPF inválido';
                               }
                               return null;
@@ -194,8 +196,8 @@ class _UserDataPageState extends State<UserDataPage> {
                             controller: cpfController,
                             decoration: InputDecoration(
                               label: const Text('CPF (Opcional)'),
-                              labelStyle:
-                                  TextStyle(color: Colors.blue[900], fontSize: 22),
+                              labelStyle: TextStyle(
+                                  color: Colors.blue[900], fontSize: 22),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
@@ -203,8 +205,8 @@ class _UserDataPageState extends State<UserDataPage> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Color(0xFF0D47A1))),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF0D47A1))),
                             ),
                           ),
                         ),
@@ -213,10 +215,11 @@ class _UserDataPageState extends State<UserDataPage> {
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
                             readOnly: processing,
-                            validator: (text){
+                            validator: (text) {
                               if (text == null || text.isEmpty) {
                                 return 'Campo obrigatório';
-                              } else if (GetUtils.isEmail(emailController.text) ==
+                              } else if (GetUtils.isEmail(
+                                      emailController.text) ==
                                   false) {
                                 return 'Email inválido';
                               }
@@ -237,8 +240,8 @@ class _UserDataPageState extends State<UserDataPage> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Color(0xFF0D47A1))),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF0D47A1))),
                             ),
                           ),
                         ),
@@ -247,8 +250,9 @@ class _UserDataPageState extends State<UserDataPage> {
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
                             readOnly: processing,
-                            validator: (text){
-                              if(celController.text.length > 1 && celController.text.length < 11){
+                            validator: (text) {
+                              if (celController.text.length > 1 &&
+                                  celController.text.length < 11) {
                                 return 'Telefone inválido';
                               }
                               return null;
@@ -263,13 +267,13 @@ class _UserDataPageState extends State<UserDataPage> {
                                 fontSize: 22,
                               ),
                               border: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Color(0xFF0D47A1)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF0D47A1)),
                                   borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      const BorderSide(color: Color(0xFF0D47A1))),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF0D47A1))),
                             ),
                           ),
                         ),
@@ -281,19 +285,22 @@ class _UserDataPageState extends State<UserDataPage> {
               Row(children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: processing == false ? (){
-                      if(verificaCampos() && userDataKey.currentState!.validate()){
-                        final person = Person.fromjson(
-                            name: nameController.text,
-                            cpf: cpfController.text,
-                            email: emailController.text,
-                            tel: celController.text);
-                        setState(() {
-                          processing = true;
-                        });
-                        refreshKey.currentState?.show();
-                      }
-                    } : null,
+                    onPressed: processing == false
+                        ? () {
+                            if (verificaCampos() &&
+                                userDataKey.currentState!.validate()) {
+                              final person = Person.fromjson(
+                                  name: nameController.text,
+                                  cpf: cpfController.text,
+                                  email: emailController.text,
+                                  tel: celController.text);
+                              setState(() {
+                                processing = true;
+                              });
+                              refreshKey.currentState?.show();
+                            }
+                          }
+                        : null,
                     child: const Text(
                       'Salvar',
                       style: TextStyle(fontSize: 20),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
 import 'package:delivery_app_multi/constant/constant.dart';
@@ -137,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                                                       TextStyle(fontSize: 16)),
                                               backgroundColor: Colors.red,
                                               duration:
-                                                  Duration(milliseconds: 1500),
+                                                  Duration(milliseconds: 1000),
                                             ));
                                           },
                                           icon: const Icon(
@@ -280,22 +281,58 @@ class _CartPageState extends State<CartPage> {
                           () => ElevatedButton(
                             onPressed: cart.items.isNotEmpty
                                 ? () {
-                                    var map = toJson(person, cart.items);
+                                    if (person.name.value == '' ||
+                                        person.name.value!.isEmpty) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Aviso'),
+                                              titleTextStyle: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 20),
+                                              content: const Text(
+                                                  'Para prosseguir será necessário realizar login.'),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text('OK'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context)
+                                                        .pushNamed('/signin');
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.of(context)
+                                          .pushNamed('/checkout');
+                                    }
+                                    /*var map =
+                                        jsonDecode(toJson(person, cart.items));
                                     postOrder(map);
                                     cart.items.clear();
                                     //Navigator.of(context).pushNamed('/signin');
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content:
-                                          Text('Pedido efetuado com sucesso'),
-                                    ));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(
+                                                'Pedido efetuado com sucesso'),
+                                            duration:
+                                                Duration(milliseconds: 1000)));*/
                                   }
                                 : null,
-                            child: const Text('Ir para Pagamento',
-                                style: TextStyle(fontSize: 18)),
+                            child: const Text(
+                              'Ir para Pagamento',
+                              style: TextStyle(fontSize: 18),
+                            ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue[900],
                               shape: RoundedRectangleBorder(
@@ -333,15 +370,18 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  Map<dynamic, dynamic> toJson(Person person, List<Item> itens) {
-    var order = Map();
+  String toJson(Person person, List<Item> itens) {
+    var order = <dynamic, dynamic>{};
     var num = Random();
     double value = 5; // 5 para embutir já o frete, apenas demonstrativo
     DateTime data = DateTime.now();
+    DateFormat('dd/MM/yyyy')
+        .format(data); // Formata a data em um padrão específico
     order['loja'] = 'Loja Teste';
     order['cliente'] = person.name.toString();
     order['numeroVenda'] = num.nextInt(99999);
-    order['data'] = DateFormat('dd/MM/yyyy').format(data);
+    order['data'] =
+        data.toIso8601String(); // Formata a data para o suportado pelo JSON
     order['itens'] = listItem(itens);
     for (int i = 0; i < listItem(itens).length; i++) {
       value += double.parse(listItem(itens)[i]['total']);
@@ -350,7 +390,8 @@ class _CartPageState extends State<CartPage> {
     order['tpp'] = 'Dinheiro';
     order['status'] = 'Separando';
 
-    return order;
+    print(jsonEncode(order));
+    return jsonEncode(order);
   }
 
   List<Map> listItem(List<Item> itens) {
