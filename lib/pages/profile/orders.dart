@@ -81,7 +81,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                                   'Pedido - ${orders[index]['numeroVenda']}',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.blue[900])),
-                              subtitle: Text('Data - ${orders[index]['data']}',
+                              subtitle: Text(
+                                  'Data - ${DateFormat('dd/MM/yyyy').format(orders[index]['date'])}',
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.blue[900])),
                             ),
@@ -136,7 +137,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    item['data'],
+                    item['date'],
                     style: const TextStyle(fontSize: 18, color: Colors.grey),
                   )
                 ]),
@@ -173,7 +174,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                         style: TextStyle(fontSize: 18, color: Colors.blue),
                       ),
                       const SizedBox(width: 10),
-                      Text('R\$ ${item['total']}',
+                      Text('R\$ ${item['value']}',
                           overflow: TextOverflow.ellipsis,
                           style:
                               TextStyle(color: Colors.blue[900], fontSize: 20))
@@ -240,14 +241,14 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                                     fontSize: 17, color: Colors.red),
                               ),
                               title: Text(
-                                item['itens'][index]['descricao'],
+                                item['itens'][index]['product'],
                                 //overflow: TextOverflow.ellipsis,
                                 softWrap: true,
                                 style: TextStyle(
                                     fontSize: 19, color: Colors.blue[900]),
                               ),
                               trailing: Text(
-                                'R\$ ${item['itens'][index]['total']}',
+                                'R\$ ${item['itens'][index]['totalValue']}',
                                 style: const TextStyle(
                                     fontSize: 19, color: Colors.blue),
                               ),

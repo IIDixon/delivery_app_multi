@@ -1,8 +1,10 @@
+import 'package:delivery_app_multi/pages/cart_page.dart';
 import 'package:delivery_app_multi/pages/checkout_page.dart';
 import 'package:delivery_app_multi/pages/login/SignUp_Pages/address_page.dart';
 import 'package:delivery_app_multi/pages/login/SignUp_Pages/email_page.dart';
 import 'package:delivery_app_multi/pages/login/SignUp_Pages/userdata_page.dart';
 import 'package:delivery_app_multi/pages/login/signin_page.dart';
+import 'package:delivery_app_multi/pages/profile/orders.dart';
 import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/signup/addressdata': (context) => const SignupAddressPage(),
         '/signup/emaildata': (context) => const SignupEmailPage(),
         '/profile': (context) => const ProfilePage(),
+        '/profile/orders': (context) => const MyOrdersPage(),
+        '/cart': (context) => const CartPage(),
         '/checkout': (context) => const CheckoutPage(),
       },
     );
