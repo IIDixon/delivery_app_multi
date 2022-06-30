@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../../back4app/credentials.dart';
 import '../../../models/person.dart';
 import '../../root_page.dart';
 
@@ -87,8 +88,8 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
 
     http.Response response;
     Map<String, String> header = {
-      "X-Parse-Application-Id": "7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9",
-      "X-Parse-REST-API-Key": "SG65TqMUHhXx9CduNNumoQkkfzDCXOuu9DQNdPiq",
+      "X-Parse-Application-Id": keyApplicationId,
+      "X-Parse-REST-API-Key": restApiKey,
       "Content-Type": "application/json"
     };
 
@@ -107,16 +108,12 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     //await Future.delayed(const Duration(seconds: 2));
     var resp = json.decode(response.body);
     if (response.statusCode == 200) {
-      person.name.value = resp['result']['name'];
-      person.email.value = resp['result']['email'];
-      //person.password.value = resp['result']['password'];
-      if (cpf.isNotEmpty) {
-        person.cpf.value = resp['result']['cpf'];
-      }
-      if (tel.isNotEmpty) {
-        person.tel.value = resp['result']['telefone'];
-      }
-      person.id.value = resp['result']['objectId'];
+      person = Person.fromjson(
+          name: resp['result']['name'],
+          cpf: cpf,
+          email: resp['result']['email'],
+          tel: tel,
+          id: resp['result']['objectId']);
 
       processing.value = false;
       showSuccess();

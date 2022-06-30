@@ -284,6 +284,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             onPressed: () {
                                               setState(() {
                                                 person.reset();
+                                                Navigator.of(context).pop();
                                               });
                                             },
                                           ),
