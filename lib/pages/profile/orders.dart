@@ -27,14 +27,6 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
         backgroundColor: Colors.blue[900],
         title: const Text('Meus Pedidos'),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: getOrders,
-              icon: const Icon(
-                Icons.abc,
-                color: Colors.red,
-              ))
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
