@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:delivery_app_multi/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import '../../back4app/credentials.dart';
+import '../../models/person.dart';
 
 class MyOrdersPage extends StatefulWidget {
   const MyOrdersPage({Key? key}) : super(key: key);
@@ -9,7 +15,11 @@ class MyOrdersPage extends StatefulWidget {
   State<MyOrdersPage> createState() => _MyOrdersPageState();
 }
 
+enum Status { confirmando, separando, rota, entregue }
+
 class _MyOrdersPageState extends State<MyOrdersPage> {
+  Person person = Get.put(Person());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +27,14 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
         backgroundColor: Colors.blue[900],
         title: const Text('Meus Pedidos'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: getOrders,
+              icon: const Icon(
+                Icons.abc,
+                color: Colors.red,
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -25,14 +43,16 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return Container(
-                  width: 200,
-                  height: 200,
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).colorScheme.primary),
-                    strokeWidth: 5,
+                return Center(
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.primary),
+                      strokeWidth: 5,
+                    ),
                   ),
                 );
               case ConnectionState.none:
@@ -49,53 +69,16 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       height: 200,
                       alignment: Alignment.center,
                       child: Column(
-                        children: const [
+                        children: [
                           Icon(Icons.error),
-                          Text('Erro ao carregar os pedidos'),
+                          Text(
+                              'Erro ao carregar os pedidos - ${snapshot.error}'),
                         ],
                       ),
                     ),
                   );
                 } else {
-                  return ListView.builder(
-                      itemCount: orders.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              showModal(context, orders[index]);
-                            },
-                            child: ListTile(
-                              leading: Hero(
-                                  tag: 'order $index',
-                                  child: Icon(
-                                    Icons.sell_rounded,
-                                    color: Colors.blue[900],
-                                  )),
-                              trailing: const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Color(0xFF0D47A1),
-                              ),
-                              title: Text(
-                                  'Pedido - ${orders[index]['numeroVenda']}',
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.blue[900])),
-                              subtitle: Text(
-                                  'Data - ${DateFormat('dd/MM/yyyy').format(orders[index]['date'])}',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.blue[900])),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              animationDuration: const Duration(seconds: 2),
-                              primary: Colors.white,
-                              onPrimary: Colors.blue,
-                              shadowColor: Colors.blue[900],
-                              onSurface: Colors.blue[900],
-                            ),
-                          ),
-                        );
-                      });
+                  return createData(context, snapshot);
                 }
             }
           },
@@ -104,8 +87,71 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     );
   }
 
+  Widget createData(BuildContext context, AsyncSnapshot snapshot) {
+    List<Map> order = snapshot.data;
+    return ListView.builder(
+        itemCount: order.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                showModal(context, order[index]);
+              },
+              child: ListTile(
+                leading: Hero(
+                    tag: 'order $index',
+                    child: Icon(
+                      Icons.sell_rounded,
+                      color: Colors.blue[900],
+                    )),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Color(0xFF0D47A1),
+                ),
+                title: Text(
+                    'Pedido - 11111' /*'Pedido - ${orders[index]['numeroVenda']}'*/,
+                    style: TextStyle(fontSize: 20, color: Colors.blue[900])),
+                subtitle: Text(
+                    'Data - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(order[index]['date']['iso']))}',
+                    style: TextStyle(fontSize: 18, color: Colors.blue[900])),
+              ),
+              style: ElevatedButton.styleFrom(
+                animationDuration: const Duration(seconds: 2),
+                primary: Colors.white,
+                onPrimary: Colors.blue,
+                shadowColor: Colors.blue[900],
+                onSurface: Colors.blue[900],
+              ),
+            ),
+          );
+        });
+  }
+
   Future<List<Map>> getOrders() async {
-    return orders;
+    Map<String, String> header = {
+      "X-Parse-Application-Id": keyApplicationId,
+      "X-Parse-REST-API-Key": restApiKey,
+      "Content-Type": "application/json"
+    };
+
+    Map body = {'userid': person.id.value};
+
+    http.Response response = await http.post(
+        Uri.parse(
+            "https://parseapi.back4app.com/parse/functions/get-salesUser"),
+        headers: header,
+        body: jsonEncode(body));
+
+    var resp = json.decode(response.body);
+    Map orders = jsonDecode(response.body);
+    List<Map> list = [];
+
+    for (int i = 0; i < orders['result'].length; i++) {
+      list.add(orders['result'][i]);
+    }
+    print('Resultado - $list - ${list.length}');
+    return list;
   }
 
   Future<dynamic> showModal(BuildContext context, Map item) {
@@ -212,7 +258,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                         width: 10,
                       ),
                       Text(
-                        item['status'],
+                        '${Status.values[(item['status'])]}',
                         style: TextStyle(fontSize: 20, color: Colors.blue[900]),
                       )
                     ],

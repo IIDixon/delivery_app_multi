@@ -22,7 +22,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   int checkoutTpp = 1;
   Cart cart = Get.put(Cart());
   Person person = Get.put(Person());
-
   bool processing = false;
 
   @override
