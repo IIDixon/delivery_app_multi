@@ -127,6 +127,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 child: Text(
                                   items[index]['description'],
                                   softWrap: true,
+                                  overflow: TextOverflow.fade,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -226,6 +227,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 child: Text(
                                   upvitam[index]['description'],
                                   softWrap: true,
+                                  overflow: TextOverflow.fade,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,

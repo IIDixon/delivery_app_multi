@@ -4,6 +4,7 @@ import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../back4app/credentials.dart';
+import '../../../constant/constant.dart';
 import '../../../models/person.dart';
 import '../../root_page.dart';
 
@@ -49,7 +50,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                   //'puseAndRemoveUntil' em conjunto com '(Route<dynamic> route) => false'
                   // remove todas as telas da pilha antes de trazer uma nova tela
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/root', ModalRoute.withName('/root'));
+                      '/root', ModalRoute.withName('/'));
                 },
               ),
             ],
@@ -87,11 +88,6 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
     person.reset();
 
     http.Response response;
-    Map<String, String> header = {
-      "X-Parse-Application-Id": keyApplicationId,
-      "X-Parse-REST-API-Key": restApiKey,
-      "Content-Type": "application/json"
-    };
 
     Map<String, String> body = {
       "email": email,
@@ -113,9 +109,11 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
           cpf: cpf,
           email: resp['result']['email'],
           tel: tel,
-          id: resp['result']['objectId']);
+          id: resp['result']['objectId'],
+          session: resp['result']['sessionToken']);
 
       processing.value = false;
+      print(resp);
       showSuccess();
     } else {
       processing.value = false;

@@ -43,6 +43,7 @@ dependencies:
   localization: ^2.1.0
   parse_server_sdk_flutter: ^3.1.2
   easy_splash_screen: ^1.0.3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

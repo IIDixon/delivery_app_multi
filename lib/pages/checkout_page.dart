@@ -24,6 +24,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Person person = Get.put(Person());
   bool processing = false;
 
+  List<String> tpp = ['yJ7zEOZOlk', 'LqIt4nmVht', 'X542TENQdP', 'noP2MerEOy'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -403,7 +405,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                   Expanded(
                     child: Text('Registrando venda...',
-                        style: TextStyle(color: Colors.blue[900])),
+                        style:
+                            TextStyle(fontSize: 20, color: Colors.blue[900])),
                   )
                 ],
               ),
@@ -429,7 +432,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     order['date'] = data.toIso8601String();
     order['value'] = value;
     order['itens'] = listItem(itens);
-    order['tpp'] = 1;
+    order['tpp'] = tpp[checkoutTpp - 1];
     order['status'] = 'Entregue';
 
     return jsonEncode(order);
@@ -440,7 +443,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     for (int i = 0; i < itens.length; i++) {
       Map map = {};
-      map['product'] = 'bOtGaEgQyz' /*itens[i].id*/;
+      map['product'] =
+          'bOtGaEgQyz' /*itens[i].id *ALTERAR PARA O ID DO PRODUTO*/;
       map['qtde'] = itens[i].qtde;
       map['unitValue'] = itens[i].valueSale;
       map['totalValue'] = (itens[i].qtde * itens[i].valueSale);
@@ -451,15 +455,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void postOrder(dynamic order) async {
-    Map<String, String> header = {
-      "X-Parse-Application-Id": keyApplicationId,
-      "X-Parse-REST-API-Key": restApiKey,
-      "Content-Type": "application/json"
-    };
+    Map<String, String> headers = header;
+    headers.addAll({"X-Parse-Session-Token": person.session.value});
 
     http.Response response = await http.post(
         Uri.parse("https://parseapi.back4app.com/parse/functions/create-sale"),
-        headers: header,
+        headers: headers,
         body: order);
 
     var resp = json.decode(response.body);
@@ -481,6 +482,32 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ),
         backgroundColor: Colors.red,
       ));
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text(
+                'Erro',
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+              content: Text(resp['error']),
+              actions: [
+                TextButton(
+                  child: Text(
+                    'OK',
+                    style: TextStyle(fontSize: 18, color: Colors.blue[900]),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
+      setState(() {
+        processing = false;
+      });
     }
 
     await Future.delayed(const Duration(seconds: 2));

@@ -6,6 +6,7 @@ import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+import '../../constant/constant.dart';
 import '../../models/person.dart';
 
 class UserDataPage extends StatefulWidget {
@@ -71,11 +72,6 @@ class _UserDataPageState extends State<UserDataPage> {
     person.reset();
 
     http.Response response;
-    Map<String, String> header = {
-      "X-Parse-Application-Id": "7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9",
-      "X-Parse-REST-API-Key": "SG65TqMUHhXx9CduNNumoQkkfzDCXOuu9DQNdPiq",
-      "Content-Type": "application/json"
-    };
 
     Map<String, String> body = {
       "email": email,

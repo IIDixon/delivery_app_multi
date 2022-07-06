@@ -15,10 +15,16 @@ class MyOrdersPage extends StatefulWidget {
   State<MyOrdersPage> createState() => _MyOrdersPageState();
 }
 
-enum Status { confirmando, separando, rota, entregue }
-
 class _MyOrdersPageState extends State<MyOrdersPage> {
   Person person = Get.put(Person());
+
+  List<String> status = [
+    'Confirmando',
+    'Separando',
+    'Em rota de entrega',
+    'Entregue',
+    'Cancelado'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       alignment: Alignment.center,
                       child: Column(
                         children: [
-                          Icon(Icons.error),
+                          const Icon(Icons.error),
                           Text(
                               'Erro ao carregar os pedidos - ${snapshot.error}'),
                         ],
@@ -81,58 +87,76 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
 
   Widget createData(BuildContext context, AsyncSnapshot snapshot) {
     List<Map> order = snapshot.data;
-    return ListView.builder(
-        itemCount: order.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                showModal(context, order[index]);
-              },
-              child: ListTile(
-                leading: Hero(
-                    tag: 'order $index',
-                    child: Icon(
-                      Icons.sell_rounded,
-                      color: Colors.blue[900],
-                    )),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Color(0xFF0D47A1),
-                ),
-                title: Text(
+    return order.isNotEmpty
+        ? ListView.builder(
+            itemCount: order.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                        'Carregando produtos...',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 20),
+                    ));
+                    List<Map> itens = await getItens(order[index]['sale']);
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    showModal(context, order[index], itens);
+                  },
+                  child: ListTile(
+                    leading: Hero(
+                        tag: 'order $index',
+                        child: Icon(
+                          Icons.sell_rounded,
+                          color: Colors.blue[900],
+                        )),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Color(0xFF0D47A1),
+                    ),
+                    /*title: Text(
                     'Pedido - 11111' /*'Pedido - ${orders[index]['numeroVenda']}'*/,
-                    style: TextStyle(fontSize: 20, color: Colors.blue[900])),
-                subtitle: Text(
-                    'Data - ${DateFormat('dd/MM/yyyy').format(DateTime.parse(order[index]['date']['iso']))}',
-                    style: TextStyle(fontSize: 18, color: Colors.blue[900])),
-              ),
-              style: ElevatedButton.styleFrom(
-                animationDuration: const Duration(seconds: 2),
-                primary: Colors.white,
-                onPrimary: Colors.blue,
-                shadowColor: Colors.blue[900],
-                onSurface: Colors.blue[900],
-              ),
+                    style: TextStyle(fontSize: 20, color: Colors.blue[900])),*/
+                    title: Text('Loja - ${order[index]['loja']}',
+                        overflow: TextOverflow.fade,
+                        style:
+                            TextStyle(fontSize: 20, color: Colors.blue[900])),
+                    subtitle: Text(
+                        'Data - ${DateFormat('dd/MM/yyyy H:mm').format(DateTime.parse(order[index]['date']['iso']))}',
+                        style:
+                            TextStyle(fontSize: 18, color: Colors.blue[900])),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    animationDuration: const Duration(seconds: 2),
+                    primary: Colors.white,
+                    onPrimary: Colors.blue,
+                    shadowColor: Colors.blue[900],
+                    onSurface: Colors.blue[900],
+                  ),
+                ),
+              );
+            })
+        : Center(
+            child: Text(
+              "Nenhum pedido encontrado",
+              style: TextStyle(fontSize: 20, color: Colors.blue[900]),
             ),
           );
-        });
   }
 
   Future<List<Map>> getOrders() async {
-    Map<String, String> header = {
-      "X-Parse-Application-Id": keyApplicationId,
-      "X-Parse-REST-API-Key": restApiKey,
-      "Content-Type": "application/json"
-    };
-
     Map body = {'userid': person.id.value};
+    Map<String, String> headers = header;
+    headers.addAll({"X-Parse-Session-Token": person.session.value});
 
     http.Response response = await http.post(
         Uri.parse(
             "https://parseapi.back4app.com/parse/functions/get-salesUser"),
-        headers: header,
+        headers: headers,
         body: jsonEncode(body));
 
     var resp = json.decode(response.body);
@@ -146,7 +170,28 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
     return list;
   }
 
-  Future<dynamic> showModal(BuildContext context, Map item) {
+  Future<List<Map>> getItens(String sale) async {
+    Map body = {'id': sale};
+    Map<String, String> headers = header;
+    headers.addAll({"X-Parse-Session-Token": person.session.value});
+
+    http.Response response = await http.post(
+        Uri.parse(
+            "https://parseapi.back4app.com/parse/functions/get-saleitens"),
+        headers: headers,
+        body: jsonEncode(body));
+
+    Map itens = jsonDecode(response.body);
+    List<Map> listItens = [];
+
+    for (int i = 0; i < itens['result'].length; i++) {
+      listItens.add(itens['result'][i]);
+    }
+    print(listItens);
+    return listItens;
+  }
+
+  Future<dynamic> showModal(BuildContext context, Map sale, List<Map> itens) {
     return showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -165,7 +210,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Pedido ${item['numeroVenda']}',
+                          'Pedido - ${sale['sale']}',
                           style: TextStyle(
                               fontSize: 22,
                               color: Colors.blue[900],
@@ -175,7 +220,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    item['date'],
+                    DateFormat('dd/MM/yyyy H:mm')
+                        .format(DateTime.parse(sale['date']['iso'])),
                     style: const TextStyle(fontSize: 18, color: Colors.grey),
                   )
                 ]),
@@ -192,7 +238,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            item['loja'],
+                            sale['loja'],
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 20, color: Colors.blue[900]),
@@ -212,10 +258,14 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                         style: TextStyle(fontSize: 18, color: Colors.blue),
                       ),
                       const SizedBox(width: 10),
-                      Text('R\$ ${item['value']}',
+                      Text('R\$ ${sale['value']} ',
                           overflow: TextOverflow.ellipsis,
                           style:
-                              TextStyle(color: Colors.blue[900], fontSize: 20))
+                              TextStyle(color: Colors.blue[900], fontSize: 20)),
+                      const Text(
+                        '(Incluso frete)',
+                        style: TextStyle(color: Colors.grey, fontSize: 18),
+                      )
                     ],
                   ),
                 ),
@@ -230,7 +280,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        item['tpp'],
+                        sale['tpp'],
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 20, color: Colors.blue[900]),
                       )
@@ -250,7 +300,7 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                         width: 10,
                       ),
                       Text(
-                        '${Status.values[(item['status'])]}',
+                        status[sale['status']],
                         style: TextStyle(fontSize: 20, color: Colors.blue[900]),
                       )
                     ],
@@ -259,8 +309,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 Divider(color: Colors.blue[900]),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    'Itens',
-                    style: TextStyle(fontSize: 16, color: Colors.blue[900]),
+                    'Lista de Itens',
+                    style: TextStyle(fontSize: 19, color: Colors.blue[900]),
                   )
                 ]),
                 Divider(color: Colors.blue[900]),
@@ -269,24 +319,24 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                     padding: const EdgeInsets.only(top: 3, bottom: 3),
                     child: ListView.builder(
                         //shrinkWrap: true,
-                        itemCount: item['itens'].length,
+                        itemCount: itens.length,
                         itemBuilder: (context, index) {
                           return Container(
                             child: ListTile(
                               leading: Text(
-                                '${item['itens'][index]['qtde']}x',
+                                '${itens[index]['unit']}x',
                                 style: const TextStyle(
                                     fontSize: 17, color: Colors.red),
                               ),
                               title: Text(
-                                item['itens'][index]['product'],
+                                itens[index]['name'],
                                 //overflow: TextOverflow.ellipsis,
                                 softWrap: true,
                                 style: TextStyle(
                                     fontSize: 19, color: Colors.blue[900]),
                               ),
                               trailing: Text(
-                                'R\$ ${item['itens'][index]['totalValue']}',
+                                'R\$ ${itens[index]['totalValue']}',
                                 style: const TextStyle(
                                     fontSize: 19, color: Colors.blue),
                               ),

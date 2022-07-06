@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../back4app/credentials.dart';
+import '../../constant/constant.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
@@ -27,12 +28,6 @@ class _SigninPageState extends State<SigninPage> {
     http.Response response;
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-
-    Map<String, String> header = {
-      "X-Parse-Application-Id": keyApplicationId,
-      "X-Parse-REST-API-Key": restApiKey,
-      "Content-Type": "application/json"
-    };
 
     Map<String, String> body = {"email": email, "password": password};
 
@@ -57,7 +52,8 @@ class _SigninPageState extends State<SigninPage> {
           cpf: cpf,
           email: resp['result']['email'],
           tel: tel,
-          id: resp['result']['id']);
+          id: resp['result']['id'],
+          session: resp['result']['session']);
       //person.name.value = resp['result']['name'];
       //person.email.value = resp['result']['email'];
       setState(() {

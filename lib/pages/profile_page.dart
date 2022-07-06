@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:delivery_app_multi/pages/profile/address.dart';
 import 'package:delivery_app_multi/pages/profile/orders.dart';
 import 'package:delivery_app_multi/pages/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import '../constant/constant.dart';
 import '../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -259,14 +263,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                       return AlertDialog(
                                         title: const Text(
                                           'Sair da conta',
-                                          style: TextStyle(fontSize: 16),
                                         ),
                                         titleTextStyle: const TextStyle(
-                                            color: Colors.red, fontSize: 16),
+                                            color: Colors.red, fontSize: 22),
                                         content: Text(
                                           'Deseja sair da conta?',
                                           style: TextStyle(
-                                              fontSize: 22,
+                                              fontSize: 19,
                                               color: Colors.blue[900]),
                                         ),
                                         shape: RoundedRectangleBorder(

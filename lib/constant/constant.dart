@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../back4app/credentials.dart';
+
 const List<IconData> icons = [
   Icons.home,
   Icons.search,
@@ -19,6 +21,12 @@ Map<String, dynamic> profile = {
     'city': 'São Paulo do Rio Pardo',
     'CEP': '15069-069'
   },
+};
+
+Map<String, String> header = {
+  "X-Parse-Application-Id": keyApplicationId,
+  "X-Parse-REST-API-Key": restApiKey,
+  "Content-Type": "application/json"
 };
 
 List<Map<dynamic, dynamic>> orders = [];
