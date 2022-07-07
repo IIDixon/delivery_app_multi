@@ -5,7 +5,11 @@ import 'package:delivery_app_multi/widgets/custom_sliders.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constant/constant.dart';
+import '../models/loja.dart';
 import '../route/route.dart';
+import 'package:get/get.dart';
+
+import '../widgets/list_lojas.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController controller;
+  Loja loja = Get.put(Loja());
 
   @override
   void initState() {
@@ -35,280 +40,320 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.reverseDuration = const Duration(seconds: 1);
   }
 
+  Widget alertDialog() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            onTap: () {
+              loja.id.value = '123456';
+              Navigator.of(context).pop();
+            },
+            title: Text('Loja $index'),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-      child: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Text('Vantagens exclusivas da Rede Multidrogas',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red)),
-          ),
-          const Divider(
-            color: Colors.black,
-          ),
-          CustomeCarouselHomePage(items: slider),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, left: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Mais Vendidos',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
+    return Obx(() => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+          child: loja.id.value == '' || loja.id.value.isEmpty
+              ? ListLojas(context)
+              : ListView(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Text('Vantagens exclusivas da Rede Multidrogas',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red)),
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.arrow_back_ios, color: Colors.red, size: 17),
-                    Icon(Icons.arrow_forward_ios, color: Colors.red, size: 17),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            color: Colors.black,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(items.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: GestureDetector(
-                    onTap: () {
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      Navigator.of(context).push(routePageItem(items[index]));
-                    },
-                    child: Container(
-                      height: 250,
-                      width: 170,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 2, color: Colors.grey.withOpacity(0.5)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: SizedBox(
-                                //height: 220,
-                                //width: 150,
-                                child: Image(
-                                  image:
-                                      Image.asset('assets/download.jpg').image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  items[index]['description'],
-                                  softWrap: true,
-                                  overflow: TextOverflow.fade,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "De: ${items[index]['pmc']}",
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 18,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                            Text("Por: ${items[index]['venda']}",
+                    const Divider(
+                      color: Colors.black,
+                    ),
+                    CustomeCarouselHomePage(items: slider),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, left: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Mais Vendidos',
                                 style: TextStyle(
-                                    color: Colors.blue[800], fontSize: 20)),
-                          ],
-                        ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(Icons.arrow_back_ios,
+                                  color: Colors.red, size: 17),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: Colors.red, size: 17),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                );
-              }),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, left: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'UP Vitam Vitaminas',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
+                    const Divider(
+                      color: Colors.black,
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.arrow_back_ios, color: Colors.red, size: 17),
-                    Icon(Icons.arrow_forward_ios, color: Colors.red, size: 17),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            color: Colors.black,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(upvitam.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: GestureDetector(
-                    onTap: () {
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      Navigator.of(context).push(routePageItem(upvitam[index]));
-                    },
-                    child: Container(
-                      height: 250,
-                      width: 170,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 2, color: Colors.grey.withOpacity(0.5)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: SizedBox(
-                                //height: 220,
-                                //width: 150,
-                                child: Image(
-                                  image: NetworkImage(upvitam[index]['imgUrl']),
-                                  fit: BoxFit.cover,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(items.length, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                Navigator.of(context)
+                                    .push(routePageItem(items[index]));
+                              },
+                              child: Container(
+                                height: 250,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2,
+                                      color: Colors.grey.withOpacity(0.5)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: SizedBox(
+                                          //height: 220,
+                                          //width: 150,
+                                          child: Image(
+                                            image: Image.asset(
+                                                    'assets/download.jpg')
+                                                .image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Text(
+                                            items[index]['description'],
+                                            softWrap: true,
+                                            overflow: TextOverflow.fade,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "De: ${items[index]['pmc']}",
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 18,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                      Text("Por: ${items[index]['venda']}",
+                                          style: TextStyle(
+                                              color: Colors.blue[800],
+                                              fontSize: 20)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  upvitam[index]['description'],
-                                  softWrap: true,
-                                  overflow: TextOverflow.fade,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "De: ${upvitam[index]['pmc']}",
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 18,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                            Text("Por: ${upvitam[index]['venda']}",
+                          );
+                        }),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, left: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'UP Vitam Vitaminas',
                                 style: TextStyle(
-                                    color: Colors.blue[800], fontSize: 20)),
-                          ],
-                        ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(Icons.arrow_back_ios,
+                                  color: Colors.red, size: 17),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: Colors.red, size: 17),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                );
-              }),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, left: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Categorias',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
+                    const Divider(
+                      color: Colors.black,
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.arrow_back_ios, color: Colors.red, size: 17),
-                    Icon(Icons.arrow_forward_ios, color: Colors.red, size: 17),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            color: Colors.black,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(categories.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.grey.withOpacity(0.5),
-                        ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(upvitam.length, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                Navigator.of(context)
+                                    .push(routePageItem(upvitam[index]));
+                              },
+                              child: Container(
+                                height: 250,
+                                width: 170,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2,
+                                      color: Colors.grey.withOpacity(0.5)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 5),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: SizedBox(
+                                          //height: 220,
+                                          //width: 150,
+                                          child: Image(
+                                            image: NetworkImage(
+                                                upvitam[index]['imgUrl']),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Text(
+                                            upvitam[index]['description'],
+                                            softWrap: true,
+                                            overflow: TextOverflow.fade,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "De: ${upvitam[index]['pmc']}",
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 18,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                      Text("Por: ${upvitam[index]['venda']}",
+                                          style: TextStyle(
+                                              color: Colors.blue[800],
+                                              fontSize: 20)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
                       ),
-                      child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(
-                            categories[index]['title'],
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red),
-                          ))
-                      /*Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12, left: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Categorias',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(Icons.arrow_back_ios,
+                                  color: Colors.red, size: 17),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: Colors.red, size: 17),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      color: Colors.black,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(categories.length, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.grey.withOpacity(0.5),
+                                  ),
+                                ),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Text(
+                                      categories[index]['title'],
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red),
+                                    ))
+                                /*Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -332,14 +377,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         )
                       ],
                     ),*/
+                                ),
+                          );
+                        }),
                       ),
-                );
-              }),
-            ),
-          ),
-        ],
-      ),
-    );
+                    ),
+                  ],
+                ),
+        ));
   }
 
   /*Route createRoute(Map<String, dynamic> item) {

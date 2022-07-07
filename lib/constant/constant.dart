@@ -29,6 +29,8 @@ Map<String, String> header = {
   "Content-Type": "application/json"
 };
 
+List<Map> lojas = [];
+
 List<Map<dynamic, dynamic>> orders = [];
 
 List<Map<String, dynamic>> items = [

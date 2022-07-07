@@ -1,6 +1,7 @@
 import 'package:delivery_app_multi/pages/cart_page.dart';
 import 'package:delivery_app_multi/pages/homepage.dart';
 import 'package:delivery_app_multi/pages/profile_page.dart';
+import 'package:delivery_app_multi/widgets/list_lojas.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,17 +17,59 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int activeTab = 0;
-  Cart cart = Cart();
+  Cart cart = Get.put(Cart());
   AppBar? appBar;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: activeTab == 0 ? getDrawer(context) : null,
       resizeToAvoidBottomInset: false,
       appBar: getAppBar(),
       backgroundColor: Colors.white,
       bottomNavigationBar: getFooter(),
       body: getBody(),
+    );
+  }
+
+  Widget getDrawer(BuildContext context) {
+    return Drawer(
+      elevation: 1,
+      child: SingleChildScrollView(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Image(
+                        image: Image.asset('assets/logo-multidrogas-mini.png')
+                            .image,
+                        fit: BoxFit.scaleDown,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              decoration: BoxDecoration(color: Colors.blue[900]),
+            ),
+            Card(
+              elevation: 3,
+              child: ListTile(
+                onTap: () {},
+                title: const Text(
+                  'Alterar loja',
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -39,7 +82,7 @@ class _RootPageState extends State<RootPage> {
           title: Image(
             image: Image.asset('assets/logo-multidrogas-mini.png').image,
             fit: BoxFit.fitWidth,
-            color: Colors.white,
+            color: Colors.red,
           ),
           centerTitle: true,
         );
