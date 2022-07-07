@@ -9,18 +9,17 @@ import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'back4app/credentials.dart';
 import 'pages/login/SignUp_Pages/userdata_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); // Função para bloquear rotação
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
-
-  print(DateTime.now());
-  print('Sucesso ao inicializar');
 
   runApp(const MyApp());
 }

@@ -135,8 +135,8 @@ class _SigninPageState extends State<SigninPage> {
               ),
             )
           : SafeArea(
-              minimum: const EdgeInsets.all(20),
-              child: Column(
+            minimum: const EdgeInsets.all(20),
+            child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -324,7 +324,7 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                 ],
               ),
-            ),
+          ),
     );
   }
 }
