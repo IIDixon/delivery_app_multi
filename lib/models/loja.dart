@@ -20,6 +20,16 @@ class Loja extends GetxController {
     return loja;
   }
 
+  void reset() {
+    id = ''.obs;
+    razaoSocial = ''.obs;
+    nomeFantasia = ''.obs;
+    cidade = ''.obs;
+    rua = ''.obs;
+    bairro = ''.obs;
+    number = ''.obs;
+  }
+
   Loja._internal();
 
   late var id = ''.obs;

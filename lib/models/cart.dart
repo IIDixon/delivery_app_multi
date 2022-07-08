@@ -20,6 +20,10 @@ class Cart extends GetxController {
     items.removeAt(i);
   }
 
+  void reset() {
+    items.clear();
+  }
+
   double valueItems() {
     double value = 0;
 

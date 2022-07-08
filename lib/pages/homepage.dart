@@ -2,6 +2,7 @@ import 'package:delivery_app_multi/models/item.dart';
 import 'package:delivery_app_multi/pages/item_page.dart';
 import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constant/constant.dart';
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.reverseDuration = const Duration(seconds: 1);
   }
 
-  Widget alertDialog() {
+  /*Widget alertDialog() {
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.5,
@@ -58,14 +59,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         },
       ),
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-          child: loja.id.value == '' || loja.id.value.isEmpty
-              ? ListLojas(context)
+          child: loja.id.value == ''
+              ? Column(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Selecione uma loja para carregar os produtos',
+                              softWrap: true,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.blue[900],
+                                fontSize: 20,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    ListLojas(context)
+                  ],
+                )
               : ListView(
                   children: [
                     const Padding(
@@ -100,10 +124,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: const [
-                              Icon(Icons.arrow_back_ios,
-                                  color: Colors.red, size: 17),
-                              Icon(Icons.arrow_forward_ios,
-                                  color: Colors.red, size: 17),
+                              Text(
+                                'Ver todos',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 17,
+                                ),
+                              )
                             ],
                           ),
                         ],
@@ -209,10 +236,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: const [
-                              Icon(Icons.arrow_back_ios,
-                                  color: Colors.red, size: 17),
-                              Icon(Icons.arrow_forward_ios,
-                                  color: Colors.red, size: 17),
+                              Text(
+                                'Ver todos',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 17,
+                                ),
+                              )
                             ],
                           ),
                         ],

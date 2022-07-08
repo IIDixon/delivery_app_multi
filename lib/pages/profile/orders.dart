@@ -18,6 +18,8 @@ class MyOrdersPage extends StatefulWidget {
 class _MyOrdersPageState extends State<MyOrdersPage> {
   Person person = Get.put(Person());
 
+  final ScrollController scrollController = ScrollController();
+
   List<String> status = [
     'Confirmando',
     'Separando',
@@ -88,58 +90,65 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   Widget createData(BuildContext context, AsyncSnapshot snapshot) {
     List<Map> order = snapshot.data;
     return order.isNotEmpty
-        ? ListView.builder(
-            itemCount: order.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                        'Carregando produtos...',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      backgroundColor: Colors.red,
-                      duration: Duration(seconds: 20),
-                    ));
-                    List<Map> itens = await getItens(order[index]['sale']);
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    showModal(context, order[index], itens);
-                  },
-                  child: ListTile(
-                    leading: Hero(
-                        tag: 'order $index',
-                        child: Icon(
-                          Icons.sell_rounded,
-                          color: Colors.blue[900],
-                        )),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xFF0D47A1),
-                    ),
-                    /*title: Text(
+        ? Scrollbar(
+            controller: scrollController,
+            isAlwaysShown: true,
+            showTrackOnHover: true,
+            interactive: true,
+            child: ListView.builder(
+                controller: scrollController,
+                itemCount: order.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                            'Carregando produtos...',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 20),
+                        ));
+                        List<Map> itens = await getItens(order[index]['sale']);
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        showModal(context, order[index], itens);
+                      },
+                      child: ListTile(
+                        leading: Hero(
+                            tag: 'order $index',
+                            child: Icon(
+                              Icons.sell_rounded,
+                              color: Colors.blue[900],
+                            )),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Color(0xFF0D47A1),
+                        ),
+                        /*title: Text(
                     'Pedido - 11111' /*'Pedido - ${orders[index]['numeroVenda']}'*/,
                     style: TextStyle(fontSize: 20, color: Colors.blue[900])),*/
-                    title: Text('Loja - ${order[index]['loja']}',
-                        overflow: TextOverflow.fade,
-                        style:
-                            TextStyle(fontSize: 20, color: Colors.blue[900])),
-                    subtitle: Text(
-                        'Data - ${DateFormat('dd/MM/yyyy H:mm').format(DateTime.parse(order[index]['date']['iso']))}',
-                        style:
-                            TextStyle(fontSize: 18, color: Colors.blue[900])),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    animationDuration: const Duration(seconds: 2),
-                    primary: Colors.white,
-                    onPrimary: Colors.blue,
-                    shadowColor: Colors.blue[900],
-                    onSurface: Colors.blue[900],
-                  ),
-                ),
-              );
-            })
+                        title: Text('Loja - ${order[index]['loja']}',
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                                fontSize: 20, color: Colors.blue[900])),
+                        subtitle: Text(
+                            'Data - ${DateFormat('dd/MM/yyyy H:mm').format(DateTime.parse(order[index]['date']['iso']))}',
+                            style: TextStyle(
+                                fontSize: 18, color: Colors.blue[900])),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        animationDuration: const Duration(seconds: 2),
+                        primary: Colors.white,
+                        onPrimary: Colors.blue,
+                        shadowColor: Colors.blue[900],
+                        onSurface: Colors.blue[900],
+                      ),
+                    ),
+                  );
+                }))
         : Center(
             child: Text(
               "Nenhum pedido encontrado",
@@ -317,32 +326,38 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 3, bottom: 3),
-                    child: ListView.builder(
-                        //shrinkWrap: true,
-                        itemCount: itens.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: ListTile(
-                              leading: Text(
-                                '${itens[index]['unit']}x',
-                                style: const TextStyle(
-                                    fontSize: 17, color: Colors.red),
+                    child: Scrollbar(
+                      controller: scrollController,
+                      isAlwaysShown: true,
+                      showTrackOnHover: true,
+                      interactive: true,
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: itens.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: ListTile(
+                                leading: Text(
+                                  '${itens[index]['unit']}x',
+                                  style: const TextStyle(
+                                      fontSize: 17, color: Colors.red),
+                                ),
+                                title: Text(
+                                  itens[index]['name'],
+                                  //overflow: TextOverflow.ellipsis,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      fontSize: 19, color: Colors.blue[900]),
+                                ),
+                                trailing: Text(
+                                  'R\$ ${itens[index]['totalValue']}',
+                                  style: const TextStyle(
+                                      fontSize: 19, color: Colors.blue),
+                                ),
                               ),
-                              title: Text(
-                                itens[index]['name'],
-                                //overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontSize: 19, color: Colors.blue[900]),
-                              ),
-                              trailing: Text(
-                                'R\$ ${itens[index]['totalValue']}',
-                                style: const TextStyle(
-                                    fontSize: 19, color: Colors.blue),
-                              ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                    ),
                   ),
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [

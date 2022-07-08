@@ -25,6 +25,8 @@ class _CartPageState extends State<CartPage> {
   Cart cart = Get.put(Cart());
   Person person = Get.put(Person());
 
+  final ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,139 +47,147 @@ class _CartPageState extends State<CartPage> {
               () => cart.items.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: ListView(
-                        children: List.generate(cart.items.length, (index) {
-                          return Slidable(
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.grey)),
-                              ),
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    child: Image(
-                                      image: NetworkImage(
-                                          cart.items[index].imgUrl),
-                                      fit: BoxFit.fill,
+                      child: Scrollbar(
+                        controller: scrollController,
+                        isAlwaysShown: true,
+                        showTrackOnHover: true,
+                        interactive: true,
+                        child: ListView(
+                          controller: scrollController,
+                          children: List.generate(cart.items.length, (index) {
+                            return Slidable(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(color: Colors.grey)),
+                                ),
+                                child: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      child: Image(
+                                        image: NetworkImage(
+                                            cart.items[index].imgUrl),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(cart.items[index].name,
-                                            softWrap: true,
-                                            overflow: TextOverflow.fade,
-                                            style: TextStyle(
-                                                color: Colors.blue[900],
-                                                fontSize: 18)),
-                                        Row(children: [
-                                          Text(
-                                              '${cart.items[index].qtde} Unidade(s)',
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(cart.items[index].name,
+                                              softWrap: true,
+                                              overflow: TextOverflow.fade,
                                               style: TextStyle(
                                                   color: Colors.blue[900],
-                                                  fontSize: 18))
+                                                  fontSize: 18)),
+                                          Row(children: [
+                                            Text(
+                                                '${cart.items[index].qtde} Unidade(s)',
+                                                style: TextStyle(
+                                                    color: Colors.blue[900],
+                                                    fontSize: 18))
+                                          ]),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Valor Unitário:',
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 18),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                'R\$ ${cart.items[index].valueSale.toStringAsFixed(2)}',
+                                                style: TextStyle(
+                                                    color: Colors.blue[900],
+                                                    fontSize: 18),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Valor Total:',
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 18),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                'R\$ ${(cart.items[index].qtde * cart.items[index].valueSale).toStringAsFixed(2)}',
+                                                style: TextStyle(
+                                                    color: Colors.blue[900],
+                                                    fontSize: 18),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              ScaffoldMessenger.of(context)
+                                                  .clearSnackBars();
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    'Deslize para remover o item',
+                                                    style: TextStyle(
+                                                        fontSize: 16)),
+                                                backgroundColor: Colors.red,
+                                                duration: Duration(
+                                                    milliseconds: 1000),
+                                              ));
+                                            },
+                                            icon: const Icon(
+                                                Icons.arrow_back_ios_new,
+                                                color: Colors.red),
+                                            tooltip: 'Deslize para remover',
+                                          ),
                                         ]),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Valor Unitário:',
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontSize: 18),
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              'R\$ ${cart.items[index].valueSale.toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                  color: Colors.blue[900],
-                                                  fontSize: 18),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Valor Total:',
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontSize: 18),
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              'R\$ ${(cart.items[index].qtde * cart.items[index].valueSale).toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                  color: Colors.blue[900],
-                                                  fontSize: 18),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                  ],
+                                ),
+                              ),
+                              endActionPane: ActionPane(
+                                extentRatio: 0.25,
+                                motion: BehindMotion(),
+                                children: [
+                                  SlidableAction(
+                                    flex: 1,
+                                    onPressed: (context) => {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars(),
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            duration:
+                                                Duration(milliseconds: 1500),
+                                            content: Text(
+                                                'Item removido do carrinho',
+                                                style: TextStyle(fontSize: 16)),
+                                            backgroundColor: Colors.red),
+                                      ),
+                                      cart.removeItem(index)
+                                    },
+                                    backgroundColor: Colors.red,
+                                    icon: Icons.delete,
+                                    label: 'Remover',
                                   ),
-                                  Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            ScaffoldMessenger.of(context)
-                                                .clearSnackBars();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Deslize para remover o item',
-                                                  style:
-                                                      TextStyle(fontSize: 16)),
-                                              backgroundColor: Colors.red,
-                                              duration:
-                                                  Duration(milliseconds: 1000),
-                                            ));
-                                          },
-                                          icon: const Icon(
-                                              Icons.arrow_back_ios_new,
-                                              color: Colors.red),
-                                          tooltip: 'Deslize para remover',
-                                        ),
-                                      ]),
                                 ],
                               ),
-                            ),
-                            endActionPane: ActionPane(
-                              extentRatio: 0.25,
-                              motion: BehindMotion(),
-                              children: [
-                                SlidableAction(
-                                  flex: 1,
-                                  onPressed: (context) => {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars(),
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          duration:
-                                              Duration(milliseconds: 1500),
-                                          content: Text(
-                                              'Item removido do carrinho',
-                                              style: TextStyle(fontSize: 16)),
-                                          backgroundColor: Colors.red),
-                                    ),
-                                    cart.removeItem(index)
-                                  },
-                                  backgroundColor: Colors.red,
-                                  icon: Icons.delete,
-                                  label: 'Remover',
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                        ),
                       ),
                     )
                   : const Center(
