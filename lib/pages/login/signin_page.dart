@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:delivery_app_multi/models/person.dart';
 import 'package:delivery_app_multi/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _SigninPageState extends State<SigninPage> {
   final passwordController = TextEditingController();
 
   bool processing = false;
+  bool obscureText = true;
 
   Future<void> login() async {
     http.Response response;
@@ -135,8 +137,8 @@ class _SigninPageState extends State<SigninPage> {
               ),
             )
           : SafeArea(
-            minimum: const EdgeInsets.all(20),
-            child: Column(
+              minimum: const EdgeInsets.all(20),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -153,12 +155,30 @@ class _SigninPageState extends State<SigninPage> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: SizedBox(
+                      height: 30,
+                      child: DefaultTextStyle(
+                        style: TextStyle(fontSize: 21, color: Colors.blue[900]),
+                        child: AnimatedTextKit(
+                            totalRepeatCount: 1,
+                            pause: const Duration(milliseconds: 500),
+                            animatedTexts: [
+                              TyperAnimatedText(
+                                  'Com você pela saúde da nossa gente',
+                                  speed: const Duration(milliseconds: 100),
+                                  textAlign: TextAlign.center)
+                            ]),
+                      ),
+                    ),
+                  ),
                   Expanded(
                     flex: 3,
                     child: Form(
                       key: formKey,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -215,13 +235,23 @@ class _SigninPageState extends State<SigninPage> {
                                 }
                                 return null;
                               },
-                              obscureText: true,
+                              obscureText: obscureText,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 label: const Text('Senha'),
                                 labelStyle: TextStyle(
                                   color: Colors.blue[900],
                                   fontSize: 20,
+                                ),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      obscureText = !obscureText;
+                                    });
+                                  },
+                                  icon: obscureText == true
+                                      ? const Icon(Icons.visibility)
+                                      : const Icon(Icons.visibility_off),
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
@@ -324,7 +354,7 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                 ],
               ),
-          ),
+            ),
     );
   }
 }

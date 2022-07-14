@@ -1,11 +1,8 @@
 import 'package:delivery_app_multi/pages/cart_page.dart';
 import 'package:delivery_app_multi/pages/homepage.dart';
 import 'package:delivery_app_multi/pages/profile_page.dart';
-import 'package:delivery_app_multi/widgets/list_lojas.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../constant/constant.dart';
 import '../models/cart.dart';
 import '../models/loja.dart';
 
@@ -21,13 +18,14 @@ class _RootPageState extends State<RootPage> {
   Cart cart = Get.put(Cart());
   Loja loja = Get.put(Loja());
   AppBar? appBar;
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         //drawer: activeTab == 0 ? getDrawer(context) : null,
         resizeToAvoidBottomInset: false,
-        appBar: getAppBar(),
+        //appBar: getAppBar(),
         backgroundColor: Colors.white,
         bottomNavigationBar: getFooter(),
         body: getBody(),
@@ -67,7 +65,7 @@ class _RootPageState extends State<RootPage> {
                                       Navigator.of(context).pop();
                                     },
                                     child: Text(
-                                      'Sim',
+                                      'Confirmar',
                                       style: TextStyle(
                                           fontSize: 19,
                                           color: Colors.blue[900]),
@@ -78,7 +76,7 @@ class _RootPageState extends State<RootPage> {
                                       Navigator.of(context).pop();
                                     },
                                     child: const Text(
-                                      'Nao',
+                                      'Cancelar',
                                       style: TextStyle(
                                           fontSize: 19, color: Colors.red),
                                     ),
@@ -133,7 +131,7 @@ class _RootPageState extends State<RootPage> {
     );
   }*/
 
-  PreferredSizeWidget getAppBar() {
+  /*PreferredSizeWidget getAppBar() {
     switch (activeTab) {
       case 0:
         return AppBar(
@@ -199,11 +197,18 @@ class _RootPageState extends State<RootPage> {
       default:
         return AppBar();
     }
-  }
+  }*/
 
+  // Páginas
   Widget getBody() {
-    return IndexedStack(
-      index: activeTab,
+    return PageView(
+      //physics: const NeverScrollableScrollPhysics(), // Caso queira bloquear a troca de tela por gestos
+      controller: pageController,
+      onPageChanged: (index) {
+        setState(() {
+          activeTab = index;
+        });
+      },
       children: const [
         HomePage(),
         Center(
@@ -221,7 +226,60 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
+  /*Widget getBody() {
+    return IndexedStack(
+      index: activeTab,
+      children: const [
+        HomePage(),
+        Center(
+          child: Text(
+            'Página 2',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        CartPage(),
+        ProfilePage(),
+      ],
+    );
+  }*/
+
+  //BottomNavigator
   Widget getFooter() {
+    return BottomNavigationBar(
+      iconSize: 34,
+      selectedFontSize: 17,
+      unselectedFontSize: 15,
+      currentIndex: activeTab,
+      onTap: (i) {
+        setState(() {
+          activeTab = i;
+          pageController.jumpToPage(i);
+        });
+      },
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.blue[900],
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white.withOpacity(0.6),
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home,
+          ),
+          label: 'Início',
+        ),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Busca'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_outlined), label: 'Carrinho'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), label: 'Perfil'),
+      ],
+    );
+  }
+
+  /*Widget getFooter() {
     return Container(
       height: 60,
       decoration: BoxDecoration(
@@ -258,4 +316,5 @@ class _RootPageState extends State<RootPage> {
       ),
     );
   }
+  */
 }
