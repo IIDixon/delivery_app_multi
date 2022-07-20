@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:delivery_app_multi/models/person.dart';
-import 'package:delivery_app_multi/pages/profile_page.dart';
+import 'package:delivery_app_multi/views/index/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

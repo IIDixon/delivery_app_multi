@@ -6,7 +6,7 @@ import 'dart:convert';
 import '../../../back4app/credentials.dart';
 import '../../../constant/constant.dart';
 import '../../../models/person.dart';
-import '../../root_page.dart';
+import '../../index/root_page.dart';
 
 class SignupEmailPage extends StatefulWidget {
   const SignupEmailPage({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
-import 'package:delivery_app_multi/views/cart_page.dart';
-import 'package:delivery_app_multi/views/homepage.dart';
-import 'package:delivery_app_multi/views/profile_page.dart';
+import 'package:delivery_app_multi/views/index/cart_page.dart';
+import 'package:delivery_app_multi/views/index/homepage.dart';
+import 'package:delivery_app_multi/views/index/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../models/cart.dart';
-import '../models/loja.dart';
+import '../../models/cart.dart';
+import '../../models/loja.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);

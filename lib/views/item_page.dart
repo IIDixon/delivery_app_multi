@@ -144,7 +144,8 @@ class _ItemPageState extends State<ItemPage> {
                               width: 150,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Color(0xFF0D47A1)),
+                                border:
+                                    Border.all(color: const Color(0xFF0D47A1)),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8),

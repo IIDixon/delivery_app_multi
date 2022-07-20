@@ -15,8 +15,8 @@ Widget ListLojas(BuildContext context) {
     width: MediaQuery.of(context).size.width,
     child: Scrollbar(
       controller: scrollController,
-      isAlwaysShown: true,
-      showTrackOnHover: true,
+      thumbVisibility: true,
+      trackVisibility: true,
       interactive: true,
       child: ListView.builder(
         controller: scrollController,

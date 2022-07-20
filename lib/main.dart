@@ -1,15 +1,14 @@
 import 'dart:convert';
-
 import 'package:delivery_app_multi/constant/constant.dart';
-import 'package:delivery_app_multi/views/cart_page.dart';
+import 'package:delivery_app_multi/views/index/cart_page.dart';
 import 'package:delivery_app_multi/views/checkout_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/address_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/email_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/userdata_page.dart';
 import 'package:delivery_app_multi/views/login/signin_page.dart';
 import 'package:delivery_app_multi/views/profile/orders.dart';
-import 'package:delivery_app_multi/views/profile_page.dart';
-import 'package:delivery_app_multi/views/root_page.dart';
+import 'package:delivery_app_multi/views/index/profile_page.dart';
+import 'package:delivery_app_multi/views/index/root_page.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

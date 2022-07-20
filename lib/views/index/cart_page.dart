@@ -1,16 +1,9 @@
-import 'dart:convert';
 import 'dart:core';
-import 'dart:math';
-import 'package:delivery_app_multi/constant/constant.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import '../models/cart.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-import '../models/item.dart';
-import '../models/person.dart';
+import 'package:get/get.dart';
+import '../../models/cart.dart';
+import '../../models/person.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -185,7 +178,7 @@ class _CartPageState extends State<CartPage> {
                                 ),
                                 endActionPane: ActionPane(
                                   extentRatio: 0.25,
-                                  motion: BehindMotion(),
+                                  motion: const BehindMotion(),
                                   children: [
                                     SlidableAction(
                                       flex: 1,

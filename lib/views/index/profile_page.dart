@@ -1,13 +1,9 @@
-import 'dart:convert';
-
-import 'package:delivery_app_multi/pages/profile/address.dart';
-import 'package:delivery_app_multi/pages/profile/orders.dart';
-import 'package:delivery_app_multi/pages/profile/user_data.dart';
+import 'package:delivery_app_multi/views/profile/address.dart';
+import 'package:delivery_app_multi/views/profile/orders.dart';
+import 'package:delivery_app_multi/views/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import '../constant/constant.dart';
-import '../models/person.dart';
+import '../../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -72,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Container(
                                   decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Color(0xFF0D47A1)),
+                                        Border.all(color: const Color(0xFF0D47A1)),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: const Icon(Icons.person, size: 50)),

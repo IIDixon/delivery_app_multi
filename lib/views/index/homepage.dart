@@ -1,11 +1,10 @@
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
 import 'package:flutter/material.dart';
-import '../constant/constant.dart';
-import '../models/loja.dart';
-import '../route/route.dart';
+import '../../models/loja.dart';
+import '../../constant/constant.dart';
+import '../../route/route.dart';
 import 'package:get/get.dart';
-
-import '../widgets/list_lojas.dart';
+import '../../widgets/list_lojas.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
