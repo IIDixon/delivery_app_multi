@@ -1,10 +1,5 @@
-import 'package:delivery_app_multi/models/item.dart';
-import 'package:delivery_app_multi/pages/item_page.dart';
-import 'package:delivery_app_multi/pages/root_page.dart';
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../constant/constant.dart';
 import '../models/loja.dart';
 import '../route/route.dart';

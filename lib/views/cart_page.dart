@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
 import 'package:delivery_app_multi/constant/constant.dart';
-import 'package:delivery_app_multi/pages/root_page.dart';
-import 'package:localization/localization.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,8 +73,8 @@ class _CartPageState extends State<CartPage> {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Scrollbar(
                           controller: scrollController,
-                          isAlwaysShown: true,
-                          showTrackOnHover: true,
+                          trackVisibility: true,
+                          thumbVisibility: true,
                           interactive: true,
                           child: ListView(
                             controller: scrollController,
@@ -354,20 +352,6 @@ class _CartPageState extends State<CartPage> {
                                         Navigator.of(context)
                                             .pushNamed('/checkout');
                                       }
-                                      /*var map =
-                                          jsonDecode(toJson(person, cart.items));
-                                      postOrder(map);
-                                      cart.items.clear();
-                                      //Navigator.of(context).pushNamed('/signin');
-                                      ScaffoldMessenger.of(context)
-                                          .clearSnackBars();
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                              backgroundColor: Colors.red,
-                                              content: Text(
-                                                  'Pedido efetuado com sucesso'),
-                                              duration:
-                                                  Duration(milliseconds: 1000)));*/
                                     }
                                   : null,
                               child: const Text(
@@ -392,68 +376,5 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
-  }
-
-  void getTodo() async {
-    QueryBuilder<ParseObject> queryTodo =
-        QueryBuilder<ParseObject>(ParseObject('Product'));
-
-    //queryTodo.whereContains('descricao', 'Anador');
-
-    final ParseResponse apiResponse = await queryTodo.query();
-
-    if (apiResponse.success && apiResponse.results != null) {
-      for (var i in apiResponse.results!) {
-        print((i as ParseObject)['descricao']
-            .toString()); // Pegando apenas o nome do produto
-      }
-    } else {
-      print(apiResponse.error);
-    }
-  }
-
-  String toJson(Person person, List<Item> itens) {
-    var order = <dynamic, dynamic>{};
-    var num = Random();
-    double value = 5; // 5 para embutir já o frete, apenas demonstrativo
-    DateTime data = DateTime.now();
-    DateFormat('dd/MM/yyyy')
-        .format(data); // Formata a data em um padrão específico
-    order['loja'] = 'Loja Teste';
-    order['cliente'] = person.name.toString();
-    order['numeroVenda'] = num.nextInt(99999);
-    order['data'] =
-        data.toIso8601String(); // Formata a data para o suportado pelo JSON
-    order['itens'] = listItem(itens);
-    for (int i = 0; i < listItem(itens).length; i++) {
-      value += double.parse(listItem(itens)[i]['total']);
-    }
-    order['total'] = value.toStringAsFixed(2);
-    order['tpp'] = 'Dinheiro';
-    order['status'] = 'Separando';
-
-    print(jsonEncode(order));
-    return jsonEncode(order);
-  }
-
-  List<Map> listItem(List<Item> itens) {
-    List<Map> list = [];
-    var num = Random();
-    for (int i = 0; i < itens.length; i++) {
-      Map map = {};
-      map['codigo'] = num.nextInt(99999);
-      map['descricao'] = itens[i].name;
-      map['qtde'] = itens[i].qtde;
-      map['total'] = (itens[i].qtde * itens[i].valueSale).toStringAsFixed(2);
-      list.add(map);
-    }
-
-    return list;
-  }
-
-  void postOrder(Map order) {
-    setState(() {
-      orders.add(order);
-    });
   }
 }

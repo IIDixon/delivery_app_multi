@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pages/item_page.dart';
+import '../views/item_page.dart';
 
 Route routePageItem(Map<String, dynamic> item) {
   return PageRouteBuilder(

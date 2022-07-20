@@ -1,6 +1,6 @@
-import 'package:delivery_app_multi/pages/cart_page.dart';
-import 'package:delivery_app_multi/pages/homepage.dart';
-import 'package:delivery_app_multi/pages/profile_page.dart';
+import 'package:delivery_app_multi/views/cart_page.dart';
+import 'package:delivery_app_multi/views/homepage.dart';
+import 'package:delivery_app_multi/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/cart.dart';
