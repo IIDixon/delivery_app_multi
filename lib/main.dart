@@ -1,26 +1,31 @@
-import 'package:delivery_app_multi/pages/cart_page.dart';
-import 'package:delivery_app_multi/pages/checkout_page.dart';
-import 'package:delivery_app_multi/pages/login/SignUp_Pages/address_page.dart';
-import 'package:delivery_app_multi/pages/login/SignUp_Pages/email_page.dart';
-import 'package:delivery_app_multi/pages/login/SignUp_Pages/userdata_page.dart';
-import 'package:delivery_app_multi/pages/login/signin_page.dart';
-import 'package:delivery_app_multi/pages/profile/orders.dart';
-import 'package:delivery_app_multi/pages/profile_page.dart';
-import 'package:delivery_app_multi/pages/root_page.dart';
+import 'dart:convert';
+import 'package:delivery_app_multi/constant/constant.dart';
+import 'package:delivery_app_multi/views/index/cart_page.dart';
+import 'package:delivery_app_multi/views/checkout/checkout_page.dart';
+import 'package:delivery_app_multi/views/login/SignUp_Pages/address_page.dart';
+import 'package:delivery_app_multi/views/login/SignUp_Pages/email_page.dart';
+import 'package:delivery_app_multi/views/login/SignUp_Pages/userdata_page.dart';
+import 'package:delivery_app_multi/views/login/signin_page.dart';
+import 'package:delivery_app_multi/views/profile/orders.dart';
+import 'package:delivery_app_multi/views/index/profile_page.dart';
+import 'package:delivery_app_multi/views/index/root_page.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'back4app/credentials.dart';
-import 'pages/login/SignUp_Pages/userdata_page.dart';
+import 'models/loja.dart';
+import 'views/login/SignUp_Pages/userdata_page.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]); // Função para bloquear rotação
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
-
-  print(DateTime.now());
-  print('Sucesso ao inicializar');
 
   runApp(const MyApp());
 }
@@ -58,19 +63,34 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  Loja loja = Get.put(Loja());
+
   @override
   Widget build(BuildContext context) {
     return EasySplashScreen(
-        logo: const Image(
-          image: AssetImage('assets/logo-multidrogas-big2.png'),
-        ),
-        logoSize: 200,
-        backgroundColor: Colors.white,
-        showLoader: true,
-        loaderColor: const Color(0XFF0D47A1),
-        loadingText: Text('Carregando dados...',
-            style: TextStyle(color: Colors.blue[900], fontSize: 20)),
-        navigator: const RootPage(),
-        durationInSeconds: 5);
+      logo: const Image(
+        image: AssetImage('assets/logo-multidrogas-big2.png'),
+      ),
+      logoSize: 200,
+      backgroundColor: Colors.white,
+      showLoader: true,
+      loadingText: Text('Carregando dados...',
+          style: TextStyle(color: Colors.blue[900], fontSize: 20)),
+      futureNavigator: getLojas(),
+    );
+  }
+
+  Future<Widget> getLojas() async {
+    http.Response response = await http.post(
+        Uri.parse("https://parseapi.back4app.com/parse/functions/get-lojas"),
+        headers: header);
+
+    Map orders = jsonDecode(response.body);
+
+    for (int i = 0; i < orders['result'].length; i++) {
+      lojas.add(orders['result'][i]);
+    }
+
+    return const RootPage();
   }
 }

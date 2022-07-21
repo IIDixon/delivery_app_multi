@@ -1,11 +1,8 @@
+import 'package:delivery_app_multi/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/get_utils/get_utils.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../../../back4app/credentials.dart';
+
 import '../../../models/person.dart';
-import '../../root_page.dart';
 
 class SignupEmailPage extends StatefulWidget {
   const SignupEmailPage({Key? key}) : super(key: key);
@@ -19,12 +16,10 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfController = TextEditingController();
-
+  final UserController _userController = UserController();
   final emailKey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-
-  var processing = false.obs;
 
   bool verificaCampos() {
     if (emailKey.currentState != null) {
@@ -49,7 +44,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                   //'puseAndRemoveUntil' em conjunto com '(Route<dynamic> route) => false'
                   // remove todas as telas da pilha antes de trazer uma nova tela
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/root', ModalRoute.withName('/root'));
+                      '/root', ModalRoute.withName('/'));
                 },
               ),
             ],
@@ -77,59 +72,13 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
         });
   }
 
-  void userRegistration() async {
-    final email = person.email.value;
-    final name = person.name.value;
-    final password = person.password.value;
-    final cpf = person.cpf.value;
-    final tel = person.tel.value;
-
-    person.reset();
-
-    http.Response response;
-    Map<String, String> header = {
-      "X-Parse-Application-Id": keyApplicationId,
-      "X-Parse-REST-API-Key": restApiKey,
-      "Content-Type": "application/json"
-    };
-
-    Map<String, String> body = {
-      "email": email,
-      "password": password,
-      "name": name!,
-      "cpf": cpf,
-      "tel": tel
-    };
-
-    response = await http.post(
-        Uri.parse("https://parseapi.back4app.com/parse/functions/create-user"),
-        headers: header,
-        body: jsonEncode(body));
-    //await Future.delayed(const Duration(seconds: 2));
-    var resp = json.decode(response.body);
-    if (response.statusCode == 200) {
-      person = Person.fromjson(
-          name: resp['result']['name'],
-          cpf: cpf,
-          email: resp['result']['email'],
-          tel: tel,
-          id: resp['result']['objectId']);
-
-      processing.value = false;
-      showSuccess();
-    } else {
-      processing.value = false;
-      showError(resp['error']);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        floatingActionButton: processing.value == false
+        floatingActionButton: _userController.processing.isFalse
             ? Padding(
                 padding: const EdgeInsets.all(40),
                 child: Row(
@@ -139,7 +88,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                         heroTag: "btn3",
                         backgroundColor: Colors.blue[900],
                         child: const Icon(Icons.navigate_before),
-                        onPressed: processing.value == false
+                        onPressed: _userController.processing.isFalse
                             ? () {
                                 Navigator.of(context).pop();
                               }
@@ -148,16 +97,25 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                         heroTag: "btn4",
                         backgroundColor: Colors.blue[900],
                         child: const Icon(Icons.navigate_next),
-                        onPressed: processing.value == false
-                            ? () {
+                        onPressed: _userController.processing.isFalse
+                            ? () async {
                                 if (verificaCampos() &&
                                     emailKey.currentState!.validate()) {
                                   person.email.value = emailController.text;
                                   person.password.value =
                                       passwordController.text;
-                                  processing.value = true;
-                                  userRegistration();
-                                  //userRegistration();
+                                  _userController.changeStatus();
+                                  int resp = await _userController
+                                      .userRegistration(person);
+
+                                  if (resp == 200) {
+                                    showSuccess();
+                                  } else if (resp == 101) {
+                                    showError('Email já possui cadastro.');
+                                  } else {
+                                    showError(
+                                        'Houve um erro ao processar sua solicitação.');
+                                  }
                                 }
                               }
                             : null)
@@ -166,7 +124,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
               )
             : null,
         body: SafeArea(
-          child: processing.value == true
+          child: _userController.processing.isTrue
               ? Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(
@@ -200,7 +158,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
-                            'Insira suas credencias para acesso',
+                            'Insira suas credenciais para acesso',
                             style: TextStyle(
                                 color: Colors.blue[900], fontSize: 20),
                             softWrap: true,
@@ -214,7 +172,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 TextFormField(
-                                  readOnly: processing.value,
+                                  readOnly: _userController.processing.value,
                                   controller: emailController,
                                   validator: (text) {
                                     if (text == null || text.isEmpty) {
@@ -249,7 +207,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                                   height: 15,
                                 ),
                                 TextFormField(
-                                  readOnly: processing.value,
+                                  readOnly: _userController.processing.value,
                                   controller: passwordController,
                                   obscureText: true,
                                   validator: (text) {
@@ -283,7 +241,7 @@ class _SignupEmailPageState extends State<SignupEmailPage> {
                                   height: 15,
                                 ),
                                 TextFormField(
-                                  readOnly: processing.value,
+                                  readOnly: _userController.processing.value,
                                   controller: passwordConfController,
                                   obscureText: true,
                                   validator: (text) {

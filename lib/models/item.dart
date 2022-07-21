@@ -12,8 +12,8 @@ class Item {
 
   Item.fromJson({required Map<String, dynamic> json, required this.qtde})
       : name = json['description'],
-        value = double.parse(json['pmc']),
-        valueSale = double.parse(json['venda']),
+        value = json['pmc'],
+        valueSale = json['venda'],
         categoria = json['categoria'],
         imgUrl = json['imgUrl'],
         laboratorio = json['laboratorio'];

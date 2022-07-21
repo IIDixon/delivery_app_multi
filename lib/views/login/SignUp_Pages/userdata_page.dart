@@ -1,6 +1,4 @@
-import 'package:delivery_app_multi/pages/login/SignUp_Pages/address_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../models/person.dart';

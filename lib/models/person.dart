@@ -8,12 +8,22 @@ class Person extends GetxController {
   }
 
   factory Person.fromjson(
-      {String? name, String? cpf, String? email, String? tel, String? id}) {
+      {String? name,
+      String? cpf,
+      String? email,
+      String? tel,
+      String? id,
+      String? session}) {
     person.name.value = name!.capitalizeFirst;
-    person.cpf.value = cpf!;
+    if (cpf != null) {
+      person.cpf.value = cpf;
+    }
     person.email.value = email!;
-    person.tel.value = tel!;
-    if(id != null){
+    if (tel != null) {
+      person.tel.value = tel;
+    }
+    person.session.value = session!;
+    if (id != null) {
       person.id.value = id;
     }
     return person;
@@ -27,6 +37,7 @@ class Person extends GetxController {
   late var password = ''.obs;
   late var tel = ''.obs;
   late var id = ''.obs;
+  late var session = ''.obs;
 
   void reset() {
     name = ''.obs;
@@ -35,5 +46,6 @@ class Person extends GetxController {
     password = ''.obs;
     tel = ''.obs;
     id = ''.obs;
+    session = ''.obs;
   }
 }
