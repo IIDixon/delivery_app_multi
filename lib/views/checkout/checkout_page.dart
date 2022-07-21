@@ -1,10 +1,11 @@
 import 'package:delivery_app_multi/controllers/order_controller.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../constant/constant.dart';
-import '../models/cart.dart';
-import '../models/person.dart';
+import 'package:http/http.dart' as http;
+
+import '../../constant/constant.dart';
+import '../../models/cart.dart';
+import '../../models/person.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -18,7 +19,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final OrderController _orderController = Get.put(OrderController());
   Cart cart = Get.put(Cart());
   Person person = Get.put(Person());
-  bool processing = false;
   List<String> tpp = ['yJ7zEOZOlk', 'LqIt4nmVht', 'X542TENQdP', 'noP2MerEOy'];
 
   @override

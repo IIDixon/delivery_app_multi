@@ -3,6 +3,7 @@ import 'package:delivery_app_multi/views/index/homepage.dart';
 import 'package:delivery_app_multi/views/index/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../models/cart.dart';
 import '../../models/loja.dart';
 
@@ -17,7 +18,6 @@ class _RootPageState extends State<RootPage> {
   int activeTab = 0;
   Cart cart = Get.put(Cart());
   Loja loja = Get.put(Loja());
-  AppBar? appBar;
   final pageController = PageController();
 
   @override
@@ -25,7 +25,6 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
         //drawer: activeTab == 0 ? getDrawer(context) : null,
         resizeToAvoidBottomInset: false,
-        //appBar: getAppBar(),
         backgroundColor: Colors.white,
         bottomNavigationBar: getFooter(),
         body: getBody(),

@@ -3,6 +3,7 @@ import 'package:delivery_app_multi/views/profile/orders.dart';
 import 'package:delivery_app_multi/views/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -34,10 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                          /*Center(
-                      child: Text("Usuário não logado",
-                          style:
-                              TextStyle(color: Colors.blue[900], fontSize: 22))),*/
                           Row(
                             children: [
                               Expanded(
@@ -67,8 +64,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Container(
                                   decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xFF0D47A1)),
+                                    border: Border.all(
+                                        color: const Color(0xFF0D47A1)),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: const Icon(Icons.person, size: 50)),
@@ -216,32 +213,30 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation,
-                                                  secondaryAnimation) =>
-                                              const MyOrdersPage(),
-                                          transitionsBuilder: (context,
-                                              animation,
-                                              secondaryAnimation,
-                                              child) {
-                                            const begin = Offset(0, 1);
-                                            const end = Offset.zero;
-                                            const curve = Curves.ease;
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            const MyOrdersPage(),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          const begin = Offset(0, 1);
+                                          const end = Offset.zero;
+                                          const curve = Curves.ease;
 
-                                            var tween = Tween(
-                                                    begin: begin, end: end)
-                                                .chain(
-                                                    CurveTween(curve: curve));
+                                          var tween = Tween(
+                                                  begin: begin, end: end)
+                                              .chain(CurveTween(curve: curve));
 
-                                            return SlideTransition(
-                                              position: animation.drive(tween),
-                                              child: child,
-                                            );
-                                          },
-                                          transitionDuration: const Duration(
-                                              milliseconds: 1000),
-                                        ));
+                                          return SlideTransition(
+                                            position: animation.drive(tween),
+                                            child: child,
+                                          );
+                                        },
+                                        transitionDuration:
+                                            const Duration(milliseconds: 1000),
+                                      ),
+                                    );
                                   },
                                   child: ListTile(
                                     leading: Icon(Icons.shopping_bag_outlined,
@@ -306,7 +301,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ),
                                             TextButton(
                                               child: const Text(
-                                                'Não',
+                                                'Cancelar',
                                                 style: TextStyle(fontSize: 17),
                                               ),
                                               onPressed: () {

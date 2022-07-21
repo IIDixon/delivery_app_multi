@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:delivery_app_multi/constant/constant.dart';
 import 'package:delivery_app_multi/views/index/cart_page.dart';
-import 'package:delivery_app_multi/views/checkout_page.dart';
+import 'package:delivery_app_multi/views/checkout/checkout_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/address_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/email_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/userdata_page.dart';

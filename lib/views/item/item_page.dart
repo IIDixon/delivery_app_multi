@@ -1,8 +1,9 @@
 import 'package:delivery_app_multi/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
-import '../models/item.dart';
+import '../../models/item.dart';
 
 class ItemPage extends StatefulWidget {
   const ItemPage({Key? key, required this.item}) : super(key: key);
@@ -114,7 +115,8 @@ class _ItemPageState extends State<ItemPage> {
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.red)),
                                 Text(
-                                  widget.item['pmc'],
+                                  NumberFormat('###.00', 'pt_BR')
+                                      .format(widget.item['pmc']),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.red,
@@ -127,7 +129,9 @@ class _ItemPageState extends State<ItemPage> {
                                     style: TextStyle(
                                         fontSize: 20,
                                         color: Color(0xFF0D47A1))),
-                                Text(widget.item['venda'],
+                                Text(
+                                    NumberFormat('###.00', 'pt_BR')
+                                        .format(widget.item['venda']),
                                     style: const TextStyle(
                                         color: Color(0xFF0D47A1), fontSize: 20))
                               ],

@@ -1,9 +1,11 @@
 import 'package:delivery_app_multi/widgets/custom_sliders.dart';
 import 'package:flutter/material.dart';
-import '../../models/loja.dart';
-import '../../constant/constant.dart';
-import '../../route/route.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../constant/constant.dart';
+import '../../models/loja.dart';
+import '../../route/route.dart';
 import '../../widgets/list_lojas.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,26 +36,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.duration = const Duration(seconds: 1);
     controller.reverseDuration = const Duration(seconds: 1);
   }
-
-  /*Widget alertDialog() {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      width: MediaQuery.of(context).size.width * 0.5,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            onTap: () {
-              loja.id.value = '123456';
-              Navigator.of(context).pop();
-            },
-            title: Text('Loja $index'),
-          );
-        },
-      ),
-    );
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -204,14 +186,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          "De: ${items[index]['pmc']}",
+                                          "De: ${NumberFormat('###.00', 'pt_BR').format(items[index]['pmc'])}",
                                           style: const TextStyle(
                                               color: Colors.red,
                                               fontSize: 18,
                                               decoration:
                                                   TextDecoration.lineThrough),
                                         ),
-                                        Text("Por: ${items[index]['venda']}",
+                                        Text(
+                                            "Por: ${NumberFormat('###.00', 'pt_BR').format(items[index]['venda'])}",
                                             style: TextStyle(
                                                 color: Colors.blue[800],
                                                 fontSize: 20)),
@@ -318,14 +301,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          "De: ${upvitam[index]['pmc']}",
+                                          "De: ${NumberFormat('###.00', 'pt_BR').format(upvitam[index]['pmc'])}",
                                           style: const TextStyle(
                                               color: Colors.red,
                                               fontSize: 18,
                                               decoration:
                                                   TextDecoration.lineThrough),
                                         ),
-                                        Text("Por: ${upvitam[index]['venda']}",
+                                        Text(
+                                            "Por: ${NumberFormat('###.00', 'pt_BR').format(upvitam[index]['venda'])}",
                                             style: TextStyle(
                                                 color: Colors.blue[800],
                                                 fontSize: 20)),
@@ -379,47 +363,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
                               child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 2,
-                                      color: Colors.grey.withOpacity(0.5),
-                                    ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.grey.withOpacity(0.5),
                                   ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: Text(
-                                        categories[index]['title'],
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red),
-                                      ))
-                                  /*Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 200,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(categories[index]['imgUrl']),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: Text(
-                            categories[index]['title'],
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        )
-                      ],
-                    ),*/
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(
+                                    categories[index]['title'],
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red),
                                   ),
+                                ),
+                              ),
                             );
                           }),
                         ),
@@ -429,28 +390,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           )),
     );
   }
-
-  /*Route createRoute(Map<String, dynamic> item) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => ItemPage(
-        item: item,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0, 1);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 1500),
-    );
-  }*/
 
   Future<dynamic> showModal(BuildContext context, Map<String, dynamic> item) {
     int qtde = 1;
@@ -664,36 +603,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     ),
                                   ],
                                 ),
-                                /*Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border:
-                                              Border.all(color: Colors.blue),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Icon(Icons.remove,
-                                                  size: 18, color: Colors.red),
-                                              Text('$qtde',
-                                                  style: const TextStyle(
-                                                      fontSize: 20)),
-                                              const Icon(Icons.add,
-                                                  size: 18, color: Colors.blue),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ]),*/
                               ],
                             ),
                           ],

@@ -1,7 +1,10 @@
 import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import '../../models/cart.dart';
 import '../../models/person.dart';
 
@@ -118,7 +121,7 @@ class _CartPageState extends State<CartPage> {
                                                 ),
                                                 const SizedBox(width: 5),
                                                 Text(
-                                                  'R\$ ${cart.items[index].valueSale.toStringAsFixed(2)}',
+                                                  'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.items[index].valueSale)}',
                                                   style: TextStyle(
                                                       color: Colors.blue[900],
                                                       fontSize: 18),
@@ -135,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                                                 ),
                                                 const SizedBox(width: 5),
                                                 Text(
-                                                  'R\$ ${(cart.items[index].qtde * cart.items[index].valueSale).toStringAsFixed(2)}',
+                                                  'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.items[index].qtde * cart.items[index].valueSale)}',
                                                   style: TextStyle(
                                                       color: Colors.blue[900],
                                                       fontSize: 18),
@@ -253,7 +256,9 @@ class _CartPageState extends State<CartPage> {
                             width: 10,
                           ),
                           Obx(() => Text(
-                              'R\$ ${cart.valueItems().toStringAsFixed(2)}',
+                              cart.items.isNotEmpty
+                                  ? 'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.valueItems())}'
+                                  : '-',
                               style: TextStyle(
                                   color: Colors.blue[900], fontSize: 18))),
                           //Text('R\$ 200.00')
@@ -271,7 +276,8 @@ class _CartPageState extends State<CartPage> {
                                 style: TextStyle(
                                     color: Colors.blue, fontSize: 18)),
                             const SizedBox(width: 10),
-                            Text('R\$ 5.00',
+                            Text(
+                                'R\$ ${NumberFormat('###.00', 'pt_BR').format(5)}',
                                 style: TextStyle(
                                     color: Colors.blue[900], fontSize: 18)),
                           ],
@@ -293,7 +299,7 @@ class _CartPageState extends State<CartPage> {
                             ),
                             Obx(
                               () => Text(
-                                'R\$ ${(cart.valueItems() + 5).toStringAsFixed(2)}',
+                                'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.valueItems() + 5)}',
                                 style: TextStyle(
                                     color: Colors.blue[900], fontSize: 18),
                               ),

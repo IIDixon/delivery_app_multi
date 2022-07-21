@@ -80,4 +80,47 @@ class OrderController extends GetxController {
 
     return response;
   }
+
+  Future<List<Map>> getOrders() async {
+    Map body = {'userid': person.id.value};
+    Map<String, String> headers = header;
+    headers.addAll({"X-Parse-Session-Token": person.session.value});
+
+    http.Response response = await http.post(
+        Uri.parse(
+            "https://parseapi.back4app.com/parse/functions/get-salesUser"),
+        headers: headers,
+        body: jsonEncode(body));
+
+    var resp = json.decode(response.body);
+    Map orders = jsonDecode(response.body);
+    List<Map> list = [];
+
+    for (int i = 0; i < orders['result'].length; i++) {
+      list.add(orders['result'][i]);
+    }
+    print('Resultado - $list - ${list.length}');
+    return list;
+  }
+
+  Future<List<Map>> getItens(String sale) async {
+    Map body = {'id': sale};
+    Map<String, String> headers = header;
+    headers.addAll({"X-Parse-Session-Token": person.session.value});
+
+    http.Response response = await http.post(
+        Uri.parse(
+            "https://parseapi.back4app.com/parse/functions/get-saleitens"),
+        headers: headers,
+        body: jsonEncode(body));
+
+    Map itens = jsonDecode(response.body);
+    List<Map> listItens = [];
+
+    for (int i = 0; i < itens['result'].length; i++) {
+      listItens.add(itens['result'][i]);
+    }
+    print(listItens);
+    return listItens;
+  }
 }

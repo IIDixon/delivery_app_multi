@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../views/item_page.dart';
+import '../views/item/item_page.dart';
 
+// Animação de transição para a tela dos itens
 Route routePageItem(Map<String, dynamic> item) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) =>
