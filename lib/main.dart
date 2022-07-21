@@ -1,23 +1,26 @@
 import 'dart:convert';
+
 import 'package:delivery_app_multi/constant/constant.dart';
-import 'package:delivery_app_multi/views/index/cart_page.dart';
 import 'package:delivery_app_multi/views/checkout/checkout_page.dart';
+import 'package:delivery_app_multi/views/initial/cart_page.dart';
+import 'package:delivery_app_multi/views/initial/profile_page.dart';
+import 'package:delivery_app_multi/views/initial/root_page.dart';
+import 'package:delivery_app_multi/views/initial/search_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/address_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/email_page.dart';
 import 'package:delivery_app_multi/views/login/SignUp_Pages/userdata_page.dart';
 import 'package:delivery_app_multi/views/login/signin_page.dart';
 import 'package:delivery_app_multi/views/profile/orders.dart';
-import 'package:delivery_app_multi/views/index/profile_page.dart';
-import 'package:delivery_app_multi/views/index/root_page.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
 import 'back4app/credentials.dart';
 import 'models/loja.dart';
 import 'views/login/SignUp_Pages/userdata_page.dart';
-import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/profile/orders': (context) => const MyOrdersPage(),
         '/cart': (context) => const CartPage(),
         '/checkout': (context) => const CheckoutPage(),
+        '/search': (context) => const SearchPage()
       },
     );
   }

@@ -43,7 +43,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
   {
     'description': 'Anador 500MG 24CP',
@@ -54,7 +54,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
   {
     'description': 'Dipirona Sódica 1MG 30CP',
@@ -65,7 +65,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
   {
     'description': 'Dipirona Sódica 500MG 30CP',
@@ -76,7 +76,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
   {
     'description': 'Dorflex Uno 10CP',
@@ -87,7 +87,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
   {
     'description': 'Lisador Dip 1G 20CP',
@@ -98,7 +98,7 @@ List<Map<String, dynamic>> items = [
     'laboratorio': 'Catarinense',
     'categoria': 'Vitaminas',
     'imgUrl':
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXatXEHisbBLD4LCMQARpEZbHPfgS4S24JOw&usqp=CAU'
+        'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/00069c2c3dae97627ccad137e64181aa_img%20padrao.png'
   },
 ];
 

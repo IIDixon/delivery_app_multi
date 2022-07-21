@@ -2,6 +2,7 @@ import 'package:delivery_app_multi/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 
 import '../../models/item.dart';
 
@@ -40,9 +41,50 @@ class _ItemPageState extends State<ItemPage> {
                     Container(
                       alignment: Alignment.center,
                       height: 220,
-                      child: Image(
-                        image: NetworkImage(widget.item['imgUrl']),
-                        fit: BoxFit.fitHeight,
+                      child: GestureDetector(
+                        child: Image(
+                          image: NetworkImage(widget.item['imgUrl']),
+                          fit: BoxFit.fitHeight,
+                        ),
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: PinchZoom(
+                                          child: Image.network(
+                                            widget.item['imgUrl'],
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.6,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.blue[900]),
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: const Text('Voltar',
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
                       ),
                     ),
                     const Divider(

@@ -163,9 +163,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             //height: 220,
                                             //width: 150,
                                             child: Image(
-                                              image: Image.asset(
-                                                      'assets/download.jpg')
-                                                  .image,
+                                              image: NetworkImage(
+                                                  items[index]['imgUrl']),
                                               fit: BoxFit.cover,
                                             ),
                                           ),

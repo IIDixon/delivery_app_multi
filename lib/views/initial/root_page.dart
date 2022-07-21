@@ -1,6 +1,7 @@
-import 'package:delivery_app_multi/views/index/cart_page.dart';
-import 'package:delivery_app_multi/views/index/homepage.dart';
-import 'package:delivery_app_multi/views/index/profile_page.dart';
+import 'package:delivery_app_multi/views/initial/cart_page.dart';
+import 'package:delivery_app_multi/views/initial/homepage.dart';
+import 'package:delivery_app_multi/views/initial/profile_page.dart';
+import 'package:delivery_app_multi/views/initial/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -210,15 +211,7 @@ class _RootPageState extends State<RootPage> {
       },
       children: const [
         HomePage(),
-        Center(
-          child: Text(
-            'Página 2',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        SearchPage(),
         CartPage(),
         ProfilePage(),
       ],
