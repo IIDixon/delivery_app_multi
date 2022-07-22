@@ -209,11 +209,11 @@ class _RootPageState extends State<RootPage> {
           activeTab = index;
         });
       },
-      children: const [
-        HomePage(),
+      children: [
+        const HomePage(),
         SearchPage(),
-        CartPage(),
-        ProfilePage(),
+        const CartPage(),
+        const ProfilePage(),
       ],
     );
   }

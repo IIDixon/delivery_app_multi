@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         '/profile/orders': (context) => const MyOrdersPage(),
         '/cart': (context) => const CartPage(),
         '/checkout': (context) => const CheckoutPage(),
-        '/search': (context) => const SearchPage()
+        '/search': (context) => SearchPage()
       },
     );
   }

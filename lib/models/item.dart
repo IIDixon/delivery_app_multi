@@ -1,29 +1,26 @@
 import 'dart:core';
 
-class Item {
-  Item(
-      {required this.name,
-      required this.value,
-      required this.valueSale,
-      required this.qtde,
-      required this.categoria,
-      required this.laboratorio,
-      required this.imgUrl});
+import 'package:intl/intl.dart';
 
-  Item.fromJson({required Map<String, dynamic> json, required this.qtde})
-      : name = json['description'],
-        value = json['pmc'],
-        valueSale = json['venda'],
-        categoria = json['categoria'],
-        imgUrl = json['imgUrl'],
-        laboratorio = json['laboratorio'];
+class Item {
+  Item();
+
+  Item.fromJson({this.qtde, required Map<String, dynamic> json}) {
+    name = json['description'];
+    value = double.parse(NumberFormat('###.0#', 'en_US').format(json['pmc']));
+    valueSale =
+        double.parse(NumberFormat('###.0#', 'en_US').format(json['venda']));
+    categoria = json['categoria'];
+    imgUrl = json['imgUrl'];
+    laboratorio = json['laboratorio'];
+  }
 
   String? id;
-  String name;
-  double value;
-  double valueSale;
-  int qtde;
-  String categoria;
-  String imgUrl;
-  String laboratorio;
+  late String name;
+  late double value;
+  late double valueSale;
+  int? qtde;
+  late String categoria;
+  late String imgUrl;
+  late String laboratorio;
 }

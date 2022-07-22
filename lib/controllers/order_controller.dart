@@ -52,7 +52,7 @@ class OrderController extends GetxController {
           'bOtGaEgQyz' /*itens[i].id *ALTERAR PARA O ID DO PRODUTO*/;
       map['qtde'] = itens[i].qtde;
       map['unitValue'] = itens[i].valueSale;
-      map['totalValue'] = (itens[i].qtde * itens[i].valueSale);
+      map['totalValue'] = (itens[i].qtde! * itens[i].valueSale);
       list.add(map);
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../back4app/credentials.dart';
 
@@ -488,3 +489,5 @@ List<Map<String, dynamic>> upvitam = [
         'https://www.upvitam.com.br/wp-content/uploads/2019/06/7896023720918_Up-Vitam-Vitamina-E-400-UI-30-cps-430-x-321_.jpg'
   },
 ];
+
+List<Map<String, dynamic>> searchItems = <Map<String, dynamic>>[].obs;
