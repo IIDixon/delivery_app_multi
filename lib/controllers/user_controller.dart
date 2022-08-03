@@ -59,8 +59,8 @@ class UserController extends GetxController {
       print(resp);
       return 200;
     } else {
-      changeStatus();
       print(resp);
+      changeStatus();
       return response.statusCode;
     }
   }
@@ -70,7 +70,10 @@ class UserController extends GetxController {
     final email = emailData;
     final password = passwordData;
 
-    Map<String, String> body = {"email": email, "password": password};
+    Map<String, String> body = {
+      "email": email.toLowerCase(),
+      "password": password
+    };
 
     response = await http.post(
         Uri.parse("https://parseapi.back4app.com/parse/functions/login"),

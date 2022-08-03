@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -122,5 +123,10 @@ class OrderController extends GetxController {
     }
     print(listItens);
     return listItens;
+  }
+
+  Future<double> calcFrete(
+      double startLat, double startLong, double endLat, double endLong) async {
+    return Geolocator.distanceBetween(startLat, startLong, endLat, endLong);
   }
 }

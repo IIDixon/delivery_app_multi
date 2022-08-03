@@ -51,6 +51,8 @@ class ItemTile extends StatelessWidget {
               style: TextStyle(color: Colors.blue[800], fontSize: 20),
             ),
           ),
+
+          // Botão 'Adicionar'
           Row(
             children: [
               Expanded(

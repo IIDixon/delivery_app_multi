@@ -116,7 +116,7 @@ class _SigninPageState extends State<SigninPage> {
                                 pause: const Duration(milliseconds: 500),
                                 animatedTexts: [
                                   TyperAnimatedText(
-                                      'Com você pela saúde da nossa gente',
+                                      'Com você, pela saúde da nossa gente',
                                       speed: const Duration(milliseconds: 100),
                                       textAlign: TextAlign.center)
                                 ]),
@@ -272,10 +272,12 @@ class _SigninPageState extends State<SigninPage> {
                                               Navigator.of(context).pop();
                                               break;
                                             case 101:
+                                              _userController.changeStatus();
                                               showError(
                                                   'Usuário e/ou senha inválidos');
                                               break;
                                             default:
+                                              _userController.changeStatus();
                                               showError(
                                                   'Ocorreu um erro ao processar sua solicitação.');
                                               break;

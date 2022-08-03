@@ -29,13 +29,16 @@ Widget ListLojas(BuildContext context) {
               child: ListTile(
                 onTap: () {
                   loja = Loja.fromJson(
-                      lojas[index]['id'],
-                      lojas[index]['razao'],
-                      lojas[index]['fantasia'],
-                      lojas[index]['cidade'],
-                      lojas[index]['rua'],
-                      lojas[index]['bairro'],
-                      lojas[index]['numero']);
+                    lojas[index]['id'],
+                    lojas[index]['razao'],
+                    lojas[index]['fantasia'],
+                    lojas[index]['cidade'],
+                    lojas[index]['rua'],
+                    lojas[index]['bairro'],
+                    lojas[index]['numero'],
+                    lojas[index]['geo']['latitude'],
+                    lojas[index]['geo']['longitude'],
+                  );
                 },
                 title: Text(
                   lojas[index]['fantasia'],
