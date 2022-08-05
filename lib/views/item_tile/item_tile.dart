@@ -56,31 +56,34 @@ class ItemTile extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    item.qtde = 1;
-                    cart.items.add(item);
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      backgroundColor: Colors.red,
-                      duration: Duration(milliseconds: 1000),
-                      content: Text(
-                        'Produto adicionado ao carrinho',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Icon(Icons.add_shopping_cart),
-                      Text(
-                        'Comprar',
-                        style: TextStyle(fontSize: 18),
-                      )
-                    ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      item.qtde = 1;
+                      cart.items.add(item);
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        duration: Duration(milliseconds: 1000),
+                        content: Text(
+                          'Produto adicionado ao carrinho',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: const [
+                        Icon(Icons.add_shopping_cart),
+                        Text(
+                          'Comprar',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                   ),
-                  style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                 ),
               ),
             ],
