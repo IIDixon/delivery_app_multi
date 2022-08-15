@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'address.dart';
+
 class Person extends GetxController {
   static final Person person = Person._internal();
 
@@ -38,6 +40,7 @@ class Person extends GetxController {
   late var tel = ''.obs;
   late var id = ''.obs;
   late var session = ''.obs;
+  //late Address address;
 
   void reset() {
     name = ''.obs;

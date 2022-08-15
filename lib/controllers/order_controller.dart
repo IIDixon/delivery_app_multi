@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -52,7 +53,7 @@ class OrderController extends GetxController {
           'bOtGaEgQyz' /*itens[i].id *ALTERAR PARA O ID DO PRODUTO*/;
       map['qtde'] = itens[i].qtde;
       map['unitValue'] = itens[i].valueSale;
-      map['totalValue'] = (itens[i].qtde * itens[i].valueSale);
+      map['totalValue'] = (itens[i].qtde! * itens[i].valueSale);
       list.add(map);
     }
 
@@ -122,5 +123,13 @@ class OrderController extends GetxController {
     }
     print(listItens);
     return listItens;
+  }
+
+  Future<double> calcFrete(
+      double startLat, double startLong, double endLat, double endLong) async {
+    return Geolocator.distanceBetween(startLat, startLong, endLat, endLong);
+
+    // API para buscar latitude e longitude pelo endereço
+    //https://nominatim.openstreetmap.org/?addressdetails=1&q=nelvo+facchini+271&format=json&limit=1
   }
 }

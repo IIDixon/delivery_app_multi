@@ -163,9 +163,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             //height: 220,
                                             //width: 150,
                                             child: Image(
-                                              image: Image.asset(
-                                                      'assets/download.jpg')
-                                                  .image,
+                                              image: NetworkImage(
+                                                  items[index]['imgUrl']),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -186,7 +185,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           ),
                                         ),
                                         Text(
-                                          "De: ${NumberFormat('###.00', 'pt_BR').format(items[index]['pmc'])}",
+                                          "De: R\$ ${NumberFormat('###.00', 'pt_BR').format(items[index]['pmc'])}",
                                           style: const TextStyle(
                                               color: Colors.red,
                                               fontSize: 18,
@@ -194,10 +193,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                   TextDecoration.lineThrough),
                                         ),
                                         Text(
-                                            "Por: ${NumberFormat('###.00', 'pt_BR').format(items[index]['venda'])}",
-                                            style: TextStyle(
-                                                color: Colors.blue[800],
-                                                fontSize: 20)),
+                                          "Por: R\$ ${NumberFormat('###.00', 'pt_BR').format(items[index]['venda'])}",
+                                          style: TextStyle(
+                                              color: Colors.blue[800],
+                                              fontSize: 20),
+                                        ),
                                       ],
                                     ),
                                   ),

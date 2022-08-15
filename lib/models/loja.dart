@@ -8,7 +8,7 @@ class Loja extends GetxController {
   }
 
   factory Loja.fromJson(String id, String razao, String fantasia, String cidade,
-      String rua, String bairro, String numero) {
+      String rua, String bairro, String numero, double lat, double long) {
     loja.id.value = id;
     loja.razaoSocial.value = razao;
     loja.nomeFantasia.value = fantasia;
@@ -16,6 +16,8 @@ class Loja extends GetxController {
     loja.bairro.value = bairro;
     loja.number.value = numero;
     loja.cidade.value = cidade;
+    loja.lat.value = lat.toString();
+    loja.long.value = long.toString();
 
     return loja;
   }
@@ -39,4 +41,6 @@ class Loja extends GetxController {
   late var rua = ''.obs;
   late var bairro = ''.obs;
   late var number = ''.obs;
+  late var lat = ''.obs;
+  late var long = ''.obs;
 }

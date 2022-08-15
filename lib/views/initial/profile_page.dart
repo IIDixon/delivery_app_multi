@@ -4,6 +4,7 @@ import 'package:delivery_app_multi/views/profile/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/order_controller.dart';
 import '../../models/person.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -15,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Person person = Person();
+  final OrderController _orderController = OrderController();
 
   @override
   Widget build(BuildContext context) {
@@ -329,6 +331,22 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              child: Text('Testar'),
+                              onPressed: () async {
+                                double resp = await _orderController.calcFrete(
+                                    -20.792828,
+                                    -49.437401,
+                                    -20.803649,
+                                    -49.427750);
+
+                                print('A distância é $resp');
+                              },
+                            )
+                          ],
+                        )
                       ],
                     ),
             )),

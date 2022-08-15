@@ -28,7 +28,7 @@ class Cart extends GetxController {
     double value = 0;
 
     items.forEach((element) {
-      value += element.valueSale * element.qtde;
+      value += element.valueSale * element.qtde!;
     });
     return value;
   }

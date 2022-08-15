@@ -138,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                                                 ),
                                                 const SizedBox(width: 5),
                                                 Text(
-                                                  'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.items[index].qtde * cart.items[index].valueSale)}',
+                                                  'R\$ ${NumberFormat('###.00', 'pt_BR').format(cart.items[index].qtde! * cart.items[index].valueSale)}',
                                                   style: TextStyle(
                                                       color: Colors.blue[900],
                                                       fontSize: 18),
