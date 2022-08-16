@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../models/item.dart';
 
@@ -42,10 +43,15 @@ class _ItemPageState extends State<ItemPage> {
                       alignment: Alignment.center,
                       height: 220,
                       child: GestureDetector(
-                        child: Image(
+                        child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: widget.item['imgUrl'],
+                            fit: BoxFit.fitHeight),
+
+                        /*Image(
                           image: NetworkImage(widget.item['imgUrl']),
                           fit: BoxFit.fitHeight,
-                        ),
+                        ),*/
                         onTap: () {
                           showDialog(
                               context: context,
@@ -56,13 +62,18 @@ class _ItemPageState extends State<ItemPage> {
                                       Expanded(
                                         flex: 4,
                                         child: PinchZoom(
-                                          child: Image.network(
+                                          child: FadeInImage.memoryNetwork(
+                                              placeholder: kTransparentImage,
+                                              image: widget.item['imgUrl'],
+                                              fit: BoxFit.scaleDown),
+
+                                          /*Image.network(
                                             widget.item['imgUrl'],
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
                                                 0.6,
-                                          ),
+                                          ),*/
                                         ),
                                       ),
                                       Row(

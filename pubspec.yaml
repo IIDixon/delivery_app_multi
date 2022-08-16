@@ -47,6 +47,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   pinch_zoom: ^1.0.0
   geolocator: ^8.2.1  
+  transparent_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:

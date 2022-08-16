@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../models/cart.dart';
 import '../../models/item.dart';
@@ -24,10 +25,10 @@ class ItemTile extends StatelessWidget {
           // Imagem
           Expanded(
             flex: 3,
-            child: Image.network(
-              item.imgUrl,
-              fit: BoxFit.fill,
-            ),
+            child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: item.imgUrl,
+                fit: BoxFit.fill),
           ),
 
           // Nome

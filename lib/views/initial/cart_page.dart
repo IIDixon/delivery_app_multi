@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../models/cart.dart';
 import '../../models/person.dart';
@@ -87,11 +88,15 @@ class _CartPageState extends State<CartPage> {
                                       Container(
                                         height: 100,
                                         width: 100,
-                                        child: Image(
+                                        child: FadeInImage.memoryNetwork(
+                                            placeholder: kTransparentImage,
+                                            image: cart.items[index].imgUrl,
+                                            fit: BoxFit.fill),
+                                        /*Image(
                                           image: NetworkImage(
                                               cart.items[index].imgUrl),
                                           fit: BoxFit.fill,
-                                        ),
+                                        ),*/
                                       ),
                                       Expanded(
                                         child: Column(
@@ -176,6 +181,7 @@ class _CartPageState extends State<CartPage> {
                                               tooltip: 'Deslize para remover',
                                             ),
                                           ]),
+                                      //const Divider(),
                                     ],
                                   ),
                                 ),

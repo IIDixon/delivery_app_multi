@@ -2,6 +2,7 @@ import 'package:delivery_app_multi/widgets/custom_sliders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../constant/constant.dart';
 import '../../models/loja.dart';
@@ -162,11 +163,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           child: SizedBox(
                                             //height: 220,
                                             //width: 150,
-                                            child: Image(
+                                            child: FadeInImage.memoryNetwork(
+                                                placeholder: kTransparentImage,
+                                                image: items[index]['imgUrl'],
+                                                fit: BoxFit.cover),
+
+                                            /*Image(
                                               image: NetworkImage(
                                                   items[index]['imgUrl']),
                                               fit: BoxFit.cover,
-                                            ),
+                                            ),*/
                                           ),
                                         ),
                                         Expanded(
@@ -278,11 +284,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           child: SizedBox(
                                             //height: 220,
                                             //width: 150,
-                                            child: Image(
-                                              image: NetworkImage(
-                                                  upvitam[index]['imgUrl']),
-                                              fit: BoxFit.cover,
-                                            ),
+                                            child: FadeInImage.memoryNetwork(
+                                                placeholder: kTransparentImage,
+                                                image: upvitam[index]['imgUrl'],
+                                                fit: BoxFit.cover),
                                           ),
                                         ),
                                         Expanded(
@@ -441,10 +446,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ),
                                 height: 180,
                                 width: MediaQuery.of(context).size.width,
-                                child: Image(
-                                  image: NetworkImage(item['imgUrl']),
-                                  fit: BoxFit.fitHeight,
-                                ),
+                                child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    image: item['imgUrl'],
+                                    fit: BoxFit.fitHeight),
                               ),
                             ),
                             Padding(
