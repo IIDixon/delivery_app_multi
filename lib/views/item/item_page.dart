@@ -10,7 +10,7 @@ import '../../models/item.dart';
 class ItemPage extends StatefulWidget {
   const ItemPage({Key? key, required this.item}) : super(key: key);
 
-  final Map<String, dynamic> item;
+  final Item item;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
@@ -45,7 +45,7 @@ class _ItemPageState extends State<ItemPage> {
                       child: GestureDetector(
                         child: FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: widget.item['imgUrl'],
+                            image: widget.item.imgUrl,
                             fit: BoxFit.fitHeight),
 
                         /*Image(
@@ -64,7 +64,7 @@ class _ItemPageState extends State<ItemPage> {
                                         child: PinchZoom(
                                           child: FadeInImage.memoryNetwork(
                                               placeholder: kTransparentImage,
-                                              image: widget.item['imgUrl'],
+                                              image: widget.item.imgUrl,
                                               fit: BoxFit.scaleDown),
 
                                           /*Image.network(
@@ -109,7 +109,7 @@ class _ItemPageState extends State<ItemPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.item['description'],
+                            widget.item.name,
                             style: TextStyle(
                                 color: Colors.blue[900], fontSize: 22),
                           ),
@@ -124,7 +124,7 @@ class _ItemPageState extends State<ItemPage> {
                               style: TextStyle(
                                   color: Colors.blue[900], fontSize: 20)),
                           const SizedBox(width: 10),
-                          Text(widget.item['laboratorio'],
+                          Text(widget.item.laboratorio,
                               style: TextStyle(
                                   color: Colors.blue[900], fontSize: 20))
                         ],
@@ -138,7 +138,7 @@ class _ItemPageState extends State<ItemPage> {
                               style: TextStyle(
                                   color: Colors.blue[900], fontSize: 20)),
                           const SizedBox(width: 10),
-                          Text(widget.item['categoria'],
+                          Text(widget.item.categoria,
                               style: TextStyle(
                                   color: Colors.blue[900], fontSize: 20)),
                         ],
@@ -169,7 +169,7 @@ class _ItemPageState extends State<ItemPage> {
                                         fontSize: 20, color: Colors.red)),
                                 Text(
                                   NumberFormat('###.00', 'pt_BR')
-                                      .format(widget.item['pmc']),
+                                      .format(widget.item.value),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.red,
@@ -184,7 +184,7 @@ class _ItemPageState extends State<ItemPage> {
                                         color: Color(0xFF0D47A1))),
                                 Text(
                                     NumberFormat('###.00', 'pt_BR')
-                                        .format(widget.item['venda']),
+                                        .format(widget.item.valueSale),
                                     style: const TextStyle(
                                         color: Color(0xFF0D47A1), fontSize: 20))
                               ],
@@ -248,8 +248,8 @@ class _ItemPageState extends State<ItemPage> {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              item =
-                                  Item.fromJson(json: widget.item, qtde: qtde);
+                              item = widget.item;
+                              item.qtde = qtde;
                               cart.items.add(item);
                               //print(cart.valueItems());
                               Navigator.of(context).pop();

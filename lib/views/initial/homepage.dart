@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../../constant/constant.dart';
+import '../../models/item.dart';
 import '../../models/loja.dart';
 import '../../route/route.dart';
 import '../../widgets/list_lojas.dart';
@@ -138,8 +139,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 onTap: () {
                                   ScaffoldMessenger.of(context)
                                       .clearSnackBars();
+                                  Item item = Item.fromJson(json: items[index]);
                                   Navigator.of(context)
-                                      .push(routePageItem(items[index]));
+                                      .push(routePageItem(item));
                                 },
                                 child: Container(
                                   height: 250,
@@ -259,8 +261,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 onTap: () {
                                   ScaffoldMessenger.of(context)
                                       .clearSnackBars();
+                                  Item item =
+                                      Item.fromJson(json: upvitam[index]);
                                   Navigator.of(context)
-                                      .push(routePageItem(upvitam[index]));
+                                      .push(routePageItem(item));
                                 },
                                 child: Container(
                                   height: 250,

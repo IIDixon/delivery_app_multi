@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delivery_app_multi/constant/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CustomeCarouselHomePage extends StatefulWidget {
   //final List<Map<String, dynamic>>? items;
-  final List<Image>? items;
+  final List<String>? items;
 
   const CustomeCarouselHomePage({Key? key, this.items}) : super(key: key);
 
@@ -33,8 +34,9 @@ class _CustomeCarouselHomePageState extends State<CustomeCarouselHomePage> {
               onPageChanged: (index, Null) {
                 setActiveDot(index);
               },
+              autoPlay: true,
               autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-              autoPlayAnimationDuration: const Duration(seconds: 2),
+              autoPlayAnimationDuration: const Duration(seconds: 7),
               viewportFraction: 1.0,
             ),
             items: widget.items!.map((item) {
@@ -43,12 +45,18 @@ class _CustomeCarouselHomePageState extends State<CustomeCarouselHomePage> {
                   return Stack(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Image(
+                          width: MediaQuery.of(context).size.width,
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: item,
+                            fit: BoxFit.fill,
+                          )
+
+                          /*Image(
                           image: item.image,
                           fit: BoxFit.contain,
-                        ),
-                      ),
+                        ),*/
+                          ),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         color: Colors.black.withOpacity(0.35),

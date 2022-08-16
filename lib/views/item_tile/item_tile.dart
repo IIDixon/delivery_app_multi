@@ -5,6 +5,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 import '../../models/cart.dart';
 import '../../models/item.dart';
+import '../../route/route.dart';
 
 class ItemTile extends StatelessWidget {
   ItemTile({Key? key, required this.item}) : super(key: key);
@@ -25,31 +26,46 @@ class ItemTile extends StatelessWidget {
           // Imagem
           Expanded(
             flex: 3,
-            child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: item.imgUrl,
-                fit: BoxFit.fill),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(routePageItem(item));
+              },
+              child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: item.imgUrl,
+                  fit: BoxFit.fill),
+            ),
           ),
 
           // Nome
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                item.name,
-                softWrap: true,
-                overflow: TextOverflow.fade,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(routePageItem(item));
+                },
+                child: Text(
+                  item.name,
+                  softWrap: true,
+                  //overflow: TextOverflow.fade,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             ),
           ),
 
           // Preço
           Expanded(
-            child: Text(
-              'R\$ ${NumberFormat('###.00', 'pt_BR').format(item.valueSale)}',
-              style: TextStyle(color: Colors.blue[800], fontSize: 20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(routePageItem(item));
+              },
+              child: Text(
+                'R\$ ${NumberFormat('###.00', 'pt_BR').format(item.valueSale)}',
+                style: TextStyle(color: Colors.blue[800], fontSize: 20),
+              ),
             ),
           ),
 

@@ -172,10 +172,10 @@ List<Map<String, dynamic>> sliderDescription = [
   },
 ];
 
-List<Image> slider = [
-  Image.asset('assets/JORNAL.jpg'),
-  Image.asset('assets/PBM.jpg'),
-  Image.asset('assets/FIDELIDADE.jpg'),
+List<String> slider = [
+  'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/3e7a996897c47347ea2f73c3936c7efc_JORNAL.jpg',
+  'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/f53add68cf94865fed6eccba0279d3e9_PBM.jpg',
+  'https://parsefiles.back4app.com/7CL23wlKcmRh61hQN1OXNfKpY8YGFXOeQAOBhSH9/d591519d0b3f82f01268a5e67953f3cc_FIDELIDADE.jpg'
 ];
 
 List<Map<String, dynamic>> upvitam = [
