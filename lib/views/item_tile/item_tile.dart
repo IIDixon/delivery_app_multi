@@ -78,7 +78,7 @@ class ItemTile extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       item.qtde = 1;
-                      cart.items.add(item);
+                      cart.addItem(item);
                       ScaffoldMessenger.of(context).clearSnackBars();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         backgroundColor: Colors.red,

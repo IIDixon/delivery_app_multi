@@ -250,7 +250,7 @@ class _ItemPageState extends State<ItemPage> {
                             onPressed: () {
                               item = widget.item;
                               item.qtde = qtde;
-                              cart.items.add(item);
+                              cart.addItem(item);
                               //print(cart.valueItems());
                               Navigator.of(context).pop();
                               ScaffoldMessenger.of(context)

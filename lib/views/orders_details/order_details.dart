@@ -38,7 +38,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             padding: const EdgeInsets.all(10),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                'Pedido - ${widget.sale['sale']}',
+                'Pedido - ${widget.sale['sale'].toString().toUpperCase()}',
                 style: TextStyle(
                     fontSize: 22,
                     color: Colors.blue[900],

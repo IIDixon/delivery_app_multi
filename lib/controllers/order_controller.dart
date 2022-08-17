@@ -49,8 +49,8 @@ class OrderController extends GetxController {
 
     for (int i = 0; i < itens.length; i++) {
       Map map = {};
-      map['product'] =
-          'bOtGaEgQyz' /*itens[i].id *ALTERAR PARA O ID DO PRODUTO*/;
+      map['product'] = itens[i].id;
+      //'bOtGaEgQyz' /*itens[i].id *ALTERAR PARA O ID DO PRODUTO*/;
       map['qtde'] = itens[i].qtde;
       map['unitValue'] = itens[i].valueSale;
       map['totalValue'] = (itens[i].qtde! * itens[i].valueSale);
@@ -93,7 +93,7 @@ class OrderController extends GetxController {
         headers: headers,
         body: jsonEncode(body));
 
-    var resp = json.decode(response.body);
+    //var resp = json.decode(response.body);
     Map orders = jsonDecode(response.body);
     List<Map> list = [];
 

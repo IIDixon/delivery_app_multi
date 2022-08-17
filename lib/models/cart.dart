@@ -16,6 +16,16 @@ class Cart extends GetxController {
   //que for incluído algum item
   var items = <Item>[].obs;
 
+  void addItem(Item item) {
+    var contain = items.where((e) => e.id == item.id);
+    if (contain.isNotEmpty) {
+      int idx = items.indexWhere((element) => element.id == item.id);
+      items[idx].qtde = items[idx].qtde! + item.qtde!;
+    } else {
+      items.add(item);
+    }
+  }
+
   void removeItem(int i) {
     items.removeAt(i);
   }
